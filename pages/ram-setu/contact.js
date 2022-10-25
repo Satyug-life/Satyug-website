@@ -3,7 +3,7 @@ import React, { useEffect, useState, useRef } from "react";
 // import ramSita from "../../assets/video/Final_Render_2.mp4";
 // import anyAudio from "../../assets/audio/afterSetuAudio.mp3";
 import Confetti from 'react-confetti';
-import Image from 'next/image';
+import Image from 'next/future/image';
 import { useRouter } from "next/router";
 
 // import { useRouter } from 'next/router';
@@ -86,12 +86,13 @@ const anyAudio = "https://res.cloudinary.com/dde6glimb/video/upload/v1666700225/
 
   },[]);
 
-  function playVideo(e) {
-    // const videoPlay = ref.current;
-    // videoPlay.play();
-    // ref.current.play();
-    navigate('ram-setu/ram-sita')
-  }
+
+  // function playVideo(e) {
+  //   // const videoPlay = ref.current;
+  //   // videoPlay.play();
+  //   ref.current.play();
+  //   // navigate('/ram-setu/ram-sita')
+  // }
   // useEffect( () =>{
 
   //     window.localStorage.setItem("name",name);
@@ -113,6 +114,7 @@ const anyAudio = "https://res.cloudinary.com/dde6glimb/video/upload/v1666700225/
         src={require("../../assets/images/LableBox.png")}
         className= {` ${hide} input-box targetAnimation`}
         alt="LabelBox"
+        layout="raw"
       />
       <label className="labelName d-flex targetAnimation"></label>
       {/* <button
@@ -171,11 +173,12 @@ const anyAudio = "https://res.cloudinary.com/dde6glimb/video/upload/v1666700225/
         onEnded={()=>{
           save();
           setVidOn(true);
-          playVideo();
+          
 
         }}
       />
       
+
       {vidOn === true ? (
         <div className="warp d-flex justify-content-center align-items-center">
         <video

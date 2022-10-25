@@ -1,4 +1,7 @@
 import React, { useEffect, useState, useRef } from "react";
+import Web3Modal from "web3modal";
+import WalletConnectProvider from "@walletconnect/web3-provider";
+import Web3 from "web3";
 // import "../assets/css/TestModal.css";
 import PropTypes from "prop-types";
 // import { WalletContext } from "../context/WalletContext";
@@ -30,6 +33,52 @@ const Modal = ({ onRequestClose,pathName }) => {
     setLoaded(true);
     console.log(media);
   };
+
+
+
+
+
+  const [web3Modal, setWeb3Modal] = useState({});
+
+  
+
+  const providerOptions = {
+    binancechainwallet:{
+      package:true
+    },
+    walletconnect: {
+      package: WalletConnectProvider,
+      options: {
+        infuraId: 'eca3650c70d546c2a15702ab9a1c4d73'
+      }
+    }
+  }
+
+  
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+       const web3modal = new Web3Modal({
+        network: "rinkeby", // optional
+        cacheProvider: true, // optional
+        providerOptions, // required
+       });
+       setWeb3Modal(web3modal);
+    }
+ }, [providerOptions]);
+
+async function connectWallet(){
+  
+  const provider = await web3Modal.connect();
+  const web3 = new Web3(provider);
+  const accounts = await web3.eth.getAccounts();
+  console.log(accounts);
+}
+
+
+
+
+
+
 
   // const handleDisconnectWallet = () => {
   //   disconnectWallet();
@@ -192,7 +241,7 @@ const Modal = ({ onRequestClose,pathName }) => {
               <div className="modal__submitButton">
                 <button
                   className="btn-hover color-5"
-                  onClick={()=>{console.log(1);}}
+                  onClick={connectWallet}
                 >
                   Connect To Wallet
                 </button>

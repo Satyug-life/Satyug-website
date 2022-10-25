@@ -6,6 +6,7 @@ import Footer from "../components/Footer";
 import UpperFooter from "../components/UpperFooter";
 import cs from "../assets/cssModules/Home.module.css"
 import { useRouter } from "next/router";
+import Typewriter from 'typewriter-effect';
 
 function Home() {
 //   function getWindowDimensions() {
@@ -39,13 +40,21 @@ const v1 = "https://res.cloudinary.com/dde6glimb/video/upload/v1666530742/earth_
       <div className="HomeDiv container" style={{zIndex:'1000'}}>
         <div className="row p-4 pb-0 pe-lg-0 pt-lg-5 align-items-center rounded-3  shadow-lg">
           <div className="col-lg-12 p-3 p-lg-5 pt-lg-3">
-            <h2 className="display-4 fw-bold lh-1 font-scriptina"> 
+            <h2 className="display-4 fw-bold lh-1 font-shalimar typewritter"> 
             {/* <Typical
-        steps={['Sat in Sanskrit stands for "Right and Truthful" and Yug stands for "Period of Time"', 2000]}
-        // loop={Infinity}
-        wrapper="h2"
-      />   */}
-      Sat in Sanskrit stands for "Right and Truthful" and Yug stands for "Period of Time"
+                  steps={['Sat in Sanskrit stands for "Right and Truthful" and Yug stands for "Period of Time"', 2000]}
+                  // loop={Infinity}
+                  wrapper="h2"
+                />   */}
+              <Typewriter
+                options={{
+                  delay: 50,
+                }}
+                onInit={(typewriter) => {
+                  typewriter.typeString('Sat in Sanskrit stands for \"Right and Truthful\" and Yug stands for \"Period of Time\"')
+                    .start();
+                }}
+              />
             </h2>
       </div>
         </div>
@@ -83,7 +92,7 @@ const v1 = "https://res.cloudinary.com/dde6glimb/video/upload/v1666530742/earth_
       </div>
         </div>
       </div>
-      <div className="HomeDiv container" data-aos="fade-down-left"  data-aos-easing="ease-in-back" data-aos-delay="2300">
+      <div className="HomeDiv container" data-aos="fade-down-left"  data-aos-easing="ease-in-back" data-aos-delay="2100">
         <div className="row p-4 pb-0 pe-lg-0 pt-lg-5 align-items-center rounded-3  shadow-lg">
           <div className="col-lg-12 p-3 p-lg-5 pt-lg-3">
             <h2 className="display-4 fw-bold lh-1 text-light font-shalimar click-pointer" onClick={()=>{
@@ -96,7 +105,7 @@ const v1 = "https://res.cloudinary.com/dde6glimb/video/upload/v1666530742/earth_
       </div>
         </div>
       </div>
-      <div className="HomeDiv container"  data-aos="fade-down-right"  data-aos-easing="ease-in-back" data-aos-delay="2900">
+      <div className="HomeDiv container"  data-aos="fade-down-right"  data-aos-easing="ease-in-back" data-aos-delay="2400">
         <div className="row p-4 pb-0 pe-lg-0 pt-lg-5 align-items-center rounded-3  shadow-lg">
           <div className="col-lg-12 p-3 p-lg-5 pt-lg-3">
             <h2 className="display-4 fw-bold lh-1 text-light font-shalimar click-pointer" onClick={()=>{
@@ -109,7 +118,7 @@ const v1 = "https://res.cloudinary.com/dde6glimb/video/upload/v1666530742/earth_
       </div>
         </div>
       </div>
-      <div className="HomeDiv container"  data-aos="fade-up-left"  data-aos-easing="ease-in-back" data-aos-delay="500">
+      <div className="HomeDiv container"  data-aos="fade-up-left"  data-aos-easing="ease-in-back" data-aos-delay="400">
         <div className="row p-4 pb-0 pe-lg-0 pt-lg-5 align-items-center rounded-3  shadow-lg">
           <div className="col-lg-12 p-3 p-lg-5 pt-lg-3">
             <h2 className="display-4 fw-bold lh-1 text-light font-shalimar click-pointer" onClick={()=>{
