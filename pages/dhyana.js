@@ -24,9 +24,9 @@ const Dhyana = () => {
     return (
         <div className="App">
             <div className={classes.container} >
-                <video src={v} playsInline className={classes.vidStyles} onEnded={()=>navigate("/DhyanaToken")} autoPlay/>
+                <video src={v} playsInline className={classes.vidStyles} onEnded={()=>navigate("/dhyanaToken")} autoPlay/>
             </div>
-            <button className="SkipButtonUniversal" onClick={()=>navigate("/DhyanaToken")}>
+            <button className="SkipButtonUniversal" onClick={()=>navigate("/dhyanaToken")}>
                 <div className="SkipButtonUniversalContainer">
                 Skip
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-skip-forward" viewBox="0 0 16 16">

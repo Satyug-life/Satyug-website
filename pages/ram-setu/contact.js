@@ -90,7 +90,7 @@ const anyAudio = "https://res.cloudinary.com/dde6glimb/video/upload/v1666700225/
     // const videoPlay = ref.current;
     // videoPlay.play();
     // ref.current.play();
-    navigate('ram-setu/ram-sita')
+    navigate('/ram-setu/ram-sita')
   }
   // useEffect( () =>{
 
