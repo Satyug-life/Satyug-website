@@ -17,8 +17,9 @@ const Modal = ({ onRequestClose,pathName }) => {
   const [walletConnected, setWalletConnected] = useState(false);
   const [preLoader, setPreLoader] = useState(false);
   const navigate = useRouter().push;
-  // const { connectWallet, currentAccount, disconnectWallet } =
-    // React.useContext(WalletContext);
+  const [currentAccount,setcurrentAccount] = useState('');
+
+  //   React.useContext(WalletContext);
     let pageName = "";
     if(pathName === "/yogaToken") {
       pageName = "Yoga"
@@ -59,19 +60,21 @@ const Modal = ({ onRequestClose,pathName }) => {
     if (typeof window !== "undefined") {
        const web3modal = new Web3Modal({
         network: "rinkeby", // optional
-        cacheProvider: true, // optional
+        cacheProvider: false, // optional
         providerOptions, // required
        });
        setWeb3Modal(web3modal);
     }
- }, [providerOptions]);
+ }, [currentAccount]);
 
 async function connectWallet(){
   
   const provider = await web3Modal.connect();
   const web3 = new Web3(provider);
-  const accounts = await web3.eth.getAccounts();
-  console.log(accounts);
+  const Account = await web3.eth.getAccounts();
+ setcurrentAccount(Account[0]);
+  console.log(currentAccount);
+  setWalletConnected(true)
 }
 
 
@@ -250,15 +253,18 @@ async function connectWallet(){
             {walletConnected && (
               <div className="modal__submitButton">
                 <button className=" color-disabled walletClass">
-                  Wallet ID: {currentAccount}
+                  Wallet ID: {currentAccount
+                  
+                  }
                 </button>
               </div>
-            )}
+            )
+            }
             {walletConnected && (
               <div className="modal__submitButton">
                 <button
                   className="btn-hover color-5"
-                  onClick={handleDisconnectWallet}
+                  // onClick={handleDisconnectWallet}
                 >
                   Disconnect Wallet
                 </button>
