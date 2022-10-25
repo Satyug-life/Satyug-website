@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useRef } from "react";
 import Web3Modal from "web3modal";
 import WalletConnectProvider from "@walletconnect/web3-provider";
+import Image from 'next/image';
 import Web3 from "web3";
 // import "../assets/css/TestModal.css";
 import PropTypes from "prop-types";
@@ -192,7 +193,7 @@ async function connectWallet(){
                   onDrop={onDrop}
                 >
                   <div className="drop-file-input__label">
-                    <img src={uploadImg} alt="Uploading IMG" />
+                    <Image  height={200} width={200} src={require("../assets/images/cloud-upload-regular-240.png")} alt="Uploading IMG" />
                     <p>Drag & Drop your files here</p>
                   </div>
                   <input
