@@ -1,4 +1,8 @@
 import React, { useEffect, useState, useRef } from "react";
+import Web3Modal from "web3modal";
+import WalletConnectProvider from "@walletconnect/web3-provider";
+import Image from 'next/image';
+import Web3 from "web3";
 // import "../assets/css/TestModal.css";
 import PropTypes from "prop-types";
 // import { WalletContext } from "../context/WalletContext";
@@ -14,8 +18,9 @@ const Modal = ({ onRequestClose,pathName }) => {
   const [walletConnected, setWalletConnected] = useState(false);
   const [preLoader, setPreLoader] = useState(false);
   const navigate = useRouter().push;
-  // const { connectWallet, currentAccount, disconnectWallet } =
-    // React.useContext(WalletContext);
+  const [currentAccount,setcurrentAccount] = useState('');
+
+  //   React.useContext(WalletContext);
     let pageName = "";
     if(pathName === "/yogaToken") {
       pageName = "Yoga"
@@ -31,10 +36,60 @@ const Modal = ({ onRequestClose,pathName }) => {
     console.log(media);
   };
 
-  // const handleDisconnectWallet = () => {
-  //   disconnectWallet();
-  //   setWalletConnected(false);
-  // };
+
+
+
+
+  const [web3Modal, setWeb3Modal] = useState({});
+
+  
+
+  const providerOptions = {
+    binancechainwallet:{
+      package:true
+    },
+    walletconnect: {
+      package: WalletConnectProvider,
+      options: {
+        infuraId: 'eca3650c70d546c2a15702ab9a1c4d73'
+      }
+    }
+  }
+
+  
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+       const web3modal = new Web3Modal({
+        network: "rinkeby", // optional
+        cacheProvider: false, // optional
+        providerOptions, // required
+       });
+       setWeb3Modal(web3modal);
+    }
+ }, [currentAccount]);
+
+async function connectWallet(){
+  
+  const provider = await web3Modal.connect();
+  const web3 = new Web3(provider);
+  const Account = await web3.eth.getAccounts();
+ setcurrentAccount(Account[0]);
+  console.log(currentAccount);
+  setWalletConnected(true)
+}
+
+
+
+
+
+
+
+  const handleDisconnectWallet = () => {
+    localStorage.removeItem('walletconnect')
+    setcurrentAccount('');
+    setWalletConnected(false);
+
+  };
 
   // const handleSubmitWallet = () => {
   //   connectWallet();
@@ -138,7 +193,7 @@ const Modal = ({ onRequestClose,pathName }) => {
                   onDrop={onDrop}
                 >
                   <div className="drop-file-input__label">
-                    <img src={uploadImg} alt="Uploading IMG" />
+                    <Image  height={200} width={200} src={require("../assets/images/cloud-upload-regular-240.png")} alt="Uploading IMG" />
                     <p>Drag & Drop your files here</p>
                   </div>
                   <input
@@ -192,7 +247,7 @@ const Modal = ({ onRequestClose,pathName }) => {
               <div className="modal__submitButton">
                 <button
                   className="btn-hover color-5"
-                  onClick={()=>{console.log(1);}}
+                  onClick={connectWallet}
                 >
                   Connect To Wallet
                 </button>
@@ -201,10 +256,13 @@ const Modal = ({ onRequestClose,pathName }) => {
             {walletConnected && (
               <div className="modal__submitButton">
                 <button className=" color-disabled walletClass">
-                  Wallet ID: {currentAccount}
+                  Wallet ID: {currentAccount
+                  
+                  }
                 </button>
               </div>
-            )}
+            )
+            }
             {walletConnected && (
               <div className="modal__submitButton">
                 <button
