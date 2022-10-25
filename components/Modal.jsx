@@ -83,10 +83,12 @@ async function connectWallet(){
 
 
 
-  // const handleDisconnectWallet = () => {
-  //   disconnectWallet();
-  //   setWalletConnected(false);
-  // };
+  const handleDisconnectWallet = () => {
+    localStorage.removeItem('walletconnect')
+    setcurrentAccount('');
+    setWalletConnected(false);
+
+  };
 
   // const handleSubmitWallet = () => {
   //   connectWallet();
@@ -264,7 +266,7 @@ async function connectWallet(){
               <div className="modal__submitButton">
                 <button
                   className="btn-hover color-5"
-                  // onClick={handleDisconnectWallet}
+                  onClick={handleDisconnectWallet}
                 >
                   Disconnect Wallet
                 </button>
