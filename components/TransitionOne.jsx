@@ -4,7 +4,7 @@ import { useRouter } from "next/router";
 // import image from "../assets/images/image.png";
 // import hanuman from "../assets/images/hanuman.png";
 // import audIntro from "../assets/audio/audIntro.mp3";
-import Image from 'next/image'
+import Image from 'next/future/image'
 import initialImage from "../assets/images/initial-image.png";
 
 import { useNavigate } from "react-router-dom";

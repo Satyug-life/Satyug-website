@@ -3,7 +3,7 @@ import Draggable from "react-draggable";
 // import "../../assets/css/Setu.css";
 import chat from "../../assets/images/calll-1.png";
 import stone from "../../assets/images/stone.png";
-import Image from 'next/image';
+import Image from 'next/future/image';
 import { useRouter } from 'next/router';
 // import after_video from "../../assets/video/afterSetu.mp4";
 import full_Setu_pic from '../../assets/images/setu_full_pic.jpg';
@@ -83,12 +83,12 @@ const Setu = () => {
             setDragging(false);
           }}
         >
-          <img
-            ref={stony}
+          <div className="stone"  ref={stony}>
+          <Image
             src={stone}
             alt="stone"
             className={"stone" + (isDragging ? " " : " highlight")}
-          />
+          /></div>
         </Draggable>
       ) : null}
       {Complete === false ? (

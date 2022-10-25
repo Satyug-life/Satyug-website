@@ -2,7 +2,7 @@ import Image from 'next/image';
 import { useRouter } from 'next/router';
 import React from 'react'
 import coming from '../assets/images/cs.jpg';
-
+import classes from "../assets/cssModules/satyug.module.css";
 function ComingSoon() {
 //   const navigate = useRouter().push;
 //     setTimeout(() => {
@@ -12,9 +12,10 @@ function ComingSoon() {
   return (
     <div > 
       <Image src={coming} alt="s"       layout="fill"
-      sizes="(max-width: 768px) 100vw,
-              (max-width: 1200px) 50vw,
-              33vw"
+      // sizes="(max-width: 768px) 100vw,
+      //         (max-width: 1200px) 50vw,
+      //         33vw"
+      className={classes.comingSoonImage}
 />
     </div>
   )

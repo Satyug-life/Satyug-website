@@ -1,9 +1,9 @@
 import React from 'react'
 // import "./YogaToken.css";
-import yogaImg from "../assets/images/DhyanaTokenBg.png";
+import yogaImg from "../assets/images/yogaToken1.png";
 import Modal from '../components/Modal';
 import { useRouter } from 'next/router';
-import Image from 'next/image';
+import Image from 'next/future/image';
 // import { useLocation } from 'react-router-dom';
 const YogaToken = () => {
   const location = useRouter();

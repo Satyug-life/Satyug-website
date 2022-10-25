@@ -1,5 +1,5 @@
 import React from "react";
-import "../../assets/css/Mask.css";
+// import "../../assets/css/Mask.css";
 import Image from 'next/image';
 
 const Mask = () => {
