@@ -3,21 +3,28 @@ import classes from "../assets/cssModules/satyug.module.css";
 import { useRouter } from 'next/router'
 import Image from 'next/future/image'
 import satyugLogo from "../assets/images/satyugLogo.png";
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import {
   useWindowWidth,
 } from '@react-hook/window-size'
 
 const Dhyana = () => {
   const [VideoOn, SetVideoOn] = useState(false);
+  const [v,setv] =useState( "https://res.cloudinary.com/dde6glimb/video/upload/v1665915468/Main_Video_1_gfaand.mp4");
+
  
   let screenWidth = useWindowWidth();
-  const v =
+  console.log(screenWidth);
+  useEffect(() => {
+    const t =
   screenWidth > 600
       ? "https://res.cloudinary.com/dde6glimb/video/upload/v1665915468/Main_Video_1_gfaand.mp4"
       : "https://res.cloudinary.com/dde6glimb/video/upload/v1666419775/M-1_-_Compressed_with_FlexClip_dpfv1b.mp4";
   // let v = "https://res.cloudinary.com/dde6glimb/video/upload/v1665915468/Main_Video_1_gfaand.mp4";
 
+  setv(t);
+  }, [v]);
+  
   // const navigate = useNavigate();
   const router = useRouter()
   const refVid = useRef();

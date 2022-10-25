@@ -11,7 +11,7 @@ function ComingSoon() {
 // const x ='https://media.istockphoto.com/photos/coming-soon-neon-sign-the-banner-shining-light-signboard-collection-picture-id1332167985?b=1&k=20&m=1332167985&s=170667a&w=0&h=O-084eNJBhGZGJbJvNvUC1P6d4aSo6XkV4Kom7ZZcIQ='
   return (
     <div > 
-      <Image src={coming} alt="s"       layout="fill"
+      <Image src={coming} alt="s" layout="fill"
       // sizes="(max-width: 768px) 100vw,
       //         (max-width: 1200px) 50vw,
       //         33vw"

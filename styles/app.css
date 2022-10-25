@@ -17,6 +17,9 @@
   }
   
   @media screen and (min-width: 500px) {
+    body{
+      overflow-x: hidden;
+    }
     .App{
       display:flex;
       justify-content: center;
@@ -52,7 +55,13 @@
     font-family: 'SCRIPTIN';
     src: local('SCRIPTIN'), url(../assets/fonts/SCRIPTIN.ttf) format('truetype');
   }
-  
+/*   
+  @font-face {
+    font-family: 'Courgette';
+    font-style: normal ;
+    src: local('Courgette');
+  } */
+
   @import url('https://fonts.googleapis.com/css2?family=Oleo+Script&display=swap');
   #clickText{
     position: absolute;
@@ -99,25 +108,25 @@
     text-decoration: underline;
   }
   @import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@1,300&display=swap');
-  
   @import url('https://fonts.googleapis.com/css2?family=Courgette&display=swap');
+
+  
   .font-shalimar{
     font-family: 'Courgette', cursive;
     font-size: 26px;
     line-height: 30px;
     text-align: center;
   }
+
   .font-scriptina{
-    font-family: 'Courgette', cursive;
-    color:gold;
-    /* font-family: 'SCRIPTIN'; */
-    font-weight:bolder;
+    font-weight: 500!important;
+    color: gold;
   }
+
   .typewritter {
+    font-family: 'Courgette', cursive;
     font-size: 2rem;
-    color:gold;
-    font-weight: 500;
-    font-style: italic;
+    line-height: 1.2!important;
   }
   /* #clickText img {
     height: 200px;

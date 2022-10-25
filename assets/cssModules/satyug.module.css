@@ -31,7 +31,7 @@
 .comingSoonImage{
     height:100vh!important;
     width:100vw!important; 
-    object-fit :cover; 
+    object-fit:fill; 
     object-position : center!important;
   }
 @media screen and (max-width: 500px) {
