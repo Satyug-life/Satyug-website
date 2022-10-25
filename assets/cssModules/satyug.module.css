@@ -25,6 +25,15 @@
 .clickEnterText{
     cursor:pointer;
 }
+.imageLogo{
+    margin-top: 0.5em;
+}
+.comingSoonImage{
+    height:100vh!important;
+    width:100vw!important; 
+    object-fit :cover; 
+    object-position : center!important;
+  }
 @media screen and (max-width: 500px) {
     .clickEnterText{
         font-size: 2rem;

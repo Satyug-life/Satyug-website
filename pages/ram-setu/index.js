@@ -7,7 +7,7 @@ const Home = () => {
   return (
        <div className="App">
         <video autoPlay muted loop id="myBGVideo">
-          <source src={Bg_Video} type=""></source>
+          <source src={Bg_Video} type="" ></source>
         </video>
     <div className={classes.container}>
         <video autoPlay muted loop id="myBGVideo">

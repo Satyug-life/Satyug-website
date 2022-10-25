@@ -2,24 +2,42 @@
     #myBGVideo {
       display: none;
     }
+    .RamSitaGIFContainer{
+      width: 100%;
+      height: 100vh;
+      object-fit: fill;
+    }
+   
   }
-  
+  @media screen and  (min-width: 700px)
+  {
+    .RamSitaGIFContainer{
+      object-fit: contain !important;
+    }
+  }
   
   @media screen and (min-width: 500px) {
     .App{
       display:flex;
       justify-content: center;
       overflow-x: hidden;
+      overflow: none;
       z-index: -1;
       /* background-color: black; */
       /* background:url("./assets/video/wave\ 4.gif"); */
     }
-  
+   
+    .RamSitaGIFContainer{
+      width : 50%;
+      object-fit: fill;
+      height: 100vh;
+    }
     #myBGVideo {
       position: absolute;
       z-index: -10;
       left: 0;
       top: 0;
+      height: 100vh;
       right: 0;
       bottom: 0;
       display: flex;
@@ -28,7 +46,6 @@
       min-width: 100vw; 
       min-height: 100vh;
     }
-  
   }
   @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300&display=swap');
   @font-face {
@@ -70,6 +87,13 @@
     justify-content: space-between;
     align-items: center;
   }
+  .topContainer{
+    width: 100%;
+    display: flex;
+    height: 100vh;
+    align-items: center;
+    justify-content: center;
+  }
   .click-pointer:hover{
     cursor: pointer;
     text-decoration: underline;
@@ -89,11 +113,17 @@
     /* font-family: 'SCRIPTIN'; */
     font-weight:bolder;
   }
-  #clickText img {
+  .typewritter {
+    font-size: 2rem;
+    color:gold;
+    font-weight: 500;
+    font-style: italic;
+  }
+  /* #clickText img {
     height: 200px;
     width: 200px;
     margin-top: 0.5em;
-  }
+  } */
   @media screen and (max-width:600px) {
     #clickText{
       position: absolute;
@@ -723,9 +753,11 @@
   
   .chat {
     position: absolute;
+   
     width: 165px;
+    height: 10%;
     margin-left: -100px;
-    margin-top: -30px;
+    margin-top: -50px;
     z-index: 10;
     animation: float 2s ease-in-out infinite;
   }
@@ -764,10 +796,11 @@
   .stone {
     position: absolute;
     width: 100px;
-    left: 45%;
+    left: 40%;
     bottom: 40px;
     bottom: 20px;
     z-index: 20;
+    height: 25%;
   }
   
   .highlight {
@@ -1106,16 +1139,16 @@
   width: 100%;
 }
 .hanuman {
-  z-index: 10;
  
-  
+  z-index: 10;
   max-width: 300px;
-  position: fixed;
-  left:0;
-  
-  bottom:0;
+  position: absolute;
+  left: 2.5%;
+  bottom: 0;
   height: 55%;
-  width: 20%;
+  width: 55%;
+
+  /* right: 40%;
   
  /* right: 40%; */
 }
@@ -1187,4 +1220,6 @@
     width: 100vw;
     /* object-fit: cover; */
 }
+
+
   

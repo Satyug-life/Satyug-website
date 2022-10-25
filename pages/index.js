@@ -1,7 +1,7 @@
 import classes from "../assets/cssModules/satyug.module.css";
 // import { useNavigate } from "react-router-dom";
 import { useRouter } from 'next/router'
-import Image from 'next/image'
+import Image from 'next/future/image'
 import satyugLogo from "../assets/images/satyugLogo.png";
 import React, { useRef, useState } from "react";
 import {
@@ -46,7 +46,7 @@ const Dhyana = () => {
               About Us
             </div>
           </div>
-          <Image src={satyugLogo} height="280" width='300' alt="Satyug Logo" />
+          <Image src={satyugLogo} height="200" width='200' alt="Satyug Logo" className={classes.imageLogo} />
         </div>
         <div className={classes.container}>
           <video
