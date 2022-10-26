@@ -1,0 +1,19 @@
+{
+  "/_error": "pages/_error.js",
+  "/_document": "pages/_document.js",
+  "/api/hello": "pages/api/hello.js",
+  "/_app": "pages/_app.js",
+  "/dhyanaToken": "pages/dhyanaToken.html",
+  "/dhyana": "pages/dhyana.html",
+  "/navigator": "pages/navigator.html",
+  "/": "pages/index.html",
+  "/ram-setu": "pages/ram-setu.html",
+  "/ram-setu/mask": "pages/ram-setu/mask.html",
+  "/about": "pages/about.html",
+  "/ram-setu/setu": "pages/ram-setu/setu.html",
+  "/yogaToken": "pages/yogaToken.html",
+  "/ram-setu/contact": "pages/ram-setu/contact.html",
+  "/coming-soon": "pages/coming-soon.html",
+  "/yog": "pages/yog.html",
+  "/404": "pages/404.html"
+}
