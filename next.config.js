@@ -4,14 +4,14 @@ const nextConfig = {
   swcMinify: true,
   optimizeFonts: false,
  
-  experimental: {
-    adjustFontFallbacks: true,
-  },
-  experimental: {
-    images: {
-        allowFutureImage: true
-    },
-}
+  // experimental: {
+  //   adjustFontFallbacks: true,
+  // },
+  // experimental: {
+  //   images: {
+  //       allowFutureImage: true
+  //   },
+// }
 }
 
 
