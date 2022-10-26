@@ -23,7 +23,7 @@ const Dhyana = () => {
   // let v = "https://res.cloudinary.com/dde6glimb/video/upload/v1665915468/Main_Video_1_gfaand.mp4";
 
   setv(t);
-  }, [v]);
+  }, [v,screenWidth]);
   
   // const navigate = useNavigate();
   const router = useRouter()
