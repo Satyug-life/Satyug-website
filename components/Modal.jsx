@@ -62,7 +62,7 @@ const Modal = ({ onRequestClose,pathName }) => {
        const web3modal = new Web3Modal({
         network: "rinkeby", // optional
         cacheProvider: false, // optional
-        // providerOptions, // required
+        providerOptions, // required
        });
        setWeb3Modal(web3modal);
     }
