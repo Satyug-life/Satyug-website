@@ -24,7 +24,10 @@ var head_default = /*#__PURE__*/__webpack_require__.n(head_namespaceObject);
 // EXTERNAL MODULE: ./node_modules/next/script.js
 var script = __webpack_require__(4298);
 var script_default = /*#__PURE__*/__webpack_require__.n(script);
+// EXTERNAL MODULE: external "react"
+var external_react_ = __webpack_require__(6689);
 ;// CONCATENATED MODULE: ./pages/_app.js
+
 
 
 
@@ -32,6 +35,14 @@ var script_default = /*#__PURE__*/__webpack_require__.n(script);
 
 // import satyugLogo from "../assets/images/satyugLogo.png";
 function MyApp({ Component , pageProps  }) {
+    (0,external_react_.useEffect)(()=>{
+        window.dataLayer = window.dataLayer || [];
+        function gtag() {
+            dataLayer.push(arguments);
+        }
+        gtag("js", new Date());
+        gtag("config", "G-B64YMWSLWS");
+    }, []);
     return /*#__PURE__*/ (0,jsx_runtime_.jsxs)(jsx_runtime_.Fragment, {
         children: [
             /*#__PURE__*/ (0,jsx_runtime_.jsxs)((head_default()), {
