@@ -5,8 +5,8 @@
   "devFiles": [],
   "ampDevFiles": [],
   "lowPriorityFiles": [
-    "static/T5s9fUZpxPCAkEH4lHw0a/_buildManifest.js",
-    "static/T5s9fUZpxPCAkEH4lHw0a/_ssgManifest.js"
+    "static/bucolcMtaUzbMZlWEZc78/_buildManifest.js",
+    "static/bucolcMtaUzbMZlWEZc78/_ssgManifest.js"
   ],
   "rootMainFiles": [],
   "pages": {
@@ -23,7 +23,7 @@
       "static/chunks/framework-7751730b10fa0f74.js",
       "static/chunks/main-3f31ae3a5e116ff7.js",
       "static/css/53ada3a67eab8976.css",
-      "static/chunks/pages/_app-bd0762598a022849.js"
+      "static/chunks/pages/_app-6695c8d518717b6e.js"
     ],
     "/_error": [
       "static/chunks/webpack-7ab3068c828c5bf6.js",
@@ -64,7 +64,7 @@
       "static/chunks/675-dca0833b9a8dac3e.js",
       "static/chunks/807-b0be7eb2028d4e55.js",
       "static/css/1cdbadac87c5dc23.css",
-      "static/chunks/pages/dhyanaToken-8fb8a49759f46add.js"
+      "static/chunks/pages/dhyanaToken-948ce9febc659087.js"
     ],
     "/navigator": [
       "static/chunks/webpack-7ab3068c828c5bf6.js",
@@ -119,7 +119,7 @@
       "static/chunks/675-dca0833b9a8dac3e.js",
       "static/chunks/807-b0be7eb2028d4e55.js",
       "static/css/1cdbadac87c5dc23.css",
-      "static/chunks/pages/yogaToken-96ec257abf5896e5.js"
+      "static/chunks/pages/yogaToken-fe6c2afab2bfddc5.js"
     ]
   },
   "ampFirstPages": []

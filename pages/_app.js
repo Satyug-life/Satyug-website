@@ -19,7 +19,7 @@ function MyApp({ Component, pageProps }) {
     <title>Satyug</title>
     <link rel='icon' href="/satyugLogo.png" />
   </Head>
-
+  <Script async src="https://www.googletagmanager.com/gtag/js?id=G-B64YMWSLWS" />
    <Script
    id="bootstrap-cdn"
 src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" />

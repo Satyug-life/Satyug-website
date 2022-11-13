@@ -143,7 +143,9 @@ const Modal = ({ onRequestClose , pathName  })=>{
     };
     (0,react__WEBPACK_IMPORTED_MODULE_1__.useEffect)(()=>{
         if (false) {}
-    }, []);
+    }, [
+        currentAccount
+    ]);
     async function connectWallet() {
         const provider = await web3Modal.connect();
         const web3 = new (web3__WEBPACK_IMPORTED_MODULE_5___default())(provider);

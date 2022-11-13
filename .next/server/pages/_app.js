@@ -67,6 +67,10 @@ function MyApp({ Component , pageProps  }) {
                 ]
             }),
             /*#__PURE__*/ (0,jsx_runtime_.jsx)((script_default()), {
+                async: true,
+                src: "https://www.googletagmanager.com/gtag/js?id=G-B64YMWSLWS"
+            }),
+            /*#__PURE__*/ (0,jsx_runtime_.jsx)((script_default()), {
                 id: "bootstrap-cdn",
                 src: "https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
             }),

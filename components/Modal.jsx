@@ -66,7 +66,7 @@ const Modal = ({ onRequestClose,pathName }) => {
        });
        setWeb3Modal(web3modal);
     }
- }, []);
+ }, [currentAccount]);
 
 async function connectWallet(){
   
