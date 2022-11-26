@@ -400,7 +400,7 @@
     position: fixed;
     right: 0;
     top: 0;
-    z-index: 1;
+    z-index: 0;
   }
   
   .modal__container {
@@ -460,7 +460,19 @@
     width: 60%;
     margin-top: 40px;
   }
-  
+
+  .metamaskIcon,.phantomIcon {
+    width: 16%;
+    height: 18%;
+  }
+  .metamaskIcon:hover,.phantomIcon:hover {
+    width: 18%;
+    cursor: pointer;
+    transition: ease-in 0.1s;
+  }
+  .walletButton{
+    background-image: linear-gradient(to bottom, #fff,#fff);
+  }
   .video-upload-wrap:hover {
     background-color: #1fb264;
     border: 4px dashed #fff;
@@ -651,9 +663,9 @@
     padding: 10px;
   }
   
-  .drop-file-input__label img {
+  /* .drop-file-input__label img {
     width: 100px;
-  }
+  } */
   
   .drop-file-preview {
     margin-top: 30px;
@@ -1096,7 +1108,7 @@
   opacity: 55%;
   width: 50%;
   height: 5.5%;
-  top: 13%;
+  top: 10%;
   /* width: 60%; */
 }
 .noinput {
@@ -1106,17 +1118,29 @@
   font-size: 18px;
   background-color: black;
   opacity: 55%;
-  top: 25%;
+  top: 20%;
   width: 50%;
   height: 5.5%;
   /* width: 60%; */
+}
+
+.emailinput {
+  position: fixed;
+  border-radius: 9px;
+  color: #e6ab74;
+  font-size: 18px;
+  background-color: black;
+  opacity: 55%;
+  top: 30%;
+  width: 50%;
+  height: 5.5%;
 }
 
 .button1 {
   font-weight: 500;
   color: white;
   position: fixed;
-  top: 37%;
+  top: 40%;
   height: 5%;
   width: 20%;
   background-image: linear-gradient(to right, #96f147cb, #77c21b);
@@ -1184,17 +1208,33 @@
     background-position: center center;
 } */
 
+.web3Btn, .web3Success {
+  font-weight: 500;
+  color: white;
+  position: fixed;
+  top: 25%;
+  height: 5%;
+  width: auto;
+  opacity: 85%;
+  border-radius: 10px;
+}
+
+.web3Success {
+  top: 15%;
+}
+
+.web3Contact {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
 
 @media screen and (min-width: 500px) {
   
-  .nameinput {
-  
+  .nameinput, .noinput, .emailinput {
     width: 19%;
   }
-  .noinput {
-  
-    width: 19%;
-  }
+
   .button1{
     width: 15%;
   }
@@ -1202,14 +1242,10 @@
   }
   @media screen and (min-width: 1700px) {
   
-    .nameinput {
-    
+    .nameinput, .noinput, .emailinput {
       width: 10%;
     }
-    .noinput {
-    
-      width: 10%;
-    }
+
     .button1{
       width: 10%;
     }

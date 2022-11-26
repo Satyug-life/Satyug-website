@@ -1,24 +1,112 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState, useRef , useContext } from "react";
 import Web3Modal from "web3modal";
 import WalletConnectProvider from "@walletconnect/web3-provider";
-import Image from 'next/image';
+import Image from 'next/future/image';
 import Web3 from "web3";
 // import "../assets/css/TestModal.css";
 import PropTypes from "prop-types";
 // import { WalletContext } from "../context/WalletContext";
-import uploadImg from "../assets/images/cloud-upload-regular-240.png";
+// import uploadImg from "../assets/images/cloud-upload-regular-240.png";
 import { v4 as uuidv4 } from "uuid";
 import { Loader } from "./Loader";
+import metamask from "../assets/images/metamask.svg"
+import phantom from "../assets/images/phantom.svg"
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useRouter } from "next/router";
+// import type { NextPage } from 'next';
+import App from '../pages/App'
+// import WalletState from '../context/WalletState'
+import dynamic from "next/dynamic";
+import WalletContext from "../context/WalletContext";
+import  "./etherRPC";
+import EthereumRpc from "./etherRPC";
+
+
+
+
+// const App = dynamic(
+//   () => {
+//     return import("../pages/App");
+//   },
+//   { ssr: false }
+// );
+
+
 const Modal = ({ onRequestClose,pathName }) => {
+  const context = useContext(WalletContext);
+  // console.log(context)
+  const {walletConnected ,  setWalletConnected , currentAccount , setcurrentAccount , walletType , setWalletType} = context;
+
   const [media, setMedia] = useState(false);
   const [loaded, setLoaded] = useState(false);
-  const [walletConnected, setWalletConnected] = useState(false);
+  // const [walletConnected, setWalletConnected] = useState(false);
   const [preLoader, setPreLoader] = useState(false);
   const navigate = useRouter().push;
-  const [currentAccount,setcurrentAccount] = useState('');
+  // const [currentAccount,setcurrentAccount] = useState('');
+
+  const [walletAddress, setWalletAddress] = useState(null);
+  // const [balance, setBalance] = useState("");
+  // const [pubkey, setPubkey] = useState("");
+
+// useEffect(()=>{
+//   if(!currentAccount|| currentAccount===''){
+//     setcurrentAccount(window.localStorage?.getItem('walletId')); 
+//   setWalletConnected(true);}
+  
+// },[])
+
+  const checkIfWalletIsConnected = async () => {
+    try {
+      const { solana } = window;
+
+      if (solana) {
+        if (solana.isPhantom) {
+          // console.log("Wallet Found");
+          const response = await solana.connect({ onlyIfTrusted: true });
+          // console.log(
+          //   "connected with publickey:",
+          //   response.publicKey.toString()
+          // );
+          setWalletAddress(response.publicKey.toString());
+        }
+      } else {
+        alert("Get a phantom wallet")
+        console.log("Get a phantom wallet");
+      }
+    } catch (error) {
+      // console.error(error);
+    }
+  };
+
+
+  const connectSolanaWallet = async () => {
+    checkIfWalletIsConnected();
+    const { solana } = window;
+    if (solana) {
+      const response = await solana.connect();
+      // console.log("connected with public key", response.publicKey);
+      // setWalletAddress();
+      setcurrentAccount(response.publicKey.toString());
+      console.log(currentAccount);
+      setWalletConnected(true)
+      setWalletType('phantom')
+      
+    }
+  };
+
+
+
+
+  const disconnectWallet = async () => {
+    const { solana } = window;
+    if (solana) {
+      await solana.disconnect();
+      setcurrentAccount(null);
+
+        // disconnectWallet()
+    }
+  };
 
   //   React.useContext(WalletContext);
     let pageName = "";
@@ -70,12 +158,13 @@ const Modal = ({ onRequestClose,pathName }) => {
 
 async function connectWallet(){
   
-  const provider = await web3Modal.connect();
+  // const provider = await web3Modal.connect();
   const web3 = new Web3(provider);
   const Account = await web3.eth.getAccounts();
  setcurrentAccount(Account[0]);
   console.log(currentAccount);
   setWalletConnected(true)
+  setWalletType('polygon')
 }
 
 
@@ -84,11 +173,20 @@ async function connectWallet(){
 
 
 
-  const handleDisconnectWallet = () => {
-    localStorage.removeItem('walletconnect')
-    setcurrentAccount('');
-    setWalletConnected(false);
+  const handleDisconnectWallet = async() => {
+    // const { solana } = window;
+    if (walletType==='solana') {
+      await solana.disconnect();
+      setcurrentAccount(null);
+      setWalletConnected(false);
+        // disconnectWallet()
+    }else{
 
+      localStorage.removeItem('walletconnect')
+      setcurrentAccount('');
+      setWalletConnected(false);
+    }
+    setWalletConnected(false);
   };
 
   // const handleSubmitWallet = () => {
@@ -120,7 +218,16 @@ async function connectWallet(){
       body: formData,
     });
     let data;
-    
+     const web3 = new Web3(provider);
+     const destination = await web3.eth.getAccounts()[0]
+     const from = "0x7d73d45b8837Fe0E7f5F97D7Cb81174eA284ba51"
+     const amount = web3.utils.toWei(1);
+     const res = await web3.eth.sendTransaction(
+      {from:from, to:destination, value:amount}
+     );
+
+     console.log(res);
+
     try {
       data = await response.json();
       successMessage();
@@ -244,13 +351,19 @@ async function connectWallet(){
               </div>
             )}
             {!walletConnected && (
-              <div className="modal__submitButton">
-                <button
-                  className="btn-hover color-5"
-                  onClick={connectWallet}
-                >
-                  Connect To Wallet
-                </button>
+              <div className="modal__submitButton d-flex justify-content-evenly mt-5">
+                
+                  
+                
+                 <Image src={metamask} className="metamaskIcon" onClick={connectWallet}/>
+              
+                
+                  <Image src={phantom} className="phantomIcon" onClick={connectSolanaWallet}/>
+
+
+                  {/* {walletType==='' && <App />} */}
+                  
+            
               </div>
             )}
             {walletConnected && (
@@ -263,7 +376,7 @@ async function connectWallet(){
               </div>
             )
             }
-            {walletConnected && (
+            {walletConnected && (walletType!== 'web3Auth')? (
               <div className="modal__submitButton">
                 <button
                   className="btn-hover color-5"
@@ -272,6 +385,10 @@ async function connectWallet(){
                   Disconnect Wallet
                 </button>
               </div>
+            ):(
+              <div className="web3auth d-flex justify-content-center align-item-center mt-5 w-full">
+            <App/>
+            </div>
             )}
           </div>
         )}
