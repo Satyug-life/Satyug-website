@@ -14,7 +14,7 @@ import { Console } from "console";
 import React from "react";
 
 // HIGHLIGHTSTART-registerApp
-const clientId = "BGxnqRcxYHa0JFG4PAGlT05_-CnNKRESOvcpHjF8kD2ovkUBnL6gFovit_ueYDRTFcQI6uRTENh_7II7Nm9L_uw"; // get from https://dashboard.web3auth.io
+const clientId = "BK6dI9TO1Ol7Ke7XFsDD_wGBitbMWlQKtH7x3j9syGY5Z5CqjcTjQrCbVM6_bhB38uZpX-QgnKM9RKbgVJIBcr8"; // get from https://dashboard.web3auth.io
 
 
 function App({data} : {data: any}) {
