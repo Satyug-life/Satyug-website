@@ -472,10 +472,12 @@ function App({data} : {data: any}) {
         clientId: clientId, // get it from Web3Auth Dashboard
   chainConfig: {
     chainNamespace: "eip155",
-    chainId: "Ox5",
-    rpcTarget: "https://rpc.ankr.com/eth_goerli",
-    displayName: "Goerli Testnet",
-    blockExplorer: "https://goerli.etherscan.io",
+    chainId: "0x1",
+    rpcTarget: "https://rpc.ankr.com/eth",
+    // Avoid using public rpcTarget in production.
+    // Use services like Infura, Quicknode etc
+    displayName: "Ethereum Mainnet",
+    blockExplorer: "https://etherscan.io",
     ticker: "ETH",
     tickerName: "Ethereum",
   },});    const init = async () => {
