@@ -14,7 +14,7 @@ import { Console } from "console";
 import React from "react";
 
 // HIGHLIGHTSTART-registerApp
-const clientId = "971db62f33bb259e9b24e81e30639b85fb2a50ea471587a6e45c610bf96997e9"; // get from https://dashboard.web3auth.io
+const clientId = "BGxnqRcxYHa0JFG4PAGlT05_-CnNKRESOvcpHjF8kD2ovkUBnL6gFovit_ueYDRTFcQI6uRTENh_7II7Nm9L_uw"; // get from https://dashboard.web3auth.io
 
 
 function App({data} : {data: any}) {
@@ -470,17 +470,15 @@ function App({data} : {data: any}) {
   useEffect(() => {
       const web3auth = new Web3Auth({
         clientId: clientId, // get it from Web3Auth Dashboard
-        chainConfig: {
-          chainNamespace: "eip155",
-          chainId: "0x1",
-          rpcTarget: "https://rpc.ankr.com/eth",
-          // Avoid using public rpcTarget in production.
-          // Use services like Infura, Quicknode etc
-          displayName: "Ethereum Mainnet",
-          blockExplorer: "https://etherscan.io",
-          ticker: "ETH",
-          tickerName: "Ethereum",
-        },});    const init = async () => {
+  chainConfig: {
+    chainNamespace: "eip155",
+    chainId: "Ox5",
+    rpcTarget: "https://rpc.ankr.com/eth_goerli",
+    displayName: "Goerli Testnet",
+    blockExplorer: "https://goerli.etherscan.io",
+    ticker: "ETH",
+    tickerName: "Ethereum",
+  },});    const init = async () => {
       try {
 
 
