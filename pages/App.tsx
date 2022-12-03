@@ -469,19 +469,16 @@ function App({data} : {data: any}) {
   const {walletConnected , setWalletConnected , currentAccount , setcurrentAccount , walletType , setWalletType} = context;
   useEffect(() => {
       const web3auth = new Web3Auth({
-        clientId,
-        chainConfig: {
-          chainNamespace: "eip155",
-    chainId: "0x1",
-    rpcTarget: "https://rpc.ankr.com/eth",
-    // Avoid using public rpcTarget in production.
-    // Use services like Infura, Quicknode etc
-    displayName: "Ethereum Mainnet",
-    blockExplorer: "https://etherscan.io",
+        clientId: "YOUR_WEB3AUTH_CLIENT_ID", // get it from Web3Auth Dashboard
+  chainConfig: {
+    chainNamespace: "eip155",
+    chainId: "Ox5",
+    rpcTarget: "https://rpc.ankr.com/eth_goerli",
+    displayName: "Goerli Testnet",
+    blockExplorer: "https://goerli.etherscan.io",
     ticker: "ETH",
-    tickerName: "Ethereum", //This is the public RPC we have added, please pass on your own endpoint while creating an app
-        },
-      });    const init = async () => {
+    tickerName: "Ethereum",
+      }});    const init = async () => {
       try {
 
 
