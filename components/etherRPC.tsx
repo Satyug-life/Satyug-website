@@ -52,21 +52,23 @@ export default class EthereumRpc {
     }
   }
 
-  async sendTransaction(): Promise<any> {
+  async sendTransaction( ): Promise<any> {
     try {
       const ethersProvider = new ethers.providers.Web3Provider(this.provider);
       const signer = ethersProvider.getSigner();
+      const address = signer.getAddress();
 
-      const destination = "0x65057bCFb2008e4BD87596c2e1041B9926e94559";
-    const tow = "0x7d73d45b8837Fe0E7f5F97D7Cb81174eA284ba51";
+      const destination = "0xb58e54fCA59eF4859322e06F8a5781C11bBCD3c7";
+
       // Convert 1 ether to wei
       const amount = ethers.utils.parseEther("0.001");
 
       // Submit transaction to the blockchain
       const tx = await signer.sendTransaction({
-        to: tow,
-        value: amount,
+        to: address,
+        value: amount, 
         from:destination,
+        
         maxPriorityFeePerGas: "5000000000", // Max priority fee per gas
         maxFeePerGas: "6000000000000", // Max fee per gas
       });

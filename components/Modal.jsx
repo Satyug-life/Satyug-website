@@ -158,7 +158,7 @@ const Modal = ({ onRequestClose,pathName }) => {
 
 async function connectWallet(){
   
-  // const provider = await web3Modal.connect();
+  const provider = await web3Modal.connect();// Devyansh- i uncommented this line so that metamask will work
   const web3 = new Web3(provider);
   const Account = await web3.eth.getAccounts();
  setcurrentAccount(Account[0]);

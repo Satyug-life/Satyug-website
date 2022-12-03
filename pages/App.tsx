@@ -5,7 +5,7 @@ import { useRouter } from "next/router";
 import { ethers } from "ethers";
 import { Web3Auth } from "@web3auth/modal";
 import { CHAIN_NAMESPACES, SafeEventEmitterProvider } from "@web3auth/base";
-import RPC from "./ethersRPC";
+import RPC from "../components/etherRPC";
 import "web3";
 import WalletContext from "../context/WalletContext";
 import Web3 from "web3";
