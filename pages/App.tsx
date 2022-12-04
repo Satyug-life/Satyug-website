@@ -527,7 +527,7 @@ function App({data} : {data: any}) {
     console.log(privateKey);
 
     const infuraProvider1 = "https://goerli.infura.io/v3/0f915b2ce86c461ab0ee341166802b14"
-    const metadata1 = 'https://gateway.pinata.cloud/ipfs/QmZsGTQCTneiWS98vYQcRF8TLFD4TqmVFN3HC6WTKE7RWP'
+    const metadata1 = 'https://gateway.pinata.cloud/ipfs/QmXBgb97KaAwFZXiwBEiRSERxwZQr8MHwS6DjqbYqxjCDM'
 
 
     //! goril provider stted up to use in goril nettwoerk as web3auth provider not working in goril
