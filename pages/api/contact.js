@@ -7,8 +7,8 @@
       port: 465,
       host: "smtp.gmail.com",
       auth: {
-        user: 'testing.forms.final@gmail.com',
-        pass: "vlmdbhfztyqmcyrp",
+        user: 'satyug.token.reward@gmail.com',
+        pass: process.env.passwordgit ,
       },
       secure: true,
     })
