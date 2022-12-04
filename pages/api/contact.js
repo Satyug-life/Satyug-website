@@ -8,7 +8,7 @@
       host: "smtp.gmail.com",
       auth: {
         user: 'satyug.token.reward@gmail.com',
-        pass: process.env.passwordgit ,
+        pass: process.env.password,
       },
       secure: true,
     })
