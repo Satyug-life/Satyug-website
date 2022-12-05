@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useRef, useContext } from "react";
 // import "../../assets/css/Contact.css";
+import Swal from 'sweetalert2'
 // import ramSita from "../../assets/video/Final_Render_2.mp4";
 // import anyAudio from "../../assets/audio/afterSetuAudio.mp3";
 import Confetti from "react-confetti";
@@ -16,6 +17,7 @@ const Contact = () => {
   const [number, setNumber] = useState("");
   const [email, setEmail] = useState("");
   const [userData, setUserData] = useState({});
+  const [ModalOpn , setModalOpn] = useState(true); 
   const [vidOn, setVidOn] = useState(false);
   const [btn, setbtn] = useState(false);
   const [hide, setHide] = useState("");
@@ -98,6 +100,21 @@ const Contact = () => {
 
   useEffect(() => {
     audioRef.current.play();
+    // const interval = setInterval(() => {
+    //   console.log(ModalOpn);
+    //   if(ModalOpn === true)
+    //   {
+    //       Swal.fire({
+    //       icon: 'warning',
+    //       title: 'Oops...',
+    //       text: 'Kindly submit your form',
+    //       timer: 3000,
+    //       timerProgressBar: true,
+    //     })
+    //   }
+    // }, 5000);
+  
+    // return () => clearInterval(interval); 
   }, []);
 
 
@@ -165,6 +182,7 @@ const Contact = () => {
               value={name}
               onChange={(e) => {
                 setName(e.target.value);
+                setModalOpn(false);
               }}
             />
 
@@ -177,6 +195,7 @@ const Contact = () => {
               value={number}
               onChange={(e) => {
                 setNumber(e.target.value);
+                setModalOpn(false);
               }}
             />
 
@@ -189,6 +208,9 @@ const Contact = () => {
               value={email}
               onChange={(e) => {
                 setEmail(e.target.value);
+                console.log(e.target.value);
+                setModalOpn(false);
+                console.log(ModalOpn);
               }}
             />
 

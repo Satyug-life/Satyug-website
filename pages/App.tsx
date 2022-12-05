@@ -1,6 +1,6 @@
 import { useContext, useEffect, useState } from "react";
-// HIGHLIGHTSTART-importModules
-
+import Swal from "sweetalert2";
+import RockNft from "../assets/images/Rock NFT.jpg";
 import { useRouter } from "next/router";
 import { ethers } from "ethers";
 import { Web3Auth } from "@web3auth/modal";
@@ -17,489 +17,478 @@ import React from "react";
 const clientId = "BK6dI9TO1Ol7Ke7XFsDD_wGBitbMWlQKtH7x3j9syGY5Z5CqjcTjQrCbVM6_bhB38uZpX-QgnKM9RKbgVJIBcr8"; // get from https://dashboard.web3auth.io
 
 
-function App({data} : {data: any}) {
+function App({ data }: { data: any }) {
   const navigate = useRouter().push;
-  const ERC721ABI =[
+  const ERC721ABI = [
     {
-      "inputs": [
-  
+      inputs: [
+
+        
       ],
-      "stateMutability": "nonpayable",
-      "type": "constructor"
+      stateMutability: "nonpayable",
+      type: "constructor",
     },
     {
-      "anonymous": false,
-      "inputs": [
+      anonymous: false,
+      inputs: [
         {
-          "indexed": true,
-          "internalType": "address",
-          "name": "owner",
-          "type": "address"
+          indexed: true,
+          internalType: "address",
+          name: "owner",
+          type: "address",
         },
         {
-          "indexed": true,
-          "internalType": "address",
-          "name": "approved",
-          "type": "address"
+          indexed: true,
+          internalType: "address",
+          name: "approved",
+          type: "address",
         },
         {
-          "indexed": true,
-          "internalType": "uint256",
-          "name": "tokenId",
-          "type": "uint256"
-        }
+          indexed: true,
+          internalType: "uint256",
+          name: "tokenId",
+          type: "uint256",
+        },
       ],
-      "name": "Approval",
-      "type": "event"
+      name: "Approval",
+      type: "event",
     },
     {
-      "anonymous": false,
-      "inputs": [
+      anonymous: false,
+      inputs: [
         {
-          "indexed": true,
-          "internalType": "address",
-          "name": "owner",
-          "type": "address"
+          indexed: true,
+          internalType: "address",
+          name: "owner",
+          type: "address",
         },
         {
-          "indexed": true,
-          "internalType": "address",
-          "name": "operator",
-          "type": "address"
+          indexed: true,
+          internalType: "address",
+          name: "operator",
+          type: "address",
         },
         {
-          "indexed": false,
-          "internalType": "bool",
-          "name": "approved",
-          "type": "bool"
-        }
+          indexed: false,
+          internalType: "bool",
+          name: "approved",
+          type: "bool",
+        },
       ],
-      "name": "ApprovalForAll",
-      "type": "event"
+      name: "ApprovalForAll",
+      type: "event",
     },
     {
-      "anonymous": false,
-      "inputs": [
+      anonymous: false,
+      inputs: [
         {
-          "indexed": true,
-          "internalType": "address",
-          "name": "from",
-          "type": "address"
+          indexed: true,
+          internalType: "address",
+          name: "from",
+          type: "address",
         },
         {
-          "indexed": true,
-          "internalType": "address",
-          "name": "to",
-          "type": "address"
+          indexed: true,
+          internalType: "address",
+          name: "to",
+          type: "address",
         },
         {
-          "indexed": true,
-          "internalType": "uint256",
-          "name": "tokenId",
-          "type": "uint256"
-        }
+          indexed: true,
+          internalType: "uint256",
+          name: "tokenId",
+          type: "uint256",
+        },
       ],
-      "name": "Transfer",
-      "type": "event"
+      name: "Transfer",
+      type: "event",
     },
     {
-      "inputs": [
+      inputs: [
         {
-          "internalType": "address",
-          "name": "to",
-          "type": "address"
+          internalType: "address",
+          name: "to",
+          type: "address",
         },
         {
-          "internalType": "uint256",
-          "name": "tokenId",
-          "type": "uint256"
-        }
+          internalType: "uint256",
+          name: "tokenId",
+          type: "uint256",
+        },
       ],
-      "name": "approve",
-      "outputs": [
-  
-      ],
-      "stateMutability": "nonpayable",
-      "type": "function"
+      name: "approve",
+      outputs: [],
+      stateMutability: "nonpayable",
+      type: "function",
     },
     {
-      "inputs": [
+      inputs: [
         {
-          "internalType": "address",
-          "name": "owner",
-          "type": "address"
-        }
+          internalType: "address",
+          name: "owner",
+          type: "address",
+        },
       ],
-      "name": "balanceOf",
-      "outputs": [
+      name: "balanceOf",
+      outputs: [
         {
-          "internalType": "uint256",
-          "name": "",
-          "type": "uint256"
-        }
+          internalType: "uint256",
+          name: "",
+          type: "uint256",
+        },
       ],
-      "stateMutability": "view",
-      "type": "function"
+      stateMutability: "view",
+      type: "function",
     },
     {
-      "inputs": [
+      inputs: [
         {
-          "internalType": "uint256",
-          "name": "tokenId",
-          "type": "uint256"
-        }
+          internalType: "uint256",
+          name: "tokenId",
+          type: "uint256",
+        },
       ],
-      "name": "getApproved",
-      "outputs": [
+      name: "getApproved",
+      outputs: [
         {
-          "internalType": "address",
-          "name": "",
-          "type": "address"
-        }
+          internalType: "address",
+          name: "",
+          type: "address",
+        },
       ],
-      "stateMutability": "view",
-      "type": "function"
+      stateMutability: "view",
+      type: "function",
     },
     {
-      "inputs": [
+      inputs: [
         {
-          "internalType": "address",
-          "name": "owner",
-          "type": "address"
+          internalType: "address",
+          name: "owner",
+          type: "address",
         },
         {
-          "internalType": "address",
-          "name": "operator",
-          "type": "address"
-        }
+          internalType: "address",
+          name: "operator",
+          type: "address",
+        },
       ],
-      "name": "isApprovedForAll",
-      "outputs": [
+      name: "isApprovedForAll",
+      outputs: [
         {
-          "internalType": "bool",
-          "name": "",
-          "type": "bool"
-        }
+          internalType: "bool",
+          name: "",
+          type: "bool",
+        },
       ],
-      "stateMutability": "view",
-      "type": "function"
+      stateMutability: "view",
+      type: "function",
     },
     {
-      "inputs": [
+      inputs: [
         {
-          "internalType": "string",
-          "name": "_uri",
-          "type": "string"
-        }
+          internalType: "string",
+          name: "_uri",
+          type: "string",
+        },
       ],
-      "name": "mint",
-      "outputs": [
-  
-      ],
-      "stateMutability": "payable",
-      "type": "function"
+      name: "mint",
+      outputs: [],
+      stateMutability: "payable",
+      type: "function",
     },
     {
-      "inputs": [
-  
-      ],
-      "name": "mintPrice",
-      "outputs": [
+      inputs: [],
+      name: "mintPrice",
+      outputs: [
         {
-          "internalType": "uint256",
-          "name": "",
-          "type": "uint256"
-        }
+          internalType: "uint256",
+          name: "",
+          type: "uint256",
+        },
       ],
-      "stateMutability": "view",
-      "type": "function"
+      stateMutability: "view",
+      type: "function",
     },
     {
-      "inputs": [
-  
-      ],
-      "name": "name",
-      "outputs": [
+      inputs: [],
+      name: "name",
+      outputs: [
         {
-          "internalType": "string",
-          "name": "",
-          "type": "string"
-        }
+          internalType: "string",
+          name: "",
+          type: "string",
+        },
       ],
-      "stateMutability": "view",
-      "type": "function"
+      stateMutability: "view",
+      type: "function",
     },
     {
-      "inputs": [
+      inputs: [
         {
-          "internalType": "uint256",
-          "name": "tokenId",
-          "type": "uint256"
-        }
+          internalType: "uint256",
+          name: "tokenId",
+          type: "uint256",
+        },
       ],
-      "name": "ownerOf",
-      "outputs": [
+      name: "ownerOf",
+      outputs: [
         {
-          "internalType": "address",
-          "name": "",
-          "type": "address"
-        }
+          internalType: "address",
+          name: "",
+          type: "address",
+        },
       ],
-      "stateMutability": "view",
-      "type": "function"
+      stateMutability: "view",
+      type: "function",
     },
     {
-      "inputs": [
+      inputs: [
         {
-          "internalType": "address",
-          "name": "from",
-          "type": "address"
+          internalType: "address",
+          name: "from",
+          type: "address",
         },
         {
-          "internalType": "address",
-          "name": "to",
-          "type": "address"
+          internalType: "address",
+          name: "to",
+          type: "address",
         },
         {
-          "internalType": "uint256",
-          "name": "tokenId",
-          "type": "uint256"
-        }
+          internalType: "uint256",
+          name: "tokenId",
+          type: "uint256",
+        },
       ],
-      "name": "safeTransferFrom",
-      "outputs": [
-  
-      ],
-      "stateMutability": "nonpayable",
-      "type": "function"
+      name: "safeTransferFrom",
+      outputs: [],
+      stateMutability: "nonpayable",
+      type: "function",
     },
     {
-      "inputs": [
+      inputs: [
         {
-          "internalType": "address",
-          "name": "from",
-          "type": "address"
+          internalType: "address",
+          name: "from",
+          type: "address",
         },
         {
-          "internalType": "address",
-          "name": "to",
-          "type": "address"
+          internalType: "address",
+          name: "to",
+          type: "address",
         },
         {
-          "internalType": "uint256",
-          "name": "tokenId",
-          "type": "uint256"
+          internalType: "uint256",
+          name: "tokenId",
+          type: "uint256",
         },
         {
-          "internalType": "bytes",
-          "name": "data",
-          "type": "bytes"
-        }
+          internalType: "bytes",
+          name: "data",
+          type: "bytes",
+        },
       ],
-      "name": "safeTransferFrom",
-      "outputs": [
-  
-      ],
-      "stateMutability": "nonpayable",
-      "type": "function"
+      name: "safeTransferFrom",
+      outputs: [],
+      stateMutability: "nonpayable",
+      type: "function",
     },
     {
-      "inputs": [
+      inputs: [
         {
-          "internalType": "address",
-          "name": "operator",
-          "type": "address"
+          internalType: "address",
+          name: "operator",
+          type: "address",
         },
         {
-          "internalType": "bool",
-          "name": "approved",
-          "type": "bool"
-        }
+          internalType: "bool",
+          name: "approved",
+          type: "bool",
+        },
       ],
-      "name": "setApprovalForAll",
-      "outputs": [
-  
-      ],
-      "stateMutability": "nonpayable",
-      "type": "function"
+      name: "setApprovalForAll",
+      outputs: [],
+      stateMutability: "nonpayable",
+      type: "function",
     },
     {
-      "inputs": [
+      inputs: [
         {
-          "internalType": "bytes4",
-          "name": "interfaceId",
-          "type": "bytes4"
-        }
+          internalType: "bytes4",
+          name: "interfaceId",
+          type: "bytes4",
+        },
       ],
-      "name": "supportsInterface",
-      "outputs": [
+      name: "supportsInterface",
+      outputs: [
         {
-          "internalType": "bool",
-          "name": "",
-          "type": "bool"
-        }
+          internalType: "bool",
+          name: "",
+          type: "bool",
+        },
       ],
-      "stateMutability": "view",
-      "type": "function"
+      stateMutability: "view",
+      type: "function",
     },
     {
-      "inputs": [
-  
-      ],
-      "name": "symbol",
-      "outputs": [
+      inputs: [],
+      name: "symbol",
+      outputs: [
         {
-          "internalType": "string",
-          "name": "",
-          "type": "string"
-        }
+          internalType: "string",
+          name: "",
+          type: "string",
+        },
       ],
-      "stateMutability": "view",
-      "type": "function"
+      stateMutability: "view",
+      type: "function",
     },
     {
-      "inputs": [
+      inputs: [
         {
-          "internalType": "uint256",
-          "name": "index",
-          "type": "uint256"
-        }
+          internalType: "uint256",
+          name: "index",
+          type: "uint256",
+        },
       ],
-      "name": "tokenByIndex",
-      "outputs": [
+      name: "tokenByIndex",
+      outputs: [
         {
-          "internalType": "uint256",
-          "name": "",
-          "type": "uint256"
-        }
+          internalType: "uint256",
+          name: "",
+          type: "uint256",
+        },
       ],
-      "stateMutability": "view",
-      "type": "function"
+      stateMutability: "view",
+      type: "function",
     },
     {
-      "inputs": [
+      inputs: [
         {
-          "internalType": "address",
-          "name": "owner",
-          "type": "address"
+          internalType: "address",
+          name: "owner",
+          type: "address",
         },
         {
-          "internalType": "uint256",
-          "name": "index",
-          "type": "uint256"
-        }
+          internalType: "uint256",
+          name: "index",
+          type: "uint256",
+        },
       ],
-      "name": "tokenOfOwnerByIndex",
-      "outputs": [
+      name: "tokenOfOwnerByIndex",
+      outputs: [
         {
-          "internalType": "uint256",
-          "name": "",
-          "type": "uint256"
-        }
+          internalType: "uint256",
+          name: "",
+          type: "uint256",
+        },
       ],
-      "stateMutability": "view",
-      "type": "function"
+      stateMutability: "view",
+      type: "function",
     },
     {
-      "inputs": [
+      inputs: [
         {
-          "internalType": "uint256",
-          "name": "tokenId",
-          "type": "uint256"
-        }
+          internalType: "uint256",
+          name: "tokenId",
+          type: "uint256",
+        },
       ],
-      "name": "tokenURI",
-      "outputs": [
+      name: "tokenURI",
+      outputs: [
         {
-          "internalType": "string",
-          "name": "",
-          "type": "string"
-        }
+          internalType: "string",
+          name: "",
+          type: "string",
+        },
       ],
-      "stateMutability": "view",
-      "type": "function"
+      stateMutability: "view",
+      type: "function",
     },
     {
-      "inputs": [
-  
-      ],
-      "name": "totalSupply",
-      "outputs": [
+      inputs: [],
+      name: "totalSupply",
+      outputs: [
         {
-          "internalType": "uint256",
-          "name": "",
-          "type": "uint256"
-        }
+          internalType: "uint256",
+          name: "",
+          type: "uint256",
+        },
       ],
-      "stateMutability": "view",
-      "type": "function"
+      stateMutability: "view",
+      type: "function",
     },
     {
-      "inputs": [
+      inputs: [
         {
-          "internalType": "address",
-          "name": "from",
-          "type": "address"
+          internalType: "address",
+          name: "from",
+          type: "address",
         },
         {
-          "internalType": "address",
-          "name": "to",
-          "type": "address"
+          internalType: "address",
+          name: "to",
+          type: "address",
         },
         {
-          "internalType": "uint256",
-          "name": "tokenId",
-          "type": "uint256"
-        }
+          internalType: "uint256",
+          name: "tokenId",
+          type: "uint256",
+        },
       ],
-      "name": "transferFrom",
-      "outputs": [
-  
-      ],
-      "stateMutability": "nonpayable",
-      "type": "function"
-    }
-  ]
- 
+      name: "transferFrom",
+      outputs: [],
+      stateMutability: "nonpayable",
+      type: "function",
+    },
+  ];
+
   const [web3auth, setWeb3auth] = useState<Web3Auth | null>(null);
-  const [provider, setProvider] = useState<SafeEventEmitterProvider | null>(null);
+  const [provider, setProvider] = useState<SafeEventEmitterProvider | null>(
+    null
+  );
   const [tokenID, setTokenID] = useState(0);
   const context = useContext(WalletContext);
+  const [Emailsent, SetEmailSent] = useState(false);
   // console.log(context)
-  const {walletConnected , setWalletConnected , currentAccount , setcurrentAccount , walletType , setWalletType} = context;
+  const {
+    walletConnected,
+    setWalletConnected,
+    currentAccount,
+    setcurrentAccount,
+    walletType,
+    setWalletType,
+  } = context;
   useEffect(() => {
-      const web3auth = new Web3Auth({
-        clientId: clientId, // get it from Web3Auth Dashboard
-  chainConfig: {
-    chainNamespace: "eip155",
-    chainId: "0x1",
-    rpcTarget: "https://rpc.ankr.com/eth",
-    // Avoid using public rpcTarget in production.
-    // Use services like Infura, Quicknode etc
-    displayName: "Ethereum Mainnet",
-    blockExplorer: "https://etherscan.io",
-    ticker: "ETH",
-    tickerName: "Ethereum",
-  },});    const init = async () => {
+    const web3auth = new Web3Auth({
+      clientId: clientId, // get it from Web3Auth Dashboard
+      chainConfig: {
+        chainNamespace: "eip155",
+        chainId: "0x1",
+        rpcTarget: "https://rpc.ankr.com/eth",
+        // Avoid using public rpcTarget in production.
+        // Use services like Infura, Quicknode etc
+        displayName: "Ethereum Mainnet",
+        blockExplorer: "https://etherscan.io",
+        ticker: "ETH",
+        tickerName: "Ethereum",
+      },
+    });
+    const init = async () => {
       try {
+        setWeb3auth(web3auth);
 
+        await web3auth.initModal();
+        setProvider(web3auth.provider);
+      } catch (error) {
+        console.error(error);
+      }
+    };
 
-          setWeb3auth(web3auth);
-
-      await web3auth.initModal();
-            setProvider(web3auth.provider);
-          }
-         catch (error) {
-          console.error(error);
-        }
-      };
-
-      init();
+    init();
   }, []);
 
   const login = async () => {
-
-    console.log('login....')
+    console.log("login....");
     if (!web3auth) {
       console.log("web3auth not initialized yet");
       return;
@@ -515,110 +504,128 @@ function App({data} : {data: any}) {
     console.log(address);
     // window.localStorage.setItem("walletId" , address);
     setcurrentAccount(address);
-    setWalletConnected(true)
-    setWalletType('web3Auth')
-    console.log(await rpc.getChainId())
+    setWalletConnected(true);
+    setWalletType("web3Auth");
+    console.log(await rpc.getChainId());
 
     // const user_onfo = await web3auth.getUserInfo()
     // console.log(user_onfo);
     const privateKey = await web3authProvider.request({
-      method: "eth_private_key"
+      method: "eth_private_key",
     });
     console.log(privateKey);
 
-    const infuraProvider1 = "https://goerli.infura.io/v3/0f915b2ce86c461ab0ee341166802b14"
-    const metadata1 = 'https://gateway.pinata.cloud/ipfs/QmXBgb97KaAwFZXiwBEiRSERxwZQr8MHwS6DjqbYqxjCDM'
-
+    const infuraProvider1 =
+      "https://goerli.infura.io/v3/0f915b2ce86c461ab0ee341166802b14";
+    const metadata1 =
+      "https://gateway.pinata.cloud/ipfs/QmXBgb97KaAwFZXiwBEiRSERxwZQr8MHwS6DjqbYqxjCDM";
 
     //! goril provider stted up to use in goril nettwoerk as web3auth provider not working in goril
-     const provider = new ethers.providers.JsonRpcProvider(infuraProvider1);  
-     const pri = 'caf7e00fe15f3aafe27f06619588b27908bfa637b71b0ca25288940fabf3ddfb'
-     const wallet = new ethers.Wallet(pri,provider)
-     const account1 = wallet.getAddress()
-     const senderBalanceBefore = await wallet.getBalance()
+    const provider = new ethers.providers.JsonRpcProvider(infuraProvider1);
+    const pri =
+      "caf7e00fe15f3aafe27f06619588b27908bfa637b71b0ca25288940fabf3ddfb";
+    const wallet = new ethers.Wallet(pri, provider);
+    const account1 = wallet.getAddress();
+    const senderBalanceBefore = await wallet.getBalance();
 
-     console.log(senderBalanceBefore)
-     const recieverBalanceBefore =  await provider.getBalance(address)
-   
-       console.log(`\nSender balance before: ${ethers.utils.formatEther(senderBalanceBefore)}`)
-       console.log(`reciever balance before: ${ethers.utils.formatEther(recieverBalanceBefore)}\n`)
+    console.log(senderBalanceBefore);
+    const recieverBalanceBefore = await provider.getBalance(address);
 
-       const contractaddress = '0x65F564D44edcDCCbF7449de9a1219b8D7c442c3f'
-       const contract = new ethers.Contract(contractaddress,ERC721ABI, provider)
-       const contractwithwalet =  contract.connect(wallet)
-       const tx = await contractwithwalet.mint(metadata1)
-       var tokenId = 0
-       tx.wait().then((_res: any) =>{
-        console.log("TokenId",_res.events[0].args.tokenId.toString());
-        const openSeaLink = `https://testnets.opensea.io/assets/goerli/${contractaddress}/${_res.events[0].args.tokenId.toString()}`
-        const openSeaAccountLink = `https://testnets.opensea.io/${address}`
-        tokenId = _res.events[0].args.tokenId.toString()
-        setTokenID(_res.events[0].args.tokenId.toString());
-        updateToken()
-        const ethScanLink = `https://goerli.etherscan.io/tx/${tx.hash}`
-        if(data != null){
-          sendEmail(openSeaLink, ethScanLink, openSeaAccountLink);
-        }
-       })
+    console.log(
+      `\nSender balance before: ${ethers.utils.formatEther(
+        senderBalanceBefore
+      )}`
+    );
+    console.log(
+      `reciever balance before: ${ethers.utils.formatEther(
+        recieverBalanceBefore
+      )}\n`
+    );
 
-       const updateToken = async () => {
+    const contractaddress = "0x65F564D44edcDCCbF7449de9a1219b8D7c442c3f";
+    const contract = new ethers.Contract(contractaddress, ERC721ABI, provider);
+    const contractwithwalet = contract.connect(wallet);
+    const tx = await contractwithwalet.mint(metadata1);
+    var tokenId = 0;
+    tx.wait().then((_res: any) => {
+      console.log("TokenId", _res.events[0].args.tokenId.toString());
+      const openSeaLink = `https://testnets.opensea.io/assets/goerli/${contractaddress}/${_res.events[0].args.tokenId.toString()}`;
+      const openSeaAccountLink = `https://testnets.opensea.io/${address}`;
+      tokenId = _res.events[0].args.tokenId.toString();
+      setTokenID(_res.events[0].args.tokenId.toString());
+      updateToken();
+      const ethScanLink = `https://goerli.etherscan.io/tx/${tx.hash}`;
+      if (data != null) {
+        sendEmail(openSeaLink, ethScanLink, openSeaAccountLink);
+      }
+    });
 
-        const transfer = await contractwithwalet["safeTransferFrom(address,address,uint256)"](account1, address, tokenId)
-        await transfer.wait().then((res: any) => {
-          console.log(res)
-          // navigate('/')
+    const updateToken = async () => {
+      const transfer = await contractwithwalet[
+        "safeTransferFrom(address,address,uint256)"
+      ](account1, address, tokenId);
+      await transfer.wait().then((res: any) => {
+        console.log(res);
+        // SetEmailSent(true);
+        // navigate('/')
+      });
+    };
+    const senderBalanceAfter = await wallet.getBalance();
+    const recieverBalanceAfter = await provider.getBalance(address);
 
-        })
-   
-       }
-    const senderBalanceAfter = await wallet.getBalance()
-    const recieverBalanceAfter = await provider.getBalance(address)
-
-    console.log(`\nSender balance after: ${ethers.utils.formatEther(senderBalanceAfter)}`)
-    console.log(`reciever balance after: ${ethers.utils.formatEther(recieverBalanceAfter)}\n`)
+    console.log(
+      `\nSender balance after: ${ethers.utils.formatEther(senderBalanceAfter)}`
+    );
+    console.log(
+      `reciever balance after: ${ethers.utils.formatEther(
+        recieverBalanceAfter
+      )}\n`
+    );
 
     //  const originalMessage = "YOUR_MESSAGE";
 
     //  const signedMessage = await web3.eth.personal.sign(originalMessage, adds,"dss");
     //  console.log(signedMessage)
     //  web3.eth.sendSignedTransaction()
-// Submit transaction to the blockchain and wait for it to be mined
+    // Submit transaction to the blockchain and wait for it to be mined
 
-// console.log(receipt);
+    // console.log(receipt);
 
-   
-    
-    
     getAccounts();
   };
 
-  const sendEmail = (openSeaLink: string, ethScanLink: string, openSeaAccountLink: string) => { 
+  const sendEmail = (
+    openSeaLink: string,
+    ethScanLink: string,
+    openSeaAccountLink: string
+  ) => {
     // e.preventDefault()
     const name = data.name;
     const email = data.email;
     const number = data.number;
-    console.log('Sending')
+    console.log("Sending");
     let finalData = {
       name,
       email,
       number,
       openSeaLink,
       ethScanLink,
-      openSeaAccountLink
-    }
-  fetch('/api/contact', {
-      method: 'POST',
+      openSeaAccountLink,
+    };
+    fetch("/api/contact", {
+      method: "POST",
       headers: {
-        'Accept': 'application/json, text/plain, */*',
-        'Content-Type': 'application/json'
+        Accept: "application/json, text/plain, */*",
+        "Content-Type": "application/json",
       },
-      body: JSON.stringify(finalData)
+      body: JSON.stringify(finalData),
     }).then((res) => {
-      console.log('Response received')
+      console.log("Response received");
       if (res.status === 200) {
-        console.log('Response succeeded!')
+        console.log("Response succeeded!");
+        SetEmailSent(!Emailsent);
       }
-    })
+    });
   };
 
   // const getUserInfo = async () => {
@@ -637,9 +644,9 @@ function App({data} : {data: any}) {
     }
     await web3auth.logout();
     setProvider(null);
-    setWalletType('')
-    setcurrentAccount('');
-    setWalletConnected(false)
+    setWalletType("");
+    setcurrentAccount("");
+    setWalletConnected(false);
   };
 
   // const getChainId = async () => {
@@ -661,8 +668,8 @@ function App({data} : {data: any}) {
     console.log(address);
     // window.localStorage.setItem("walletId" , address);
     setcurrentAccount(address);
-    setWalletConnected(true)
-    setWalletType('web3Auth')
+    setWalletConnected(true);
+    setWalletType("web3Auth");
     // props.setWalletAddress(address);
   };
 
@@ -754,18 +761,35 @@ function App({data} : {data: any}) {
       </h1> */}
 
       {/* <div className="grid">{provider ? loggedInView : unloggedInView}</div> */}
-      {walletType==='' && walletConnected===false && (<button className="btn btn-primary" onClick={login}>Verify</button>)}
-      
+      {walletType === "" && walletConnected === false && (
+        <button className="btn btn-primary" onClick={login}>
+          Verify
+        </button>
+      )}
 
-      {walletType==='web3Auth' && walletConnected===true && (<><div className="modal__submitButton">
-                <button
-                  className="btn-hover color-5"
-                  onClick={logout}
-                >
-                  Disconnect Wallet
-                </button>
-              </div></>)}
-
+      {walletType === "web3Auth" && walletConnected === true && (
+        <>
+          <div className="modal__submitButton">
+            <button className="btn-hover color-5" onClick={logout}>
+              Disconnect Wallet
+            </button>
+          </div>
+        </>
+      )}
+      <>
+      {Emailsent === true && Swal.fire({
+            text: "आपका NFT आपके ईमेल खाते में भेज दिया गया है",
+            imageUrl: `${RockNft}`,
+            imageWidth: 400,
+            allowOutsideClick: false,
+            //backdrop: "#000", // get the backgound
+            imageHeight: 200,
+            imageAlt: "Custom image",
+            timerProgressBar: true,
+            timer: 4000,
+          })
+      }
+      </>
       {/* <footer className="footer">
         <a href="https://github.com/Web3Auth/Web3Auth/tree/master/examples/react-app" target="_blank" rel="noopener noreferrer">
           Source code
