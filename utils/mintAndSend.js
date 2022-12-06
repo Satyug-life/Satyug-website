@@ -1,11 +1,10 @@
-import {ethers} from 'ethers'
-import { useContext} from "react";
-import WalletContext from "../context/WalletContext";
-import {} from "."
- const mintAndSend = async() => {
-  const context = useContext(WalletContext);
-   console.log(context)
-const {walletConnected , setWalletConnected , currentAccount , setcurrentAccount , walletType , setWalletType} = context;
+import {ethers} from 'ethers';
+
+
+
+async function mintAndSend(currentAccount,metadata){
+
+
   const ERC721ABI =[
     {
       "inputs": [
@@ -449,13 +448,13 @@ const {walletConnected , setWalletConnected , currentAccount , setcurrentAccount
   ]
 
   const infuraProvider1 = "https://goerli.infura.io/v3/0f915b2ce86c461ab0ee341166802b14"
-    const metadata1 = 'https://gateway.pinata.cloud/ipfs/QmZsGTQCTneiWS98vYQcRF8TLFD4TqmVFN3HC6WTKE7RWP'
 
     const provider = new ethers.providers.JsonRpcProvider(infuraProvider1);  
-    const pri = '27635761b3bb91ae4565742f721b60e33396fb88e2ad011288becc49313942eb'
+    const pri = "caf7e00fe15f3aafe27f06619588b27908bfa637b71b0ca25288940fabf3ddfb"
     const wallet = new ethers.Wallet(pri,provider)
     const account1 = wallet.getAddress()
     const senderBalanceBefore = await wallet.getBalance()
+
     console.log(senderBalanceBefore)
     const recieverBalanceBefore =  await provider.getBalance(currentAccount)
   
@@ -465,12 +464,19 @@ const {walletConnected , setWalletConnected , currentAccount , setcurrentAccount
       const contractaddress = '0x65F564D44edcDCCbF7449de9a1219b8D7c442c3f'
       const contract = new ethers.Contract(contractaddress,ERC721ABI, provider)
       const contractwithwalet =  contract.connect(wallet)
-      const tx = await contractwithwalet.mint(metadata1)
+      const tx = await contractwithwalet.mint(metadata)
       var tokenId = 0
       tx.wait().then((_res) =>{
        console.log("TokenId",_res.events[0].args.tokenId.toString());
+       const openSeaLink = `https://testnets.opensea.io/assets/goerli/${contractaddress}/${_res.events[0].args.tokenId.toString()}`
+       const openSeaAccountLink = `https://testnets.opensea.io/${currentAccount}`
        tokenId = _res.events[0].args.tokenId.toString()
+      
        updateToken()
+       const ethScanLink = `https://goerli.etherscan.io/tx/${tx.hash}`
+       if(data != null){
+         sendEmail(openSeaLink, ethScanLink, openSeaAccountLink);
+       }
       })
 
       const updateToken = async () => {
@@ -478,6 +484,8 @@ const {walletConnected , setWalletConnected , currentAccount , setcurrentAccount
        const transfer = await contractwithwalet["safeTransferFrom(address,address,uint256)"](account1, currentAccount, tokenId)
        await transfer.wait().then((res) => {
          console.log(res)
+         // navigate('/')
+
        })
   
       }
@@ -486,6 +494,7 @@ const {walletConnected , setWalletConnected , currentAccount , setcurrentAccount
 
    console.log(`\nSender balance after: ${ethers.utils.formatEther(senderBalanceAfter)}`)
    console.log(`reciever balance after: ${ethers.utils.formatEther(recieverBalanceAfter)}\n`)
+
   
 }
-export default mintAndSend;
+export default  mintAndSend;
