@@ -94,6 +94,9 @@ const Modal = ({ onRequestClose,pathName }) => {
       
     }
   };
+  const connectSolanaWalletMobile = async()=>{
+    checkIfWalletIsConnected();
+  }
 
 
 
@@ -357,7 +360,7 @@ async function connectWallet(){
                 
                  <Image src={metamask} className="metamaskIcon" onClick={connectWallet}/>
               
-                
+                 <Image src={phantom} className="phantomIconMobile" onClick={connectSolanaWalletMobile}/>
                   <Image src={phantom} className="phantomIcon" onClick={connectSolanaWallet}/>
 
 

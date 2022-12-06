@@ -460,12 +460,28 @@
     width: 60%;
     margin-top: 40px;
   }
-
-  .metamaskIcon,.phantomIcon {
+  .isHidden{
+    display: none;
+  }
+  .phantomIconMobile{
+    display: none;
+  }
+  @media screen and (max-width: 1200px) {
+    .phantomIcon{
+      display:none;
+    }
+    .phantomIconMobile{
+      display: block;
+      
+      
+    }
+  }
+  
+  .metamaskIcon,.phantomIcon,.phantomIconMobile {
     width: 16%;
     height: 18%;
   }
-  .metamaskIcon:hover,.phantomIcon:hover {
+  .metamaskIcon:hover,.phantomIcon:hover,.phantomIconMobile:hover {
     width: 18%;
     cursor: pointer;
     transition: ease-in 0.1s;
