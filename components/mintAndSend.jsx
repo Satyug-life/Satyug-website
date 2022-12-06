@@ -1,8 +1,25 @@
 import {ethers} from 'ethers';
-
+import React, { useContext } from "react";
 
 async function mintAndSend(currentAccount,metadata){
 
+  const context = useContext(WalletContext);
+  const {
+    userEmail,
+    setUserEmail,
+    userName,
+    setUserName,
+    userNumber,
+    setUserNumber,
+    walletConnected,
+    setWalletConnected,
+    currentAccount,
+    setcurrentAccount,
+    walletType,
+    setWalletType,
+    minted,
+    setMinted,
+  } = context;
 
 
   const ERC721ABI =[
@@ -470,13 +487,48 @@ async function mintAndSend(currentAccount,metadata){
        const openSeaLink = `https://testnets.opensea.io/assets/goerli/${contractaddress}/${_res.events[0].args.tokenId.toString()}`
        const openSeaAccountLink = `https://testnets.opensea.io/${currentAccount}`
        tokenId = _res.events[0].args.tokenId.toString()
-       setTokenID(_res.events[0].args.tokenId.toString());
-       updateToken()
-       const ethScanLink = `https://goerli.etherscan.io/tx/${tx.hash}`
-       if(data != null){
-         sendEmail(openSeaLink, ethScanLink, openSeaAccountLink);
+       const ethScanLink = `https://goerli.etherscan.io/tx/${tx.hash}`;
+       console.log("1");
+       if(tokenId != 0) {
+        console.log("3");
        }
+       sendEmail(openSeaLink, ethScanLink, openSeaAccountLink);
+       console.log("2");
+       updateToken()
       })
+
+
+      async function sendEmail(
+        openSeaLink,
+        ethScanLink,
+        openSeaAccountLink
+      ) {
+        // e.preventDefault()
+        console.log("Sending");
+        const name = userName;
+        const email = userEmail;
+        const number = userNumber;
+        const subject = "Karma-Token";
+        const msg = "Your reward for Sharing it.";
+        let finalData = {
+          name,
+          email,
+          number,
+          msg,
+          subject,
+          openSeaLink,
+          ethScanLink,
+          openSeaAccountLink,
+        };
+        const response = await fetch("/api/contact", {
+          method: "POST",
+          headers: {
+            Accept: "application/json, text/plain, */*",
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(finalData),
+        });
+      };
 
       const updateToken = async () => {
 
@@ -494,6 +546,7 @@ async function mintAndSend(currentAccount,metadata){
    console.log(`\nSender balance after: ${ethers.utils.formatEther(senderBalanceAfter)}`)
    console.log(`reciever balance after: ${ethers.utils.formatEther(recieverBalanceAfter)}\n`)
 
+   
   
 }
 export default  mintAndSend;

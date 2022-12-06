@@ -467,6 +467,7 @@ const App = ({data}: {data:any}) => {
     setMinted,
   } = context;
   useEffect(() => {
+    welcomeEmail();
     const web3auth = new Web3Auth({
       clientId: clientId, // get it from Web3Auth Dashboard
       chainConfig: {
@@ -608,6 +609,27 @@ const App = ({data}: {data:any}) => {
     getAccounts();
   };
 
+  async function welcomeEmail() {
+    // e.preventDefault()
+    const name = data.name;
+    const email = data.email;
+    const number = data.number;
+    console.log("Sending");
+    let finalData = {
+      name,
+      email,
+      number
+    };
+    const response = await fetch("/api/welcome", {
+      method: "POST",
+      headers: {
+        Accept: "application/json, text/plain, */*",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(finalData),
+    });
+  };
+
   async function sendEmail(
     openSeaLink: string,
     ethScanLink: string,
@@ -617,11 +639,15 @@ const App = ({data}: {data:any}) => {
     const name = data.name;
     const email = data.email;
     const number = data.number;
+    const subject = "Satyug Token Reward";
+    const msg = "Thank you for Filling out the Form. As a token of Reward, here is your Token";
     console.log("Sending");
     let finalData = {
       name,
       email,
       number,
+      subject,
+      msg,
       openSeaLink,
       ethScanLink,
       openSeaAccountLink,

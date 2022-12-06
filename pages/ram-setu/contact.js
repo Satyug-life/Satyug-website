@@ -5,6 +5,7 @@ import React, { useEffect, useState, useRef, useContext } from "react";
 import Confetti from "react-confetti";
 import Image from "next/future/image";
 import { useRouter } from "next/router";
+import Swal from "sweetalert2";
 import App from "../App";
 import RockNft from "../../assets/images/RockNFT.jpg";
 
@@ -28,9 +29,16 @@ const Contact = () => {
   const [hide, setHide] = useState("");
   const [validDetails, setValidDetails] = useState(false);
   const [form, setForm] = useState('')
+  const [ModalOpn, setModalOpn] = useState(true);
 
   const context = useContext(WalletContext);
   const {
+    userEmail,
+    setUserEmail,
+    userName,
+    setUserName,
+    userNumber,
+    setUserNumber,
     walletConnected,
     setWalletConnected,
     currentAccount,
@@ -216,6 +224,8 @@ const Contact = () => {
               value={name}
               onChange={(e) => {
                 setName(e.target.value);
+                setUserName(e.target.value);
+                setModalOpn(false);
               }}
             />
 
@@ -228,6 +238,8 @@ const Contact = () => {
               value={number}
               onChange={(e) => {
                 setNumber(e.target.value);
+                setUserNumber(e.target.value);
+                setModalOpn(false);
               }}
             />
 
@@ -240,6 +252,7 @@ const Contact = () => {
               value={email}
               onChange={(e) => {
                 setEmail(e.target.value);
+                setUserEmail(e.target.value);
                 setModalOpn(false);
               }}
             />
