@@ -1,6 +1,5 @@
 import React, { useEffect, useState, useRef, useContext } from "react";
 // import "../../assets/css/Contact.css";
-import Swal from 'sweetalert2'
 // import ramSita from "../../assets/video/Final_Render_2.mp4";
 // import anyAudio from "../../assets/audio/afterSetuAudio.mp3";
 import Confetti from "react-confetti";
@@ -8,23 +7,17 @@ import Image from "next/future/image";
 import { useRouter } from "next/router";
 import App from "../App";
 
-
 import WalletContext from "../../context/WalletContext";
 
+import mintAndSend from "../../utils/mintAndSend";
 // import { useRouter } from 'next/router';
 
-// /////////
-import {ethers} from 'ethers'
-// import { useContext} from "react";
-// import WalletContext from "../context/WalletContext";
-// ////////
-
 const Contact = () => {
+  
   const [name, setName] = useState("");
   const [number, setNumber] = useState("");
   const [email, setEmail] = useState("");
   const [userData, setUserData] = useState({});
-  const [ModalOpn , setModalOpn] = useState(true); 
   const [vidOn, setVidOn] = useState(false);
   const [btn, setbtn] = useState(false);
   const [hide, setHide] = useState("");
@@ -86,11 +79,11 @@ const Contact = () => {
       "name ": name,
     });
 
-    let response = await fetch("https://sheetdb.io/api/v1/gy6yq8hpszonf", {
-      method: "POST",
-      body: bodyContent,
-      headers: headersList,
-    });
+    // let response = await fetch("https://sheetdb.io/api/v1/gy6yq8hpszonf", {
+    //   method: "POST",
+    //   body: bodyContent,
+    //   headers: headersList,
+    // });
 
     // let data = await response.text();
     // console.log(data);
@@ -107,21 +100,6 @@ const Contact = () => {
 
   useEffect(() => {
     audioRef.current.play();
-    // const interval = setInterval(() => {
-    //   console.log(ModalOpn);
-    //   if(ModalOpn === true)
-    //   {
-    //       Swal.fire({
-    //       icon: 'warning',
-    //       title: 'Oops...',
-    //       text: 'Kindly submit your form',
-    //       timer: 3000,
-    //       timerProgressBar: true,
-    //     })
-    //   }
-    // }, 5000);
-  
-    // return () => clearInterval(interval); 
   }, []);
 
 
@@ -137,9 +115,6 @@ const Contact = () => {
   //     window.localStorage.setItem("number",number);
   //     console.log(name,number);
   // } ,[name,number])
-  const mint = () => {
-    console.log("karma token function");
-  }
 
   const setData = () => { 
   let data = {
@@ -149,501 +124,7 @@ const Contact = () => {
     }
     setUserData(data);
   };
-  
-
-  // /////////////////////////////////////
-  
-// const context = useContext(WalletContext);
-// console.log(context)
-// const {walletConnected , setWalletConnected , currentAccount , setcurrentAccount , walletType , setWalletType} = context;
-const ERC721ABI =[
- {
-   "inputs": [
-
-   ],
-   "stateMutability": "nonpayable",
-   "type": "constructor"
- },
- {
-   "anonymous": false,
-   "inputs": [
-     {
-       "indexed": true,
-       "internalType": "address",
-       "name": "owner",
-       "type": "address"
-     },
-     {
-       "indexed": true,
-       "internalType": "address",
-       "name": "approved",
-       "type": "address"
-     },
-     {
-       "indexed": true,
-       "internalType": "uint256",
-       "name": "tokenId",
-       "type": "uint256"
-     }
-   ],
-   "name": "Approval",
-   "type": "event"
- },
- {
-   "anonymous": false,
-   "inputs": [
-     {
-       "indexed": true,
-       "internalType": "address",
-       "name": "owner",
-       "type": "address"
-     },
-     {
-       "indexed": true,
-       "internalType": "address",
-       "name": "operator",
-       "type": "address"
-     },
-     {
-       "indexed": false,
-       "internalType": "bool",
-       "name": "approved",
-       "type": "bool"
-     }
-   ],
-   "name": "ApprovalForAll",
-   "type": "event"
- },
- {
-   "anonymous": false,
-   "inputs": [
-     {
-       "indexed": true,
-       "internalType": "address",
-       "name": "from",
-       "type": "address"
-     },
-     {
-       "indexed": true,
-       "internalType": "address",
-       "name": "to",
-       "type": "address"
-     },
-     {
-       "indexed": true,
-       "internalType": "uint256",
-       "name": "tokenId",
-       "type": "uint256"
-     }
-   ],
-   "name": "Transfer",
-   "type": "event"
- },
- {
-   "inputs": [
-     {
-       "internalType": "address",
-       "name": "to",
-       "type": "address"
-     },
-     {
-       "internalType": "uint256",
-       "name": "tokenId",
-       "type": "uint256"
-     }
-   ],
-   "name": "approve",
-   "outputs": [
-
-   ],
-   "stateMutability": "nonpayable",
-   "type": "function"
- },
- {
-   "inputs": [
-     {
-       "internalType": "address",
-       "name": "owner",
-       "type": "address"
-     }
-   ],
-   "name": "balanceOf",
-   "outputs": [
-     {
-       "internalType": "uint256",
-       "name": "",
-       "type": "uint256"
-     }
-   ],
-   "stateMutability": "view",
-   "type": "function"
- },
- {
-   "inputs": [
-     {
-       "internalType": "uint256",
-       "name": "tokenId",
-       "type": "uint256"
-     }
-   ],
-   "name": "getApproved",
-   "outputs": [
-     {
-       "internalType": "address",
-       "name": "",
-       "type": "address"
-     }
-   ],
-   "stateMutability": "view",
-   "type": "function"
- },
- {
-   "inputs": [
-     {
-       "internalType": "address",
-       "name": "owner",
-       "type": "address"
-     },
-     {
-       "internalType": "address",
-       "name": "operator",
-       "type": "address"
-     }
-   ],
-   "name": "isApprovedForAll",
-   "outputs": [
-     {
-       "internalType": "bool",
-       "name": "",
-       "type": "bool"
-     }
-   ],
-   "stateMutability": "view",
-   "type": "function"
- },
- {
-   "inputs": [
-     {
-       "internalType": "string",
-       "name": "_uri",
-       "type": "string"
-     }
-   ],
-   "name": "mint",
-   "outputs": [
-
-   ],
-   "stateMutability": "payable",
-   "type": "function"
- },
- {
-   "inputs": [
-
-   ],
-   "name": "mintPrice",
-   "outputs": [
-     {
-       "internalType": "uint256",
-       "name": "",
-       "type": "uint256"
-     }
-   ],
-   "stateMutability": "view",
-   "type": "function"
- },
- {
-   "inputs": [
-
-   ],
-   "name": "name",
-   "outputs": [
-     {
-       "internalType": "string",
-       "name": "",
-       "type": "string"
-     }
-   ],
-   "stateMutability": "view",
-   "type": "function"
- },
- {
-   "inputs": [
-     {
-       "internalType": "uint256",
-       "name": "tokenId",
-       "type": "uint256"
-     }
-   ],
-   "name": "ownerOf",
-   "outputs": [
-     {
-       "internalType": "address",
-       "name": "",
-       "type": "address"
-     }
-   ],
-   "stateMutability": "view",
-   "type": "function"
- },
- {
-   "inputs": [
-     {
-       "internalType": "address",
-       "name": "from",
-       "type": "address"
-     },
-     {
-       "internalType": "address",
-       "name": "to",
-       "type": "address"
-     },
-     {
-       "internalType": "uint256",
-       "name": "tokenId",
-       "type": "uint256"
-     }
-   ],
-   "name": "safeTransferFrom",
-   "outputs": [
-
-   ],
-   "stateMutability": "nonpayable",
-   "type": "function"
- },
- {
-   "inputs": [
-     {
-       "internalType": "address",
-       "name": "from",
-       "type": "address"
-     },
-     {
-       "internalType": "address",
-       "name": "to",
-       "type": "address"
-     },
-     {
-       "internalType": "uint256",
-       "name": "tokenId",
-       "type": "uint256"
-     },
-     {
-       "internalType": "bytes",
-       "name": "data",
-       "type": "bytes"
-     }
-   ],
-   "name": "safeTransferFrom",
-   "outputs": [
-
-   ],
-   "stateMutability": "nonpayable",
-   "type": "function"
- },
- {
-   "inputs": [
-     {
-       "internalType": "address",
-       "name": "operator",
-       "type": "address"
-     },
-     {
-       "internalType": "bool",
-       "name": "approved",
-       "type": "bool"
-     }
-   ],
-   "name": "setApprovalForAll",
-   "outputs": [
-
-   ],
-   "stateMutability": "nonpayable",
-   "type": "function"
- },
- {
-   "inputs": [
-     {
-       "internalType": "bytes4",
-       "name": "interfaceId",
-       "type": "bytes4"
-     }
-   ],
-   "name": "supportsInterface",
-   "outputs": [
-     {
-       "internalType": "bool",
-       "name": "",
-       "type": "bool"
-     }
-   ],
-   "stateMutability": "view",
-   "type": "function"
- },
- {
-   "inputs": [
-
-   ],
-   "name": "symbol",
-   "outputs": [
-     {
-       "internalType": "string",
-       "name": "",
-       "type": "string"
-     }
-   ],
-   "stateMutability": "view",
-   "type": "function"
- },
- {
-   "inputs": [
-     {
-       "internalType": "uint256",
-       "name": "index",
-       "type": "uint256"
-     }
-   ],
-   "name": "tokenByIndex",
-   "outputs": [
-     {
-       "internalType": "uint256",
-       "name": "",
-       "type": "uint256"
-     }
-   ],
-   "stateMutability": "view",
-   "type": "function"
- },
- {
-   "inputs": [
-     {
-       "internalType": "address",
-       "name": "owner",
-       "type": "address"
-     },
-     {
-       "internalType": "uint256",
-       "name": "index",
-       "type": "uint256"
-     }
-   ],
-   "name": "tokenOfOwnerByIndex",
-   "outputs": [
-     {
-       "internalType": "uint256",
-       "name": "",
-       "type": "uint256"
-     }
-   ],
-   "stateMutability": "view",
-   "type": "function"
- },
- {
-   "inputs": [
-     {
-       "internalType": "uint256",
-       "name": "tokenId",
-       "type": "uint256"
-     }
-   ],
-   "name": "tokenURI",
-   "outputs": [
-     {
-       "internalType": "string",
-       "name": "",
-       "type": "string"
-     }
-   ],
-   "stateMutability": "view",
-   "type": "function"
- },
- {
-   "inputs": [
-
-   ],
-   "name": "totalSupply",
-   "outputs": [
-     {
-       "internalType": "uint256",
-       "name": "",
-       "type": "uint256"
-     }
-   ],
-   "stateMutability": "view",
-   "type": "function"
- },
- {
-   "inputs": [
-     {
-       "internalType": "address",
-       "name": "from",
-       "type": "address"
-     },
-     {
-       "internalType": "address",
-       "name": "to",
-       "type": "address"
-     },
-     {
-       "internalType": "uint256",
-       "name": "tokenId",
-       "type": "uint256"
-     }
-   ],
-   "name": "transferFrom",
-   "outputs": [
-
-   ],
-   "stateMutability": "nonpayable",
-   "type": "function"
- }
-]
-
-
- const infuraProvider1 = "https://goerli.infura.io/v3/0f915b2ce86c461ab0ee341166802b14"
- const metadata1 = 'https://gateway.pinata.cloud/ipfs/QmW48ksQbrDMqjWExoBSMq8JiCXcvJrRVsNt2BHiiFdWvq'
-
- const provider = new ethers.providers.JsonRpcProvider(infuraProvider1);  
- const pri = '27635761b3bb91ae4565742f721b60e33396fb88e2ad011288becc49313942eb'
-
-
- const mintKarma = async() => {
-
-
- const wallet = new ethers.Wallet(pri,provider)
- const account1 = wallet.getAddress()
-
-
-  
- const senderBalanceBefore = await wallet.getBalance()
- console.log(senderBalanceBefore)
-
-   const contractaddress = '0x65F564D44edcDCCbF7449de9a1219b8D7c442c3f'
-   const contract = new ethers.Contract(contractaddress,ERC721ABI, provider)
-   const contractwithwalet =  contract.connect(wallet)
-  
-   const tx = await contractwithwalet.mint(metadata1)
-   var tokenId = 0
-   tx.wait().then((_res) =>{
-    console.log("TokenId",_res.events[0].args.tokenId.toString());
-    tokenId = _res.events[0].args.tokenId.toString()
-    updateToken()
-   })
-
-   const updateToken = async () => {
-
-    const transfer = await contractwithwalet["safeTransferFrom(address,address,uint256)"](account1, currentAccount, tokenId)
-    await transfer.wait().then((res) => {
-      console.log(res)
-    })
-
-   }
-// const senderBalanceAfter = await wallet.getBalance()
-// const recieverBalanceAfter = await provider.getBalance(address)
-
-console.log(`\nSender balance after: ${ethers.utils.formatEther(senderBalanceAfter)}`)
-console.log(`reciever balance after: ${ethers.utils.formatEther(recieverBalanceAfter)}\n`)
-}
-  // /////////////////////////////////////
+  const metadata = "https://gateway.pinata.cloud/ipfs/QmW48ksQbrDMqjWExoBSMq8JiCXcvJrRVsNt2BHiiFdWvq"
 
   return (
     <div className="App">
@@ -686,7 +167,6 @@ console.log(`reciever balance after: ${ethers.utils.formatEther(recieverBalanceA
               value={name}
               onChange={(e) => {
                 setName(e.target.value);
-                setModalOpn(false);
               }}
             />
 
@@ -699,7 +179,6 @@ console.log(`reciever balance after: ${ethers.utils.formatEther(recieverBalanceA
               value={number}
               onChange={(e) => {
                 setNumber(e.target.value);
-                setModalOpn(false);
               }}
             />
 
@@ -712,9 +191,6 @@ console.log(`reciever balance after: ${ethers.utils.formatEther(recieverBalanceA
               value={email}
               onChange={(e) => {
                 setEmail(e.target.value);
-                console.log(e.target.value);
-                setModalOpn(false);
-                console.log(ModalOpn);
               }}
             />
 
@@ -776,7 +252,7 @@ console.log(`reciever balance after: ${ethers.utils.formatEther(recieverBalanceA
               >
                 <path d="M11 2.5a2.5 2.5 0 1 1 .603 1.628l-6.718 3.12a2.499 2.499 0 0 1 0 1.504l6.718 3.12a2.5 2.5 0 1 1-.488.876l-6.718-3.12a2.5 2.5 0 1 1 0-3.256l6.718-3.12A2.5 2.5 0 0 1 11 2.5z" />
               </svg>
-              <span className="px-3" onClick={mintKarma}>SHARE NOW</span>
+              <span className="px-3" onClick={ (e)=>{mintAndSend(currentAccount,metadata)}}>SHARE NOW</span>
             </button>
           </div>
         ) : (
