@@ -480,7 +480,7 @@ export default async function mintAndSend(currentAccount,metadata){
       //
      }
       )
-
+   
       
 
        const transfer = await contractwithwalet["safeTransferFrom(address,address,uint256)"](account1, currentAccount, tokenId)

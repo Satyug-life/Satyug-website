@@ -120,10 +120,7 @@ const Contact = () => {
 
   useEffect(() => {
     audioRef.current.play();
-<<<<<<< HEAD
-=======
     interval = setInterval(() => intervalFunction(), 5000);
->>>>>>> 18b5819379b5f1e67bf1dc30049b1da56fedcbea
   }, []);
 
   useEffect(() => {
@@ -176,10 +173,7 @@ const Contact = () => {
     }
     setUserData(data);
   };
-<<<<<<< HEAD
   const metadata = "https://gateway.pinata.cloud/ipfs/QmW48ksQbrDMqjWExoBSMq8JiCXcvJrRVsNt2BHiiFdWvq"
-=======
->>>>>>> 18b5819379b5f1e67bf1dc30049b1da56fedcbea
 
   return (
     <div className="App">
@@ -246,10 +240,7 @@ const Contact = () => {
               value={email}
               onChange={(e) => {
                 setEmail(e.target.value);
-<<<<<<< HEAD
-=======
                 setModalOpn(false);
->>>>>>> 18b5819379b5f1e67bf1dc30049b1da56fedcbea
               }}
             />
 
