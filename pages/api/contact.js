@@ -3,6 +3,7 @@
     require('dotenv').config();
     // const PASSWORD = process.env.password;
     let nodemailer = require('nodemailer')
+
     const transporter = nodemailer.createTransport({
       port: 465,
       host: "smtp.gmail.com",
@@ -30,5 +31,5 @@
       else
         console.log(info)
     })
-    res.status(200)
+    res.status(200);
   }

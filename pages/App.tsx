@@ -12,12 +12,16 @@ import Web3 from "web3";
 import { createTypePredicateNodeWithModifier } from "typescript";
 import { Console } from "console";
 import React from "react";
+import { TailSpin } from 'react-loading-icons'
+// const successImg = require("../assets/images/successImg.png");
+import successImg from "../assets/images/successImg.png";
+import Image from "next/image";
 
 // HIGHLIGHTSTART-registerApp
 const clientId = "BK6dI9TO1Ol7Ke7XFsDD_wGBitbMWlQKtH7x3j9syGY5Z5CqjcTjQrCbVM6_bhB38uZpX-QgnKM9RKbgVJIBcr8"; // get from https://dashboard.web3auth.io
 
-
-function App({ data }: { data: any }) {
+// function App() {
+const App = ({data}: {data:any}) => {
   const navigate = useRouter().push;
   const ERC721ABI = [
     {
@@ -448,6 +452,8 @@ function App({ data }: { data: any }) {
   );
   const [tokenID, setTokenID] = useState(0);
   const context = useContext(WalletContext);
+  const [progress, setProgress] = useState(true);
+
   const [Emailsent, SetEmailSent] = useState(false);
   // console.log(context)
   const {
@@ -457,6 +463,8 @@ function App({ data }: { data: any }) {
     setcurrentAccount,
     walletType,
     setWalletType,
+    minted,
+    setMinted,
   } = context;
   useEffect(() => {
     const web3auth = new Web3Auth({
@@ -557,6 +565,12 @@ function App({ data }: { data: any }) {
       const ethScanLink = `https://goerli.etherscan.io/tx/${tx.hash}`;
       if (data != null) {
         sendEmail(openSeaLink, ethScanLink, openSeaAccountLink);
+        // .then((res) => {
+        //   console.log("Response received: " + res);
+        // }
+        // );
+        
+        setMinted(true);
       }
     });
 
@@ -594,11 +608,11 @@ function App({ data }: { data: any }) {
     getAccounts();
   };
 
-  const sendEmail = (
+  async function sendEmail(
     openSeaLink: string,
     ethScanLink: string,
     openSeaAccountLink: string
-  ) => {
+  ) {
     // e.preventDefault()
     const name = data.name;
     const email = data.email;
@@ -612,19 +626,13 @@ function App({ data }: { data: any }) {
       ethScanLink,
       openSeaAccountLink,
     };
-    fetch("/api/contact", {
+    const response = await fetch("/api/contact", {
       method: "POST",
       headers: {
         Accept: "application/json, text/plain, */*",
         "Content-Type": "application/json",
       },
       body: JSON.stringify(finalData),
-    }).then((res) => {
-      console.log("Response received");
-      if (res.status === 200) {
-        console.log("Response succeeded!");
-        SetEmailSent(!Emailsent);
-      }
     });
   };
 
@@ -776,8 +784,21 @@ function App({ data }: { data: any }) {
           </div>
         </>
       )}
-      <>
-      {Emailsent === true && Swal.fire({
+      {!progress && walletConnected && (
+        <div className="web3Success">
+          <Image src={successImg} alt="successImg" height={50} width={50} />
+        </div>
+      )}
+
+      {progress && walletConnected && (
+        <div className="web3Success">
+          <TailSpin height="50px" stroke="#98ff98" strokeWidth="3"/>
+        </div>
+      )}
+
+      {/* <>
+      {
+       Emailsent === true && Swal.fire({
             text: "आपका NFT आपके ईमेल खाते में भेज दिया गया है",
             imageUrl: `${RockNft}`,
             imageWidth: 400,
@@ -789,7 +810,7 @@ function App({ data }: { data: any }) {
             timer: 4000,
           })
       }
-      </>
+      </> */}
       {/* <footer className="footer">
         <a href="https://github.com/Web3Auth/Web3Auth/tree/master/examples/react-app" target="_blank" rel="noopener noreferrer">
           Source code

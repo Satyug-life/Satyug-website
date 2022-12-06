@@ -6,11 +6,16 @@ import Confetti from "react-confetti";
 import Image from "next/future/image";
 import { useRouter } from "next/router";
 import App from "../App";
+import RockNft from "../../assets/images/RockNFT.jpg";
 
 import WalletContext from "../../context/WalletContext";
 
 import mintAndSend from "../../utils/mintAndSend";
 // import { useRouter } from 'next/router';
+
+const delay = ms => new Promise(
+  resolve => setTimeout(resolve, ms)
+);
 
 const Contact = () => {
   
@@ -32,6 +37,8 @@ const Contact = () => {
     setcurrentAccount,
     walletType,
     setWalletType,
+    minted,
+    setMinted,
   } = context;
 
   const ramSita =
@@ -98,10 +105,55 @@ const Contact = () => {
     // buton.classList.add('animationClass');
   };
 
+  const interval = "";
+
+  const intervalFunction = () => {
+    console.log(ModalOpn);
+        Swal.fire({
+        icon: 'warning',
+        title: 'Oops...',
+        text: 'Kindly submit your form',
+        timer: 3000,
+        timerProgressBar: true,
+      })
+  };
+
   useEffect(() => {
     audioRef.current.play();
+<<<<<<< HEAD
+=======
+    interval = setInterval(() => intervalFunction(), 5000);
+>>>>>>> 18b5819379b5f1e67bf1dc30049b1da56fedcbea
   }, []);
 
+  useEffect(() => {
+    if(minted === true) {
+      Swal.fire({
+        text: "आपका NFT आपके ईमेल खाते में भेज दिया गया है",
+        imageUrl: "https://gateway.pinata.cloud/ipfs/QmP8SXkaY9zRQXHKQy1Mc7z8AQ5hf4aijMnYzKuRdtrde1",
+        imageWidth: 400,
+        allowOutsideClick: false,
+        //backdrop: "#000", // get the backgound
+        imageHeight: 200,
+        imageAlt: "Custom image",
+        timerProgressBar: true,
+        timer: 4000,
+      })
+      async function smallDelay() {
+      
+        await delay(4000);
+        setVidOn(minted);
+      }
+      smallDelay();
+      setModalOpn(false);
+    }
+    
+  }, [minted]);
+  
+
+  useEffect(() => {
+    return () => clearInterval(interval);
+  }, [ModalOpn]);
 
   // function playVideo(e) {
   //   // const videoPlay = ref.current;
@@ -124,7 +176,10 @@ const Contact = () => {
     }
     setUserData(data);
   };
+<<<<<<< HEAD
   const metadata = "https://gateway.pinata.cloud/ipfs/QmW48ksQbrDMqjWExoBSMq8JiCXcvJrRVsNt2BHiiFdWvq"
+=======
+>>>>>>> 18b5819379b5f1e67bf1dc30049b1da56fedcbea
 
   return (
     <div className="App">
@@ -150,14 +205,14 @@ const Contact = () => {
           </div>
         )}
 
-        {validDetails && walletConnected && (
+        {/* {validDetails && walletConnected && (
           <div className="web3Success">
             <Image src={require("../../assets/images/successImg.png")} alt="successImg" layout="raw" height={50} />
           </div>
-        )}
+        )} */}
 
         {!validDetails && (
-          <div className="web3Contact"  >
+          <div className="web3Contact">
             <input
               type="text"
               ref={nameinput}
@@ -191,6 +246,10 @@ const Contact = () => {
               value={email}
               onChange={(e) => {
                 setEmail(e.target.value);
+<<<<<<< HEAD
+=======
+                setModalOpn(false);
+>>>>>>> 18b5819379b5f1e67bf1dc30049b1da56fedcbea
               }}
             />
 
