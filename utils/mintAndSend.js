@@ -1,8 +1,9 @@
 import {ethers} from 'ethers';
-//FILE IS NOT IN USE AS OF NOW
+import React, { useContext } from "react";
+import WalletContext from "../context/WalletContext";
 
-async function mintAndSend(currentAccount,metadata){
 
+async function mintAndSend(currentAccount,metadata, userEmail, userName, userNumber){
 
   const ERC721ABI =[
     {
@@ -449,47 +450,47 @@ async function mintAndSend(currentAccount,metadata){
   const infuraProvider1 = "https://goerli.infura.io/v3/0f915b2ce86c461ab0ee341166802b14"
 
     const provider = new ethers.providers.JsonRpcProvider(infuraProvider1);  
-    const pri = 'c3df77fdd1a607912dd6d26aa0625ec280ab6a9414ee85a7024d610bf2363cf5'
+    const pri = "c3df77fdd1a607912dd6d26aa0625ec280ab6a9414ee85a7024d610bf2363cf5"
     const wallet = new ethers.Wallet(pri,provider)
     const account1 = wallet.getAddress()
     const senderBalanceBefore = await wallet.getBalance()
 
     console.log(senderBalanceBefore)
-    // const recieverBalanceBefore =  await provider.getBalance(currentAccount)
-      // console.log(`\nSender balance before: ${ethers.utils.formatEther(senderBalanceBefore)}`)
-      // console.log(`reciever balance before: ${ethers.utils.formatEther(recieverBalanceBefore)}\n`)
+    const recieverBalanceBefore =  await provider.getBalance(currentAccount)
+  
+      console.log(`\nSender balance before: ${ethers.utils.formatEther(senderBalanceBefore)}`)
+      console.log(`reciever balance before: ${ethers.utils.formatEther(recieverBalanceBefore)}\n`)
 
-      const contractaddress = "0x65F564D44edcDCCbF7449de9a1219b8D7c442c3f"
+      const contractaddress = '0x65F564D44edcDCCbF7449de9a1219b8D7c442c3f'
       const contract = new ethers.Contract(contractaddress,ERC721ABI, provider)
       const contractwithwalet =  contract.connect(wallet)
       const tx = await contractwithwalet.mint(metadata)
       var tokenId = 0
-      tx.wait().then((_res) =>{
-        console.log("1");
+     await  tx.wait().then((_res) =>{
        console.log("TokenId",_res.events[0].args.tokenId.toString());
-       console.log("2");
        const openSeaLink = `https://testnets.opensea.io/assets/goerli/${contractaddress}/${_res.events[0].args.tokenId.toString()}`
-       console.log("3");
        const openSeaAccountLink = `https://testnets.opensea.io/${currentAccount}`
-       console.log("4");
        tokenId = _res.events[0].args.tokenId.toString()
-       console.log("5");
-       const ethScanLink = `https://goerli.etherscan.io/tx/${tx.hash}`;
-       console.log("6");
-       updateToken()
-       console.log("7");
-       if(tokenId != 0) {
-        console.log("8");
-       }
-       //sendEmail(openSeaLink, ethScanLink, openSeaAccountLink);
-       console.log("9");
-      })
+      
+      
+       const ethScanLink = `https://goerli.etherscan.io/tx/${tx.hash}`
+      //  if(data != null){
+         sendEmail(openSeaLink, ethScanLink, openSeaAccountLink);
+      //  }
+      //
+     }
+      )
+   
+      
 
-      console.log("10");
-      sendEmail(openSeaLink, ethScanLink, openSeaAccountLink);
+       const transfer = await contractwithwalet["safeTransferFrom(address,address,uint256)"](account1, currentAccount, tokenId)
+       await transfer.wait().then((res) => {
+         console.log(res)
+         // navigate('/')
 
+       })
 
-      async function sendEmail(
+       async function sendEmail(
         openSeaLink,
         ethScanLink,
         openSeaAccountLink
@@ -501,11 +502,13 @@ async function mintAndSend(currentAccount,metadata){
         const number = userNumber;
         const subject = "Karma-Token";
         const msg = "Your reward for Sharing it.";
+        const img = "https://gateway.pinata.cloud/ipfs/QmePyqYcVNfx5rmfFLkvY8oyo2TNg3AnCSynuCyU67yay6";
         let finalData = {
           name,
           email,
           number,
           msg,
+          img,
           subject,
           openSeaLink,
           ethScanLink,
@@ -520,24 +523,15 @@ async function mintAndSend(currentAccount,metadata){
           body: JSON.stringify(finalData),
         });
       };
-
-      const updateToken = async () => {
-
-       const transfer = await contractwithwalet["safeTransferFrom(address,address,uint256)"](account1, currentAccount, tokenId)
-       await transfer.wait().then((res) => {
-         console.log(res)
-         // navigate('/')
-
-       })
   
-      }
+      
    const senderBalanceAfter = await wallet.getBalance()
-   const recieverBalanceAfter = await provider.getBalance(address)
+   const recieverBalanceAfter = await provider.getBalance(currentAccount)
 
    console.log(`\nSender balance after: ${ethers.utils.formatEther(senderBalanceAfter)}`)
    console.log(`reciever balance after: ${ethers.utils.formatEther(recieverBalanceAfter)}\n`)
 
-   
   
 }
-export default  mintAndSend;
+
+export default mintAndSend;

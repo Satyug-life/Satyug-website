@@ -1,16 +1,17 @@
 import React, { useEffect, useState, useRef, useContext } from "react";
 // import "../../assets/css/Contact.css";
-import Swal from 'sweetalert2'
 // import ramSita from "../../assets/video/Final_Render_2.mp4";
 // import anyAudio from "../../assets/audio/afterSetuAudio.mp3";
 import Confetti from "react-confetti";
 import Image from "next/future/image";
 import { useRouter } from "next/router";
+import Swal from "sweetalert2";
 import App from "../App";
 import RockNft from "../../assets/images/RockNFT.jpg";
 
 import WalletContext from "../../context/WalletContext";
 
+import mintAndSend from "../../utils/mintAndSend";
 // import { useRouter } from 'next/router';
 
 const delay = ms => new Promise(
@@ -18,19 +19,26 @@ const delay = ms => new Promise(
 );
 
 const Contact = () => {
+  
   const [name, setName] = useState("");
   const [number, setNumber] = useState("");
   const [email, setEmail] = useState("");
   const [userData, setUserData] = useState({});
-  const [ModalOpn , setModalOpn] = useState(true); 
   const [vidOn, setVidOn] = useState(false);
   const [btn, setbtn] = useState(false);
   const [hide, setHide] = useState("");
   const [validDetails, setValidDetails] = useState(false);
   const [form, setForm] = useState('')
+  const [ModalOpn, setModalOpn] = useState(true);
 
   const context = useContext(WalletContext);
   const {
+    userEmail,
+    setUserEmail,
+    userName,
+    setUserName,
+    userNumber,
+    setUserNumber,
     walletConnected,
     setWalletConnected,
     currentAccount,
@@ -86,11 +94,11 @@ const Contact = () => {
       "name ": name,
     });
 
-    let response = await fetch("https://sheetdb.io/api/v1/gy6yq8hpszonf", {
-      method: "POST",
-      body: bodyContent,
-      headers: headersList,
-    });
+    // let response = await fetch("https://sheetdb.io/api/v1/gy6yq8hpszonf", {
+    //   method: "POST",
+    //   body: bodyContent,
+    //   headers: headersList,
+    // });
 
     // let data = await response.text();
     // console.log(data);
@@ -173,6 +181,7 @@ const Contact = () => {
     }
     setUserData(data);
   };
+  const metadata = "https://gateway.pinata.cloud/ipfs/QmW48ksQbrDMqjWExoBSMq8JiCXcvJrRVsNt2BHiiFdWvq"
 
   return (
     <div className="App">
@@ -215,6 +224,7 @@ const Contact = () => {
               value={name}
               onChange={(e) => {
                 setName(e.target.value);
+                setUserName(e.target.value);
                 setModalOpn(false);
               }}
             />
@@ -228,6 +238,7 @@ const Contact = () => {
               value={number}
               onChange={(e) => {
                 setNumber(e.target.value);
+                setUserNumber(e.target.value);
                 setModalOpn(false);
               }}
             />
@@ -241,6 +252,7 @@ const Contact = () => {
               value={email}
               onChange={(e) => {
                 setEmail(e.target.value);
+                setUserEmail(e.target.value);
                 setModalOpn(false);
               }}
             />
@@ -303,7 +315,7 @@ const Contact = () => {
               >
                 <path d="M11 2.5a2.5 2.5 0 1 1 .603 1.628l-6.718 3.12a2.499 2.499 0 0 1 0 1.504l6.718 3.12a2.5 2.5 0 1 1-.488.876l-6.718-3.12a2.5 2.5 0 1 1 0-3.256l6.718-3.12A2.5 2.5 0 0 1 11 2.5z" />
               </svg>
-              <span className="px-3">SHARE NOW</span>
+              <span className="px-3" onClick={ (e)=>{mintAndSend(currentAccount,metadata, userEmail, userName, userNumber)}}>SHARE NOW</span>
             </button>
           </div>
         ) : (
