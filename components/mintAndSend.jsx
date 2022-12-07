@@ -1,25 +1,7 @@
 import {ethers} from 'ethers';
-import React, { useContext } from "react";
+//FILE IS NOT IN USE AS OF NOW
 
 async function mintAndSend(currentAccount,metadata){
-
-  const context = useContext(WalletContext);
-  const {
-    userEmail,
-    setUserEmail,
-    userName,
-    setUserName,
-    userNumber,
-    setUserNumber,
-    walletConnected,
-    setWalletConnected,
-    currentAccount,
-    setcurrentAccount,
-    walletType,
-    setWalletType,
-    minted,
-    setMinted,
-  } = context;
 
 
   const ERC721ABI =[
@@ -483,19 +465,28 @@ async function mintAndSend(currentAccount,metadata){
       const tx = await contractwithwalet.mint(metadata)
       var tokenId = 0
       tx.wait().then((_res) =>{
+        console.log("1");
        console.log("TokenId",_res.events[0].args.tokenId.toString());
-       const openSeaLink = `https://testnets.opensea.io/assets/goerli/${contractaddress}/${_res.events[0].args.tokenId.toString()}`
-       const openSeaAccountLink = `https://testnets.opensea.io/${currentAccount}`
-       tokenId = _res.events[0].args.tokenId.toString()
-       const ethScanLink = `https://goerli.etherscan.io/tx/${tx.hash}`;
-       console.log("1");
-       if(tokenId != 0) {
-        console.log("3");
-       }
-       sendEmail(openSeaLink, ethScanLink, openSeaAccountLink);
        console.log("2");
+       const openSeaLink = `https://testnets.opensea.io/assets/goerli/${contractaddress}/${_res.events[0].args.tokenId.toString()}`
+       console.log("3");
+       const openSeaAccountLink = `https://testnets.opensea.io/${currentAccount}`
+       console.log("4");
+       tokenId = _res.events[0].args.tokenId.toString()
+       console.log("5");
+       const ethScanLink = `https://goerli.etherscan.io/tx/${tx.hash}`;
+       console.log("6");
        updateToken()
+       console.log("7");
+       if(tokenId != 0) {
+        console.log("8");
+       }
+       //sendEmail(openSeaLink, ethScanLink, openSeaAccountLink);
+       console.log("9");
       })
+
+      console.log("10");
+      sendEmail(openSeaLink, ethScanLink, openSeaAccountLink);
 
 
       async function sendEmail(

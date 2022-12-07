@@ -18,12 +18,10 @@
       to: req.body.email,
       subject: `Welcome to the Satyug`,
       text: "Welcome to the World of Satyug",
-    //   html: `<div><p>Ram Ji ki Setu mai aapka lagaya Pathar</p>
-    //         <img src="https://gateway.pinata.cloud/ipfs/QmP8SXkaY9zRQXHKQy1Mc7z8AQ5hf4aijMnYzKuRdtrde1" alt="Ramji Setu" height="200px"/><br><br>
-    //         You can check the Reward here: ${req.body.openSeaLink}<br>
-    //         You can also track your Transaction here: ${req.body.ethScanLink}<br><br>
-    //         Here's Your Open Sea Account: ${req.body.openSeaAccountLink}<br>
-    //         </div>`,
+      html: `<div>
+            <img src="${req.body.img}" alt="Satyug Logo" height="200px"/><br><br>
+            <b>सतयुग की दुनिया में आपका स्वागत है!!</b>
+            </div>`,
     }
     transporter.sendMail(mailData, function (err, info) {
       if(err)

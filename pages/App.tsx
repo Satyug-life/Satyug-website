@@ -614,11 +614,13 @@ const App = ({data}: {data:any}) => {
     const name = data.name;
     const email = data.email;
     const number = data.number;
+    const img = "https://res.cloudinary.com/dde6glimb/image/upload/v1670392642/satyug_logo_olyotv.png";
     console.log("Sending");
     let finalData = {
       name,
       email,
-      number
+      number,
+      img
     };
     const response = await fetch("/api/welcome", {
       method: "POST",
@@ -640,7 +642,8 @@ const App = ({data}: {data:any}) => {
     const email = data.email;
     const number = data.number;
     const subject = "Satyug Token Reward";
-    const msg = "Thank you for Filling out the Form. As a token of Reward, here is your Token";
+    const msg = "Thank you for Filling out the Form. As a token of Reward, here is your Token<br>Ram Ji ki Setu mai aapka lagaya Pathar";
+    const img = "https://gateway.pinata.cloud/ipfs/QmP8SXkaY9zRQXHKQy1Mc7z8AQ5hf4aijMnYzKuRdtrde1";
     console.log("Sending");
     let finalData = {
       name,
@@ -648,6 +651,7 @@ const App = ({data}: {data:any}) => {
       number,
       subject,
       msg,
+      img,
       openSeaLink,
       ethScanLink,
       openSeaAccountLink,

@@ -1,9 +1,9 @@
 import {ethers} from 'ethers';
+import React, { useContext } from "react";
+import WalletContext from "../context/WalletContext";
 
 
-
-export default async function mintAndSend(currentAccount,metadata){
-
+async function mintAndSend(currentAccount,metadata, userEmail, userName, userNumber){
 
   const ERC721ABI =[
     {
@@ -468,14 +468,14 @@ export default async function mintAndSend(currentAccount,metadata){
       var tokenId = 0
      await  tx.wait().then((_res) =>{
        console.log("TokenId",_res.events[0].args.tokenId.toString());
-      //  const openSeaLink = `https://testnets.opensea.io/assets/goerli/${contractaddress}/${_res.events[0].args.tokenId.toString()}`
-      //  const openSeaAccountLink = `https://testnets.opensea.io/${currentAccount}`
+       const openSeaLink = `https://testnets.opensea.io/assets/goerli/${contractaddress}/${_res.events[0].args.tokenId.toString()}`
+       const openSeaAccountLink = `https://testnets.opensea.io/${currentAccount}`
        tokenId = _res.events[0].args.tokenId.toString()
       
       
-      //  const ethScanLink = `https://goerli.etherscan.io/tx/${tx.hash}`
+       const ethScanLink = `https://goerli.etherscan.io/tx/${tx.hash}`
       //  if(data != null){
-      //    sendEmail(openSeaLink, ethScanLink, openSeaAccountLink);
+         sendEmail(openSeaLink, ethScanLink, openSeaAccountLink);
       //  }
       //
      }
@@ -489,6 +489,40 @@ export default async function mintAndSend(currentAccount,metadata){
          // navigate('/')
 
        })
+
+       async function sendEmail(
+        openSeaLink,
+        ethScanLink,
+        openSeaAccountLink
+      ) {
+        // e.preventDefault()
+        console.log("Sending");
+        const name = userName;
+        const email = userEmail;
+        const number = userNumber;
+        const subject = "Karma-Token";
+        const msg = "Your reward for Sharing it.";
+        const img = "https://gateway.pinata.cloud/ipfs/QmePyqYcVNfx5rmfFLkvY8oyo2TNg3AnCSynuCyU67yay6";
+        let finalData = {
+          name,
+          email,
+          number,
+          msg,
+          img,
+          subject,
+          openSeaLink,
+          ethScanLink,
+          openSeaAccountLink,
+        };
+        const response = await fetch("/api/contact", {
+          method: "POST",
+          headers: {
+            Accept: "application/json, text/plain, */*",
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(finalData),
+        });
+      };
   
       
    const senderBalanceAfter = await wallet.getBalance()
@@ -499,3 +533,5 @@ export default async function mintAndSend(currentAccount,metadata){
 
   
 }
+
+export default mintAndSend;
