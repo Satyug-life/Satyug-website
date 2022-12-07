@@ -16,13 +16,11 @@
     const mailData = {
       from: 'Satyug',
       to: req.body.email,
-      subject: req.body.subject,
-      text: req.body.msg,
-      html: `<div><p>${req.body.msg}</p>
-            <img src="${req.body.img}" alt="Ramji Setu" height="200px"/><br><br>
-            You can check the Reward here: ${req.body.openSeaLink}<br>
-            You can also track your Transaction here: ${req.body.ethScanLink}<br><br>
-            Here's Your Open Sea Account: ${req.body.openSeaAccountLink}<br>
+      subject: `Welcome to the Satyug`,
+      text: "Welcome to the World of Satyug",
+      html: `<div>
+            <img src="${req.body.img}" alt="Satyug Logo" height="200px"/><br><br>
+            <b>सतयुग की दुनिया में आपका स्वागत है!!</b>
             </div>`,
     }
     transporter.sendMail(mailData, function (err, info) {

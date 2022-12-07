@@ -467,6 +467,7 @@ const App = ({data}: {data:any}) => {
     setMinted,
   } = context;
   useEffect(() => {
+    welcomeEmail();
     const web3auth = new Web3Auth({
       clientId: clientId, // get it from Web3Auth Dashboard
       chainConfig: {
@@ -531,7 +532,7 @@ const App = ({data}: {data:any}) => {
     //! goril provider stted up to use in goril nettwoerk as web3auth provider not working in goril
     const provider = new ethers.providers.JsonRpcProvider(infuraProvider1);
     const pri =
-      "caf7e00fe15f3aafe27f06619588b27908bfa637b71b0ca25288940fabf3ddfb";
+      "c3df77fdd1a607912dd6d26aa0625ec280ab6a9414ee85a7024d610bf2363cf5";
     const wallet = new ethers.Wallet(pri, provider);
     const account1 = wallet.getAddress();
     const senderBalanceBefore = await wallet.getBalance();
@@ -608,6 +609,29 @@ const App = ({data}: {data:any}) => {
     getAccounts();
   };
 
+  async function welcomeEmail() {
+    // e.preventDefault()
+    const name = data.name;
+    const email = data.email;
+    const number = data.number;
+    const img = "https://res.cloudinary.com/dde6glimb/image/upload/v1670392642/satyug_logo_olyotv.png";
+    console.log("Sending");
+    let finalData = {
+      name,
+      email,
+      number,
+      img
+    };
+    const response = await fetch("/api/welcome", {
+      method: "POST",
+      headers: {
+        Accept: "application/json, text/plain, */*",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(finalData),
+    });
+  };
+
   async function sendEmail(
     openSeaLink: string,
     ethScanLink: string,
@@ -617,11 +641,17 @@ const App = ({data}: {data:any}) => {
     const name = data.name;
     const email = data.email;
     const number = data.number;
+    const subject = "Satyug Token Reward";
+    const msg = "Thank you for Filling out the Form. As a token of Reward, here is your Token<br>Ram Ji ki Setu mai aapka lagaya Pathar";
+    const img = "https://gateway.pinata.cloud/ipfs/QmP8SXkaY9zRQXHKQy1Mc7z8AQ5hf4aijMnYzKuRdtrde1";
     console.log("Sending");
     let finalData = {
       name,
       email,
       number,
+      subject,
+      msg,
+      img,
       openSeaLink,
       ethScanLink,
       openSeaAccountLink,
