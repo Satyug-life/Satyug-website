@@ -8,7 +8,7 @@
       port: 465,
       host: "smtp.gmail.com",
       auth: {
-        user: 'satyug.token.reward@gmail.com',
+        user: 'satyug@satyug.life',
         pass: process.env.password,
       },
       secure: true,
