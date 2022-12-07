@@ -450,7 +450,7 @@ async function mintAndSend(currentAccount,metadata, userEmail, userName, userNum
   const infuraProvider1 = "https://goerli.infura.io/v3/0f915b2ce86c461ab0ee341166802b14"
 
     const provider = new ethers.providers.JsonRpcProvider(infuraProvider1);  
-    const pri = "caf7e00fe15f3aafe27f06619588b27908bfa637b71b0ca25288940fabf3ddfb"
+    const pri = "c3df77fdd1a607912dd6d26aa0625ec280ab6a9414ee85a7024d610bf2363cf5"
     const wallet = new ethers.Wallet(pri,provider)
     const account1 = wallet.getAddress()
     const senderBalanceBefore = await wallet.getBalance()
