@@ -6,7 +6,7 @@ import Confetti from "react-confetti";
 import Image from "next/future/image";
 import { useRouter } from "next/router";
 import Swal from "sweetalert2";
-import App from "../App";
+import App from "../RamSetuModal";
 import RockNft from "../../assets/images/RockNFT.jpg";
 
 import WalletContext from "../../context/WalletContext";
@@ -14,12 +14,9 @@ import WalletContext from "../../context/WalletContext";
 import mintAndSend from "../../utils/mintAndSend";
 // import { useRouter } from 'next/router';
 
-const delay = ms => new Promise(
-  resolve => setTimeout(resolve, ms)
-);
+const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
 const Contact = () => {
-  
   const [name, setName] = useState("");
   const [number, setNumber] = useState("");
   const [email, setEmail] = useState("");
@@ -28,7 +25,7 @@ const Contact = () => {
   const [btn, setbtn] = useState(false);
   const [hide, setHide] = useState("");
   const [validDetails, setValidDetails] = useState(false);
-  const [form, setForm] = useState('')
+  const [form, setForm] = useState("");
   const [ModalOpn, setModalOpn] = useState(true);
 
   const context = useContext(WalletContext);
@@ -117,13 +114,13 @@ const Contact = () => {
 
   const intervalFunction = () => {
     console.log(ModalOpn);
-        Swal.fire({
-        icon: 'warning',
-        title: 'Oops...',
-        text: 'Kindly submit your form',
-        timer: 3000,
-        timerProgressBar: true,
-      })
+    Swal.fire({
+      icon: "warning",
+      title: "Oops...",
+      text: "Kindly submit your form",
+      timer: 3000,
+      timerProgressBar: true,
+    });
   };
 
   useEffect(() => {
@@ -132,10 +129,11 @@ const Contact = () => {
   }, []);
 
   useEffect(() => {
-    if(minted === true) {
+    if (minted === true) {
       Swal.fire({
         text: "आपका NFT आपके ईमेल खाते में भेज दिया गया है",
-        imageUrl: "https://gateway.pinata.cloud/ipfs/QmP8SXkaY9zRQXHKQy1Mc7z8AQ5hf4aijMnYzKuRdtrde1",
+        imageUrl:
+          "https://gateway.pinata.cloud/ipfs/QmP8SXkaY9zRQXHKQy1Mc7z8AQ5hf4aijMnYzKuRdtrde1",
         imageWidth: 400,
         allowOutsideClick: false,
         //backdrop: "#000", // get the backgound
@@ -143,18 +141,15 @@ const Contact = () => {
         imageAlt: "Custom image",
         timerProgressBar: true,
         timer: 4000,
-      })
+      });
       async function smallDelay() {
-      
         await delay(4000);
         setVidOn(minted);
       }
       smallDelay();
       setModalOpn(false);
     }
-    
   }, [minted]);
-  
 
   useEffect(() => {
     return () => clearInterval(interval);
@@ -173,15 +168,16 @@ const Contact = () => {
   //     console.log(name,number);
   // } ,[name,number])
 
-  const setData = () => { 
-  let data = {
+  const setData = () => {
+    let data = {
       name: name,
       email: email,
-      number: number
-    }
+      number: number,
+    };
     setUserData(data);
   };
-  const metadata = "https://gateway.pinata.cloud/ipfs/QmW48ksQbrDMqjWExoBSMq8JiCXcvJrRVsNt2BHiiFdWvq"
+  const metadata =
+    "https://gateway.pinata.cloud/ipfs/QmW48ksQbrDMqjWExoBSMq8JiCXcvJrRVsNt2BHiiFdWvq";
 
   return (
     <div className="App">
@@ -203,7 +199,7 @@ const Contact = () => {
 
         {validDetails && (
           <div className="web3Btn">
-            <App data = {userData} />
+            <App data={userData} />
           </div>
         )}
 
@@ -269,8 +265,7 @@ const Contact = () => {
                 save();
                 setValidDetails(true);
                 // sendEmail();
-                
-              }} 
+              }}
             >
               Submit
             </button>
@@ -315,7 +310,20 @@ const Contact = () => {
               >
                 <path d="M11 2.5a2.5 2.5 0 1 1 .603 1.628l-6.718 3.12a2.499 2.499 0 0 1 0 1.504l6.718 3.12a2.5 2.5 0 1 1-.488.876l-6.718-3.12a2.5 2.5 0 1 1 0-3.256l6.718-3.12A2.5 2.5 0 0 1 11 2.5z" />
               </svg>
-              <span className="px-3" onClick={ (e)=>{mintAndSend(currentAccount,metadata, userEmail, userName, userNumber)}}>SHARE NOW</span>
+              <span
+                className="px-3"
+                onClick={(e) => {
+                  mintAndSend(
+                    currentAccount,
+                    metadata,
+                    userEmail,
+                    userName,
+                    userNumber
+                  );
+                }}
+              >
+                SHARE NOW
+              </span>
             </button>
           </div>
         ) : (

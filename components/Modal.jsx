@@ -1,7 +1,7 @@
-import React, { useEffect, useState, useRef , useContext } from "react";
+import React, { useEffect, useState, useRef, useContext } from "react";
 import Web3Modal from "web3modal";
 import WalletConnectProvider from "@walletconnect/web3-provider";
-import Image from 'next/future/image';
+import Image from "next/future/image";
 import Web3 from "web3";
 // import "../assets/css/TestModal.css";
 import PropTypes from "prop-types";
@@ -9,21 +9,18 @@ import PropTypes from "prop-types";
 // import uploadImg from "../assets/images/cloud-upload-regular-240.png";
 import { v4 as uuidv4 } from "uuid";
 import { Loader } from "./Loader";
-import metamask from "../assets/images/metamask.svg"
-import phantom from "../assets/images/phantom.svg"
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import metamask from "../assets/images/metamask.svg";
+import phantom from "../assets/images/phantom.svg";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import { useRouter } from "next/router";
 // import type { NextPage } from 'next';
-import App from '../pages/App'
+import App from "../pages/App";
 // import WalletState from '../context/WalletState'
 import dynamic from "next/dynamic";
 import WalletContext from "../context/WalletContext";
-import  "./etherRPC";
+import "./etherRPC";
 import EthereumRpc from "./etherRPC";
-
-
-
 
 // const App = dynamic(
 //   () => {
@@ -32,11 +29,17 @@ import EthereumRpc from "./etherRPC";
 //   { ssr: false }
 // );
 
-
-const Modal = ({ onRequestClose,pathName }) => {
+const Modal = ({ onRequestClose, pathName }) => {
   const context = useContext(WalletContext);
   // console.log(context)
-  const {walletConnected ,  setWalletConnected , currentAccount , setcurrentAccount , walletType , setWalletType} = context;
+  const {
+    walletConnected,
+    setWalletConnected,
+    currentAccount,
+    setcurrentAccount,
+    walletType,
+    setWalletType,
+  } = context;
 
   const [media, setMedia] = useState(false);
   const [loaded, setLoaded] = useState(false);
@@ -49,12 +52,12 @@ const Modal = ({ onRequestClose,pathName }) => {
   // const [balance, setBalance] = useState("");
   // const [pubkey, setPubkey] = useState("");
 
-// useEffect(()=>{
-//   if(!currentAccount|| currentAccount===''){
-//     setcurrentAccount(window.localStorage?.getItem('walletId')); 
-//   setWalletConnected(true);}
-  
-// },[])
+  // useEffect(()=>{
+  //   if(!currentAccount|| currentAccount===''){
+  //     setcurrentAccount(window.localStorage?.getItem('walletId'));
+  //   setWalletConnected(true);}
+
+  // },[])
 
   const checkIfWalletIsConnected = async () => {
     try {
@@ -71,14 +74,13 @@ const Modal = ({ onRequestClose,pathName }) => {
           setWalletAddress(response.publicKey.toString());
         }
       } else {
-        alert("Get a phantom wallet")
+        alert("Get a phantom wallet");
         console.log("Get a phantom wallet");
       }
     } catch (error) {
       // console.error(error);
     }
   };
-
 
   const connectSolanaWallet = async () => {
     checkIfWalletIsConnected();
@@ -89,14 +91,10 @@ const Modal = ({ onRequestClose,pathName }) => {
       // setWalletAddress();
       setcurrentAccount(response.publicKey.toString());
       console.log(currentAccount);
-      setWalletConnected(true)
-      setWalletType('phantom')
-      
+      setWalletConnected(true);
+      setWalletType("phantom");
     }
   };
-
-
-
 
   const disconnectWallet = async () => {
     const { solana } = window;
@@ -104,19 +102,22 @@ const Modal = ({ onRequestClose,pathName }) => {
       await solana.disconnect();
       setcurrentAccount(null);
 
-        // disconnectWallet()
+      // disconnectWallet()
     }
   };
 
   //   React.useContext(WalletContext);
-    let pageName = "";
-    if(pathName === "/yogaToken") {
-      pageName = "Yoga"
-    } else if(pathName === "/dhyanaToken") {
-      pageName = "Dhyana"
-    }
-    const pageText = "Thank You for submitting your video, you will soon be awarded with the " + pageName + " Token";
-    const successMessage = () => toast.success(pageText);
+  let pageName = "";
+  if (pathName === "/yogaToken") {
+    pageName = "Yoga";
+  } else if (pathName === "/dhyanaToken") {
+    pageName = "Dhyana";
+  }
+  const pageText =
+    "Thank You for submitting your video, you will soon be awarded with the " +
+    pageName +
+    " Token";
+  const successMessage = () => toast.success(pageText);
   const handleChangeMedia = (e) => {
     // console.log(e.target.files[0].name)
     setMedia(e.target.files[0]);
@@ -124,66 +125,51 @@ const Modal = ({ onRequestClose,pathName }) => {
     console.log(media);
   };
 
-
-
-
-
   const [web3Modal, setWeb3Modal] = useState({});
 
-  
-
   const providerOptions = {
-    binancechainwallet:{
-      package:true
+    binancechainwallet: {
+      package: true,
     },
     walletconnect: {
       package: WalletConnectProvider,
       options: {
-        infuraId: 'eca3650c70d546c2a15702ab9a1c4d73'
-      }
-    }
-  }
+        infuraId: "eca3650c70d546c2a15702ab9a1c4d73",
+      },
+    },
+  };
 
-  
   useEffect(() => {
     if (typeof window !== "undefined") {
-       const web3modal = new Web3Modal({
+      const web3modal = new Web3Modal({
         network: "rinkeby", // optional
         cacheProvider: false, // optional
         providerOptions, // required
-       });
-       setWeb3Modal(web3modal);
+      });
+      setWeb3Modal(web3modal);
     }
- }, [currentAccount]);
+  }, [currentAccount]);
 
-async function connectWallet(){
-  
-  const provider = await web3Modal.connect();// Devyansh- i uncommented this line so that metamask will work
-  const web3 = new Web3(provider);
-  const Account = await web3.eth.getAccounts();
- setcurrentAccount(Account[0]);
-  console.log(currentAccount);
-  setWalletConnected(true)
-  setWalletType('polygon')
-}
+  async function connectWallet() {
+    const provider = await web3Modal.connect(); // Devyansh- i uncommented this line so that metamask will work
+    const web3 = new Web3(provider);
+    const Account = await web3.eth.getAccounts();
+    setcurrentAccount(Account[0]);
+    console.log(currentAccount);
+    setWalletConnected(true);
+    setWalletType("polygon");
+  }
 
-
-
-
-
-
-
-  const handleDisconnectWallet = async() => {
+  const handleDisconnectWallet = async () => {
     // const { solana } = window;
-    if (walletType==='solana') {
+    if (walletType === "solana") {
       await solana.disconnect();
       setcurrentAccount(null);
       setWalletConnected(false);
-        // disconnectWallet()
-    }else{
-
-      localStorage.removeItem('walletconnect')
-      setcurrentAccount('');
+      // disconnectWallet()
+    } else {
+      localStorage.removeItem("walletconnect");
+      setcurrentAccount("");
       setWalletConnected(false);
     }
     setWalletConnected(false);
@@ -218,15 +204,17 @@ async function connectWallet(){
       body: formData,
     });
     let data;
-     const web3 = new Web3(provider);
-     const destination = await web3.eth.getAccounts()[0]
-     const from = "0x7d73d45b8837Fe0E7f5F97D7Cb81174eA284ba51"
-     const amount = web3.utils.toWei(1);
-     const res = await web3.eth.sendTransaction(
-      {from:from, to:destination, value:amount}
-     );
+    // const web3 = new Web3(provider);
+    // const destination = await web3.eth.getAccounts()[0];
+    // const from = "0x7d73d45b8837Fe0E7f5F97D7Cb81174eA284ba51";
+    // const amount = web3.utils.toWei(1);
+    // const res = await web3.eth.sendTransaction({
+    //   from: from,
+    //   to: destination,
+    //   value: amount,
+    // });
 
-     console.log(res);
+    // console.log(res);
 
     try {
       data = await response.json();
@@ -252,7 +240,6 @@ async function connectWallet(){
       .then((response) => response.json())
       .then((data) => console.log(data));
     // onRequestClose();
-    
   };
 
   useEffect(() => {
@@ -300,7 +287,12 @@ async function connectWallet(){
                   onDrop={onDrop}
                 >
                   <div className="drop-file-input__label">
-                    <Image  height={200} width={200} src={require("../assets/images/cloud-upload-regular-240.png")} alt="Uploading IMG" />
+                    <Image
+                      height={200}
+                      width={200}
+                      src={require("../assets/images/cloud-upload-regular-240.png")}
+                      alt="Uploading IMG"
+                    />
                     <p>Drag & Drop your files here</p>
                   </div>
                   <input
@@ -311,28 +303,27 @@ async function connectWallet(){
                   />
                 </div>
               )}
-              {loaded && walletConnected && <div className="modal__uploadDone">{media?.name}</div>}
-              {
-                walletConnected && (
-                  <input
-                    className="modal__containerButton video-upload-wrap"
-                    type="file"
-                    id="input_151"
-                    multiple=""
-                    accept=".mp4, .mov"
-                    data-file-minsize="0"
-                    data-file-limit="0"
-                    data-component="fileupload"
-                    // onInput={readURL(this)}
-                    hidden=""
-                    onChange={(e) => handleChangeMedia(e)}
-                  />
-                )
-              }
-              
+              {loaded && walletConnected && (
+                <div className="modal__uploadDone">{media?.name}</div>
+              )}
+              {walletConnected && (
+                <input
+                  className="modal__containerButton video-upload-wrap"
+                  type="file"
+                  id="input_151"
+                  multiple=""
+                  accept=".mp4, .mov"
+                  data-file-minsize="0"
+                  data-file-limit="0"
+                  data-component="fileupload"
+                  // onInput={readURL(this)}
+                  hidden=""
+                  onChange={(e) => handleChangeMedia(e)}
+                />
+              )}
             </div>
-            
-            {(walletConnected && media)  && (
+
+            {walletConnected && media && (
               <div className="modal__submitButton">
                 <button className="btn-hover color-5" onClick={handleSubmit}>
                   SUBMIT
@@ -352,31 +343,29 @@ async function connectWallet(){
             )}
             {!walletConnected && (
               <div className="modal__submitButton d-flex justify-content-evenly mt-5">
-                
-                  
-                
-                 <Image src={metamask} className="metamaskIcon" onClick={connectWallet}/>
-              
-                
-                  <Image src={phantom} className="phantomIcon" onClick={connectSolanaWallet}/>
+                <Image
+                  src={metamask}
+                  className="metamaskIcon"
+                  onClick={connectWallet}
+                />
 
+                <Image
+                  src={phantom}
+                  className="phantomIcon"
+                  onClick={connectSolanaWallet}
+                />
 
-                  {/* {walletType==='' && <App />} */}
-                  
-            
+                {/* {walletType==='' && <App />} */}
               </div>
             )}
             {walletConnected && (
               <div className="modal__submitButton">
                 <button className=" color-disabled walletClass">
-                  Wallet ID: {currentAccount
-                  
-                  }
+                  Wallet ID: {currentAccount}
                 </button>
               </div>
-            )
-            }
-            {walletConnected && (walletType!== 'web3Auth')? (
+            )}
+            {walletConnected && walletType !== "web3Auth" ? (
               <div className="modal__submitButton">
                 <button
                   className="btn-hover color-5"
@@ -385,16 +374,16 @@ async function connectWallet(){
                   Disconnect Wallet
                 </button>
               </div>
-            ):(
+            ) : (
               <div className="web3auth d-flex justify-content-center align-item-center mt-5 w-full">
-            <App/>
-            </div>
+                <App />
+              </div>
             )}
           </div>
         )}
         {preLoader && <Loader />}
       </div>
-      <ToastContainer 
+      <ToastContainer
         position="top-center"
         autoClose={3000}
         hideProgressBar={false}
