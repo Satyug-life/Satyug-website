@@ -1,7 +1,5 @@
 import React, { useEffect, useState, useRef, useContext } from "react";
-// import "../../assets/css/Contact.css";
-// import ramSita from "../../assets/video/Final_Render_2.mp4";
-// import anyAudio from "../../assets/audio/afterSetuAudio.mp3";
+
 import Confetti from "react-confetti";
 import Image from "next/future/image";
 import { useRouter } from "next/router";
@@ -13,6 +11,7 @@ import WalletContext from "../../context/WalletContext";
 
 import mintAndSend from "../../utils/mintAndSend";
 // import { useRouter } from 'next/router';
+import axios from "axios";
 
 const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
@@ -27,7 +26,16 @@ const Contact = () => {
   const [validDetails, setValidDetails] = useState(false);
   const [form, setForm] = useState("");
   const [ModalOpn, setModalOpn] = useState(true);
+  const [quizCompleted, setQuizCompleted] = useState(true);
+  const [OopsOpen , SetOopsOpen] = useState(false);
 
+
+
+  const baseUrl = "http://localhost:8080/api/ram-setu/contact";
+
+  axios.get(baseUrl).then( (respone) => { console.log(respone) });
+
+  
   const context = useContext(WalletContext);
   const {
     userEmail,
@@ -74,6 +82,12 @@ const Contact = () => {
     // window.localStorage.setItem("name", name);
     // window.localStorage.setItem("number", number);
     console.log("item saved", name, number);
+    console.log("useer data => "+  JSON.stringify(dataToSend));
+
+    
+    axios.post(baseUrl,dataToSend).then((response) => {console.log("all saved in backend database" + response)});
+
+   
     // setHide("d-none");
     // modal.current.style.display = 'none';
     // noinput.current.style.display = 'none';
@@ -110,8 +124,6 @@ const Contact = () => {
     // buton.classList.add('animationClass');
   };
 
-  const interval = "";
-
   const intervalFunction = () => {
     console.log(ModalOpn);
     Swal.fire({
@@ -125,7 +137,18 @@ const Contact = () => {
 
   useEffect(() => {
     audioRef.current.play();
-    interval = setInterval(() => intervalFunction(), 5000);
+    if(OopsOpen === false && ModalOpn === true)
+    {
+      
+      // console.log(ModalOpn);
+      //interval = setInterval(() => intervalFunction(), 7000);
+      setTimeout(()=>{
+        intervalFunction();
+      },10000);
+      SetOopsOpen(true);
+      setModalOpn(false);
+      //return () => clearInterval(interval); 
+    }
   }, []);
 
   useEffect(() => {
@@ -151,9 +174,9 @@ const Contact = () => {
     }
   }, [minted]);
 
-  useEffect(() => {
-    return () => clearInterval(interval);
-  }, [ModalOpn]);
+  // useEffect(() => {
+  //   return () => clearInterval(interval);
+  // }, [ModalOpn]);
 
   // function playVideo(e) {
   //   // const videoPlay = ref.current;
@@ -167,15 +190,26 @@ const Contact = () => {
   //     window.localStorage.setItem("number",number);
   //     console.log(name,number);
   // } ,[name,number])
-
+ let dataToSend;
   const setData = () => {
-    let data = {
+     dataToSend = {
       name: name,
       email: email,
       number: number,
+      walletId: currentAccount
     };
-    setUserData(data);
+    
+    console.log("item saved", name, number);
+    console.log("useer data => "+  JSON.stringify(dataToSend));
+
+    
+    axios.post(baseUrl,dataToSend).then((response) => {console.log("all saved in backend database" + response)});
+    
   };
+
+
+ 
+
   const metadata =
     "https://gateway.pinata.cloud/ipfs/QmW48ksQbrDMqjWExoBSMq8JiCXcvJrRVsNt2BHiiFdWvq";
 
@@ -250,6 +284,7 @@ const Contact = () => {
                 setEmail(e.target.value);
                 setUserEmail(e.target.value);
                 setModalOpn(false);
+                //console.log(ModalOpn);
               }}
             />
 
@@ -262,8 +297,9 @@ const Contact = () => {
               onClick={() => {
                 setData();
                 setbtn(!btn);
-                save();
+              
                 setValidDetails(true);
+                // postingData();
                 // sendEmail();
               }}
             >
@@ -275,6 +311,26 @@ const Contact = () => {
           </div>
         )}
 
+        
+        {/* QUIZZZZ MODALLL BELOW */}
+
+        {/* {(vidOn === true) && !quizCompleted ? (
+          <div className="web3Contact">
+          
+          
+          <label className="labelNumber d-flex justify-content-center "></label>
+
+          <button>
+            Submit
+          </button>
+          {btn && (
+            <Confetti width="1000vw" height="1000vh" tweenDuration={1000} />
+          )}
+        </div>
+        ): (<></>)} */}
+
+        {/* QUIZZZZ MODALLL ENDSSS */}
+
         <audio
           ref={audioRef}
           src={anyAudio}
@@ -284,7 +340,7 @@ const Contact = () => {
           }}
         />
 
-        {vidOn === true ? (
+        {(vidOn === true) && quizCompleted ? (
           <div className="warp d-flex justify-content-center align-items-center">
             <video
               playsInline
