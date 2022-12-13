@@ -27,16 +27,17 @@ const Contact = () => {
   const [validDetails, setValidDetails] = useState(false);
   const [form, setForm] = useState("");
   const [ModalOpn, setModalOpn] = useState(true);
-  const [quizCompleted, setQuizCompleted] = useState(true);
-  const [OopsOpen , SetOopsOpen] = useState(false);
-
-
+  const [quizCompleted, setQuizCompleted] = useState(false);
+  const [QuizOpen, SetQuizOpen] = useState(false);
+  const [QuizOption , SetQuizOption] = useState("");
+  const [OpenConfeti , SetOpenConfeti] = useState(false);
 
   const baseUrl = "http://localhost:8080/api/ram-setu/contact";
 
-  axios.get(baseUrl).then( (respone) => { console.log(respone) });
+  axios.get(baseUrl).then((respone) => {
+    console.log(respone);
+  });
 
-  
   const context = useContext(WalletContext);
   const {
     userEmail,
@@ -69,16 +70,16 @@ const Contact = () => {
   const cross = useRef();
   const navigate = useRouter().push;
 
-
   async function welcomeEmail() {
     // e.preventDefault()
-    const img = "https://res.cloudinary.com/dde6glimb/image/upload/v1670392642/satyug_logo_olyotv.png";
+    const img =
+      "https://res.cloudinary.com/dde6glimb/image/upload/v1670392642/satyug_logo_olyotv.png";
     console.log("Sending");
     let finalData = {
       name,
       email,
       number,
-      img
+      img,
     };
     const response = await fetch("/api/welcome", {
       method: "POST",
@@ -88,10 +89,15 @@ const Contact = () => {
       },
       body: JSON.stringify(finalData),
     });
-  };
-
-
-  
+  }
+  const checkQuiz = (option)=>{
+    (option === "NEXT") ? SetOpenConfeti(true) : SetOpenConfeti(false);
+    
+    setTimeout(()=>{
+      setVidOn(true);
+      setQuizCompleted(true);
+    },5000);
+  }
   const mintNFT = async () => {
     console.log("Minting NFT with name: ");
   };
@@ -106,12 +112,12 @@ const Contact = () => {
     // window.localStorage.setItem("name", name);
     // window.localStorage.setItem("number", number);
     console.log("item saved", name, number);
-    console.log("useer data => "+  JSON.stringify(dataToSend));
+    console.log("useer data => " + JSON.stringify(dataToSend));
 
-    
-    axios.post(baseUrl,dataToSend).then((response) => {console.log("all saved in backend database" + response)});
+    axios.post(baseUrl, dataToSend).then((response) => {
+      console.log("all saved in backend database" + response);
+    });
 
-   
     // setHide("d-none");
     // modal.current.style.display = 'none';
     // noinput.current.style.display = 'none';
@@ -148,32 +154,32 @@ const Contact = () => {
     // buton.classList.add('animationClass');
   };
 
-  const intervalFunction = () => {
-    console.log(ModalOpn);
-    Swal.fire({
-      icon: "warning",
-      title: "Oops...",
-      text: "Kindly submit your form",
-      timer: 3000,
-      timerProgressBar: true,
-    });
-  };
+  // const intervalFunction = () => {
+  //   console.log(ModalOpn);
+  //   Swal.fire({
+  //     icon: "warning",
+  //     title: "Oops...",
+  //     text: "Kindly submit your form",
+  //     timer: 3000,
+  //     timerProgressBar: true,
+  //   });
+  // };
   // var timer1 = "";
   useEffect(() => {
     audioRef.current.play();
-    if(OopsOpen === false && ModalOpn === true)
-    {
-      
-      // console.log(ModalOpn);
-      //interval = setInterval(() => intervalFunction(), 7000);
-      setTimeout(()=>{
-        intervalFunction();
-      },10000);
-      SetOopsOpen(true);
-      setModalOpn(false);
-      //return () => clearInterval(interval); 
-    }
-  },[]);
+    // if(OopsOpen === false && ModalOpn === true)
+    // {
+
+    //   // console.log(ModalOpn);
+    //   //interval = setInterval(() => intervalFunction(), 7000);
+    //   // setTimeout(()=>{
+    //   //   intervalFunction();
+    //   // },10000);
+    //   // SetOopsOpen(true);
+    //   // setModalOpn(false);
+    //   //return () => clearInterval(interval);
+    // }
+  }, []);
 
   useEffect(() => {
     if (minted === true) {
@@ -188,6 +194,10 @@ const Contact = () => {
         imageAlt: "Custom image",
         timerProgressBar: true,
         timer: 4000,
+      }).then(function () {
+        // setVidOn(true);
+        SetQuizOpen(true);
+        console.log("Open Quiz");
       });
       async function smallDelay() {
         await delay(4000);
@@ -214,46 +224,43 @@ const Contact = () => {
   //     window.localStorage.setItem("number",number);
   //     console.log(name,number);
   // } ,[name,number])
- let dataToSend;
+  let dataToSend;
   const setData = () => {
-     dataToSend = {
+    dataToSend = {
       name: name,
       email: email,
       number: number,
-      walletId: currentAccount
+      walletId: currentAccount,
     };
     setUserData(dataToSend);
-    
+
     console.log("item saved", name, number);
-    console.log("useer data => "+  JSON.stringify(dataToSend));
+    console.log("useer data => " + JSON.stringify(dataToSend));
 
-    
-    axios.post(baseUrl,dataToSend)
-    .then((response) => {
-      console.log("all saved in backend database" + response)
-      welcomeEmail();
-    })
-    .catch(function(error) {
-      console.log(error);
-      if(error.response.status === 500){
-        console.log("EMAIL ID Already Exists");
-        Swal.fire({
-          icon: "warning",
-          title: "Your Email ID Already Exists",
-          text: "Redirecting you!",
-          timer: 3000,
-          timerProgressBar: true,
-        }).then(function() {
-          setVidOn(true);
-          setQuizCompleted(true)
-        });
-      }
-    });
-    
+    axios
+      .post(baseUrl, dataToSend)
+      .then((response) => {
+        console.log("all saved in backend database" + response);
+        welcomeEmail();
+      })
+      .catch(function (error) {
+        console.log(error);
+        if (error.response.status === 500) {
+          console.log("EMAIL ID Already Exists");
+          Swal.fire({
+            icon: "warning",
+            title: "Your Email ID Already Exists",
+            text: "Redirecting you!",
+            timer: 3000,
+            timerProgressBar: true,
+          }).then(function () {
+            // setVidOn(true);
+            SetQuizOpen(true);
+            console.log("Open Quiz");
+          });
+        }
+      });
   };
-
-
- 
 
   const metadata =
     "https://gateway.pinata.cloud/ipfs/QmW48ksQbrDMqjWExoBSMq8JiCXcvJrRVsNt2BHiiFdWvq";
@@ -342,7 +349,7 @@ const Contact = () => {
               onClick={() => {
                 setData();
                 setbtn(!btn);
-              
+
                 setValidDetails(true);
                 // postingData();
                 // sendEmail();
@@ -356,28 +363,60 @@ const Contact = () => {
           </div>
         )}
 
-        
         {/* QUIZZZZ MODALLL BELOW */}
 
-        {(vidOn === true) && !quizCompleted ? (
+        {vidOn === false && quizCompleted === false && QuizOpen === true ? (
           <div className="quizModal">
-          
-          <p>QUIZ</p>
-          <input type="radio" id="html" name="fav_language" value="HTML"/>
-          <label for="html">HTML</label><br/>
-          <input type="radio" id="css" name="fav_language" value="CSS"/>
-          <label for="css">CSS</label><br/>
-          <input type="radio" id="javascript" name="fav_language" value="JavaScript"/>
-          <label for="javascript">JavaScript</label>
-
-          <button>
-            Submit
-          </button>
-          {btn && (
-            <Confetti width="1000vw" height="1000vh" tweenDuration={1000} />
-          )}
-        </div>
-        ): (<></>)}
+            <div className="QuizHead1">{"जवाब दीजिये एक आसान से सवाल का और पाइये मौका सुनहरी ट्रॉफी जीतने का "}</div>
+            <div className="QuizHead">{"प्रश्न - रावण का वध करने के बाद राम जी किस वाहन पे अयोध्या लौटे थे ?"}</div>
+            <div className="QuizContainer">
+            <div>
+              <input type="radio" id="html" name="fav_language" onClick={()=>{SetQuizOption("HTML")}} value="HTML" /> {" "}
+              <label for="html">{"विभीषण एयरक्राफ्ट "}</label>
+            </div>
+            <div>
+              <input type="radio" id="css" name="fav_language" onClick={()=>{SetQuizOption("CSS")}} value="CSS" /> {" "}
+              <label for="css">{"पुष्पक विमान"}</label>
+            </div>
+            <div>
+              <input
+                type="radio"
+                id="javascript"
+                name="fav_language"
+                value="JavaScript"
+                onClick={()=>{SetQuizOption("JS")}}
+              />
+              <label for="javascript">{"अपाची हेलीकाप्टर "}</label>
+            </div>
+            <div>
+              <input
+                type="radio"
+                id="javascript"
+                name="fav_language"
+                value="JavaScript"
+                onClick={()=>{SetQuizOption("NEXT")}}
+              />
+            <label for="javascript">{"हनुमान जी की पीठ पर"}</label>
+            </div>
+            </div>
+            <button
+            className="ButtonQuiz"
+              onClick={() => {
+                checkQuiz(QuizOption);
+                console.log(QuizOption);
+              }}
+            >
+              Submit
+            </button>
+            {OpenConfeti && (
+              <>
+              <Confetti width="1000vw" height="1000vh" tweenDuration={1000} />
+              </>
+            )}
+          </div>
+        ) : (
+          <></>
+        )}
 
         {/* QUIZZZZ MODALLL ENDSSS */}
 
@@ -386,11 +425,11 @@ const Contact = () => {
           src={anyAudio}
           onEnded={() => {
             save();
-            setVidOn(true);
+            // setVidOn(true);
           }}
         />
 
-        {(vidOn === true) && quizCompleted ? (
+        {vidOn === true && quizCompleted ? (
           <div className="warp d-flex justify-content-center align-items-center">
             <video
               playsInline
