@@ -2,7 +2,7 @@ import React, { useEffect, useState, useRef } from "react";
 import Draggable from "react-draggable";
 // import "../../assets/css/Setu.css";
 import chat from "../../assets/images/calll-1.png";
-import stone from "../../assets/images/stone.png";
+import newStone from "../../assets/images/new-stone.png";
 import Image from 'next/future/image';
 import { useRouter } from 'next/router';
 // import after_video from "../../assets/video/afterSetu.mp4";
@@ -10,7 +10,7 @@ import full_Setu_pic from '../../assets/images/setu_full_pic.jpg';
 import { Fireworks } from '@fireworks-js/react'
 
 const Setu = () => {
-  const background_video = "https://res.cloudinary.com/dde6glimb/video/upload/v1665922517/setuvid_gtxhp9.mp4";
+  const background_video = "https://res.cloudinary.com/dde6glimb/video/upload/v1670937572/setu_ubumkq.mov";
   const [Goalposition, setGoalPosition] = useState({ x: 0, y: 0 });
   const [Stoneposition, setStonePosition] = useState({ x: 0, y: 0 });
   const [Complete, SetComplete] = useState(false);
@@ -85,7 +85,7 @@ const Setu = () => {
         >
           <div className="stone"  ref={stony}>
           <Image
-            src={stone}
+            src={newStone }
             alt="stone"
             className={"stone" + (isDragging ? " " : " highlight")}
           /></div>
