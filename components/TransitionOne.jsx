@@ -11,7 +11,7 @@ import initialImage2 from "../assets/images/initial-image2.png";
 import { useNavigate } from "react-router-dom";
 const TransitionOne = () => {
   const [hide, setHide] = useState('');
-  const homeVideo = "https://res.cloudinary.com/dde6glimb/video/upload/v1670928560/Setu-1_msr6g1.mp4";
+  const homeVideo = "https://res.cloudinary.com/dde6glimb/video/upload/v1670944400/Setu-1_new_hzbtgd.mp4";
 const homeVideo2 = "";
   const ref = useRef(null);
   
