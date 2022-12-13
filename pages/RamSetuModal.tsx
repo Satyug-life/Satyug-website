@@ -470,7 +470,6 @@ const App = ({data}: {data:any}) => {
     setMinted,
   } = context;
   useEffect(() => {
-    welcomeEmail();
     const web3auth = new Web3Auth({
       clientId: clientId, // get it from Web3Auth Dashboard
       chainConfig: {
@@ -614,32 +613,6 @@ const App = ({data}: {data:any}) => {
     // console.log(receipt);
 
     getAccounts();
-  };
-
-
-
-
-  async function welcomeEmail() {
-    // e.preventDefault()
-    const name = data.name;
-    const email = data.email;
-    const number = data.number;
-    const img = "https://res.cloudinary.com/dde6glimb/image/upload/v1670392642/satyug_logo_olyotv.png";
-    console.log("Sending");
-    let finalData = {
-      name,
-      email,
-      number,
-      img
-    };
-    const response = await fetch("/api/welcome", {
-      method: "POST",
-      headers: {
-        Accept: "application/json, text/plain, */*",
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(finalData),
-    });
   };
 
   async function sendEmail(

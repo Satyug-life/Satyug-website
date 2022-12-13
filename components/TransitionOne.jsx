@@ -6,12 +6,13 @@ import { useRouter } from "next/router";
 // import audIntro from "../assets/audio/audIntro.mp3";
 import Image from 'next/future/image'
 import initialImage from "../assets/images/initial-image.png";
+import initialImage2 from "../assets/images/initial-image2.png";
 
 import { useNavigate } from "react-router-dom";
 const TransitionOne = () => {
   const [hide, setHide] = useState('');
-  const homeVideo = "https://res.cloudinary.com/dde6glimb/video/upload/v1665922516/intro_gupbp5.mp4";
-const homeVideo2 = "https://res.cloudinary.com/dde6glimb/video/upload/v1665922512/renderAfterPlay_zb6lxg.mp4";
+  const homeVideo = "https://res.cloudinary.com/dde6glimb/video/upload/v1670928560/Setu-1_msr6g1.mp4";
+const homeVideo2 = "";
   const ref = useRef(null);
   
   const [vidIndex,setVidIndex]=useState(0);
@@ -41,7 +42,7 @@ const navigate = useRouter().push;
   return (
     <div className="parentDiv">
     
-      <Image className={`initialImage ${hide}`} src={initialImage} alt="Front" onClick={(e)=>{
+      <Image className={`initialImage ${hide}`} src={initialImage2} alt="Front" onClick={(e)=>{
         playVideo(e);
       }}/>
 
@@ -60,10 +61,10 @@ const navigate = useRouter().push;
         style={{ display: vidIndex === 1 ? "none" : "block" }}
         src={homeVideo}
         autoPlay
-        onEnded={() => setVidIndex((idx) => idx + 1)}
+        onEnded={()=>{navigate("/ram-setu/setu")}}
       />
       
-      {vidIndex===0?"":
+      {/* {vidIndex===0?"":
         <video
         className="homeVideo" id="myVideo"
         playsInline
@@ -72,7 +73,7 @@ const navigate = useRouter().push;
           autoPlay
           onEnded={()=>{navigate("/ram-setu/setu")}}
         />
-      }
+      } */}
  
     </div>
   );

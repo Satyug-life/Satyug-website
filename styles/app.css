@@ -22,7 +22,7 @@
     }
     .App{
       display:flex;
-      justify-content: center;
+      /* justify-content: center; */
       overflow-x: hidden;
       overflow: none;
       z-index: -1;
@@ -290,14 +290,14 @@
   .homeVideo{
     height: 100vh;
     object-fit: fill;
-    width: 500px;
+    width: 100vw;
   }
   .initialImage{
     z-index: 10;
     height: 100vh;
     object-fit: fill;
     position: absolute;
-    width: 500px;
+    width: 100vw;
   }
   @keyframes move {
     0% {

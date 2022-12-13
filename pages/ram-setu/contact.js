@@ -5,6 +5,7 @@ import Image from "next/future/image";
 import { useRouter } from "next/router";
 import Swal from "sweetalert2";
 import App from "../RamSetuModal";
+
 import RockNft from "../../assets/images/RockNFT.jpg";
 
 import WalletContext from "../../context/WalletContext";
@@ -68,6 +69,29 @@ const Contact = () => {
   const cross = useRef();
   const navigate = useRouter().push;
 
+
+  async function welcomeEmail() {
+    // e.preventDefault()
+    const img = "https://res.cloudinary.com/dde6glimb/image/upload/v1670392642/satyug_logo_olyotv.png";
+    console.log("Sending");
+    let finalData = {
+      name,
+      email,
+      number,
+      img
+    };
+    const response = await fetch("/api/welcome", {
+      method: "POST",
+      headers: {
+        Accept: "application/json, text/plain, */*",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(finalData),
+    });
+  };
+
+
+  
   const mintNFT = async () => {
     console.log("Minting NFT with name: ");
   };
@@ -134,7 +158,7 @@ const Contact = () => {
       timerProgressBar: true,
     });
   };
-
+  // var timer1 = "";
   useEffect(() => {
     audioRef.current.play();
     if(OopsOpen === false && ModalOpn === true)
@@ -149,7 +173,7 @@ const Contact = () => {
       setModalOpn(false);
       //return () => clearInterval(interval); 
     }
-  }, []);
+  },[]);
 
   useEffect(() => {
     if (minted === true) {
@@ -175,7 +199,7 @@ const Contact = () => {
   }, [minted]);
 
   // useEffect(() => {
-  //   return () => clearInterval(interval);
+  //   return () => clearTimeout(timer1);
   // }, [ModalOpn]);
 
   // function playVideo(e) {
@@ -203,7 +227,27 @@ const Contact = () => {
     console.log("useer data => "+  JSON.stringify(dataToSend));
 
     
-    axios.post(baseUrl,dataToSend).then((response) => {console.log("all saved in backend database" + response)});
+    axios.post(baseUrl,dataToSend)
+    .then((response) => {
+      console.log("all saved in backend database" + response)
+      welcomeEmail();
+    })
+    .catch(function(error) {
+      console.log(error);
+      if(error.response.status === 500){
+        console.log("EMAIL ID Already Exists");
+        Swal.fire({
+          icon: "warning",
+          title: "Your Email ID Already Exists",
+          text: "Redirecting you!",
+          timer: 3000,
+          timerProgressBar: true,
+        }).then(function() {
+          setVidOn(true);
+          setQuizCompleted(true)
+        });
+      }
+    });
     
   };
 
@@ -314,11 +358,16 @@ const Contact = () => {
         
         {/* QUIZZZZ MODALLL BELOW */}
 
-        {/* {(vidOn === true) && !quizCompleted ? (
-          <div className="web3Contact">
+        {(vidOn === true) && !quizCompleted ? (
+          <div className="quizModal">
           
-          
-          <label className="labelNumber d-flex justify-content-center "></label>
+          <p>QUIZ</p>
+          <input type="radio" id="html" name="fav_language" value="HTML"/>
+          <label for="html">HTML</label><br/>
+          <input type="radio" id="css" name="fav_language" value="CSS"/>
+          <label for="css">CSS</label><br/>
+          <input type="radio" id="javascript" name="fav_language" value="JavaScript"/>
+          <label for="javascript">JavaScript</label>
 
           <button>
             Submit
@@ -327,7 +376,7 @@ const Contact = () => {
             <Confetti width="1000vw" height="1000vh" tweenDuration={1000} />
           )}
         </div>
-        ): (<></>)} */}
+        ): (<></>)}
 
         {/* QUIZZZZ MODALLL ENDSSS */}
 
