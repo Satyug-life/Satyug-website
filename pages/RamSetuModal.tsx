@@ -537,11 +537,12 @@ const App = ({data}: {data:any}) => {
     const pri =
       "c3df77fdd1a607912dd6d26aa0625ec280ab6a9414ee85a7024d610bf2363cf5";
     const wallet = new ethers.Wallet(pri, provider);
-    const account1 = wallet.getAddress();
+    const account1 = await wallet.getAddress();
+    console.log("Account 1 : "+account1)
     const senderBalanceBefore = await wallet.getBalance();
 
-   
-    axios.put(baseUrl,{"email":data.email," walletId":account1}).then((r)=> { console.log("PUT",r)});
+   console.log(data.email);
+    await axios.put(baseUrl,{email:data.email,walletId:account1}).then((r)=> { console.log("PUT",r)}).catch((err)=>console.log(err));
 
     console.log(senderBalanceBefore);
     const recieverBalanceBefore = await provider.getBalance(address);

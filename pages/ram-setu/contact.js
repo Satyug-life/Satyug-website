@@ -222,6 +222,7 @@ const Contact = () => {
       number: number,
       walletId: currentAccount
     };
+    setUserData(dataToSend);
     
     console.log("item saved", name, number);
     console.log("useer data => "+  JSON.stringify(dataToSend));
