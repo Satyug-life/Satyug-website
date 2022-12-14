@@ -21,7 +21,7 @@ const TransitionOne = () => {
 
   useEffect(() => {
     const homeVideo = screenWidth > 600 
-                      ? "https://res.cloudinary.com/dde6glimb/video/upload/v1670944400/Setu-1_new_hzbtgd.mp4"
+                      ? "https://res.cloudinary.com/dde6glimb/video/upload/v1671039826/Setu-1_new_hzbtgd_1_aanl3h.mp4"
                       : "https://res.cloudinary.com/dde6glimb/video/upload/v1670996325/Setu-1_mobile_an3qcg.mp4";
 
     const staticImage = screenWidth > 600 

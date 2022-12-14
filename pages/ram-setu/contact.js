@@ -5,9 +5,9 @@ import Image from "next/future/image";
 import { useRouter } from "next/router";
 import Swal from "sweetalert2";
 import App from "../RamSetuModal";
-
+import { BASE_URL } from "../../utils/constant";
 import RockNft from "../../assets/images/RockNFT.jpg";
-
+import Prize from '../../assets/images/trophy.png';
 import WalletContext from "../../context/WalletContext";
 
 import mintAndSend from "../../utils/mintAndSend";
@@ -35,10 +35,11 @@ const Contact = () => {
   const [QuizOpen, SetQuizOpen] = useState(false);
   const [QuizOption , SetQuizOption] = useState("");
   const [OpenConfeti , SetOpenConfeti] = useState(false);
+  const [PrizeDiv , SetPrizeDiv] = useState("PrizeCup");
 
-  const baseUrl = "http://localhost:8080/api/ram-setu/contact";
-
-  axios.get(baseUrl).then((respone) => {
+  // const BASE_URL = "http://localhost:8080/api/ram-setu/contact";
+  console.log(BASE_URL) ;
+  axios.get(BASE_URL).then((respone) => {
     console.log(respone);
   });
 
@@ -62,6 +63,7 @@ const Contact = () => {
 
   const [ramSitaVideo, setRamSitaVideo] = useState("")
   const [mintSuccessVideo, setMintSuccessVideo] = useState("")
+  const [detailsImg, setDetailsImg] = useState("")
   
   let screenWidth = useWindowWidth();
 
@@ -74,9 +76,14 @@ const Contact = () => {
                       ? "https://res.cloudinary.com/dde6glimb/video/upload/v1671025948/Setu-4_new_iqzs9j.mp4"
                       : "https://res.cloudinary.com/dde6glimb/video/upload/v1671025948/Setu-4_mobile_t9y3oh.mp4";
 
+    const background_image_fill_details = screenWidth > 600 
+                      ? "https://res.cloudinary.com/dde6glimb/image/upload/v1671035377/hanuman_web_sv0djm.png"
+                      : "https://res.cloudinary.com/dde6glimb/image/upload/v1671035376/hanuman_mobile_z8wn8n.png";
+
     setRamSitaVideo(background_video);
     setMintSuccessVideo(background_video_before);
-  }, [screenWidth, ramSitaVideo, mintSuccessVideo]);
+    setDetailsImg(background_image_fill_details);
+  }, [screenWidth, ramSitaVideo, mintSuccessVideo, detailsImg]);
   
   const anyAudio =
     "https://res.cloudinary.com/dde6glimb/video/upload/v1666700225/afterSetuAudio_rg4qor.mp3";
@@ -112,6 +119,7 @@ const Contact = () => {
   }
   const checkQuiz = (option)=>{
     (option === "NEXT") ? SetOpenConfeti(true) : SetOpenConfeti(false);
+    (option === "NEXT") ? SetPrizeDiv("PrizeCupHack") : SetPrizeDiv("PrizeCup");
     
     setTimeout(()=>{
       setQuizCompleted(true);
@@ -133,7 +141,7 @@ const Contact = () => {
     console.log("item saved", name, number);
     console.log("useer data => " + JSON.stringify(dataToSend));
 
-    axios.post(baseUrl, dataToSend).then((response) => {
+    axios.post(BASE_URL, dataToSend).then((response) => {
       console.log("all saved in backend database" + response);
     });
 
@@ -257,7 +265,7 @@ const Contact = () => {
     console.log("useer data => " + JSON.stringify(dataToSend));
 
     axios
-      .post(baseUrl, dataToSend)
+      .post(BASE_URL, dataToSend)
       .then((response) => {
         console.log("all saved in backend database" + response);
         welcomeEmail();
@@ -286,13 +294,18 @@ const Contact = () => {
 
   return (
     <div className="App">
-      <video autoPlay muted loop id="myBGVideo">
+      {/* <video autoPlay muted loop id="myBGVideo">
         <source
           src="https://res.cloudinary.com/dde6glimb/video/upload/v1665922766/Waves_vsucxi.mp4"
           type=""
         ></source>
-      </video>
-      <div className="background d-flex justify-content-center">
+      </video> */}
+
+
+      
+      <div className="background d-flex justify-content-center" style={{backgroundImage: `url('${detailsImg}')`}}>
+
+        <div className="background d-flex justify-content-center alignModal">
         <Image
           ref={modal}
           src={require("../../assets/images/LableBox.png")}
@@ -376,15 +389,18 @@ const Contact = () => {
             >
               Submit
             </button>
+            
             {btn && (
               <Confetti width="1000vw" height="1000vh" tweenDuration={1000} />
             )}
-          </div>
+            </div>
         )}
+</div>
 
         {/* QUIZZZZ MODALLL BELOW */}
 
         {vidOn === false && quizCompleted === false && QuizOpen === true ? (
+        <>
           <div className="quizModal">
             <div className="QuizHead1">{"जवाब दीजिये एक आसान से सवाल का और पाइये मौका सुनहरी ट्रॉफी जीतने का "}</div>
             <div className="QuizHead">{"प्रश्न - रावण का वध करने के बाद राम जी किस वाहन पे अयोध्या लौटे थे ?"}</div>
@@ -442,19 +458,32 @@ const Contact = () => {
             </button>
             {OpenConfeti && (
               <>
-              <Confetti width="1000vw" height="1000vh" tweenDuration={1000} />
+                <Confetti className="Confetiprize" width="1000vw" height="1000vh" tweenDuration={1000} />
               </>
             )}
           </div>
+          { (
+              <>
+                <div className={PrizeDiv}>
+                  <Image src={Prize}  height={200} alt="prize"/>
+                </div>
+              </>
+            )}
+          </>
         ) : (
           <></>
-        )}
-        <Image
+        )
+        }
+        {/* <Image
           src={require("../../assets/video/anumanreal.gif")}
           className="hanuman d-flex align-items-center"
           alt="Hanuman img"
-        />
+        /> */}
       </div>
+
+
+
+
         {/* QUIZZZZ MODALLL ENDSSS */}
 
         {/* <audio
