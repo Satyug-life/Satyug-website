@@ -272,7 +272,9 @@ const Contact = () => {
       })
       .catch(function (error) {
         console.log(error);
-        if (error.response.status === 500) {
+        if (error.response.status === 300) {
+          console.log("wallet id from backend is " + error.response.data.userToFind.walletId)
+          setcurrentAccount(error.response.data.userToFind.walletId)
           console.log("EMAIL ID Already Exists");
           Swal.fire({
             icon: "warning",
