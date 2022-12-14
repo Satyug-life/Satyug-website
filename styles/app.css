@@ -11,6 +11,16 @@
     .alignModal {
       transform: translate(-4px, -13px);
     }
+    
+
+    .stone {
+      position: absolute;
+      width: 150px;
+      left: 10%;
+      bottom: 20px;
+      z-index: 20;
+      height: auto;
+    }
 
   }
   @media screen and  (min-width: 700px)
@@ -27,6 +37,16 @@
     .alignModal {
       transform: translate(-25vw, 20vh);
     }
+    
+  .stone {
+    position: absolute;
+    width: 300px;
+    left: 10%;
+    bottom: 20px;
+    z-index: 20;
+    height: auto;
+  }
+
     .App{
       display:flex;
       justify-content: center;
@@ -878,15 +898,7 @@
     justify-content: center;
     align-items: center;
   }
-  
-  .stone {
-    position: absolute;
-    width: 300px;
-    left: 10%;
-    bottom: 20px;
-    z-index: 20;
-    height: auto;
-  }
+ 
   
   .highlight {
     -webkit-filter: drop-shadow(10px 10px 10px white)
@@ -909,7 +921,8 @@
   .BackgroundVideoContainer.full_pic{
     z-index: 2;
   }
-  
+   
+
   .hanuman_pic {
     position: absolute;
     bottom: 0;
