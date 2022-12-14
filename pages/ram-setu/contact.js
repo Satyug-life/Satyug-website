@@ -63,6 +63,7 @@ const Contact = () => {
 
   const [ramSitaVideo, setRamSitaVideo] = useState("")
   const [mintSuccessVideo, setMintSuccessVideo] = useState("")
+  const [shareVideo, setShareVideo] = useState("")
   const [detailsImg, setDetailsImg] = useState("")
   
   let screenWidth = useWindowWidth();
@@ -72,18 +73,23 @@ const Contact = () => {
                       ? "https://res.cloudinary.com/dde6glimb/video/upload/v1671005316/Setu-ram-sita_web_spytbc.mp4"
                       : "https://res.cloudinary.com/dde6glimb/video/upload/v1671005316/Setu-ram-sita_mobile_xzibzo.mp4";
 
-    const background_video_before = screenWidth > 600 
-                      ? "https://res.cloudinary.com/dde6glimb/video/upload/v1671025948/Setu-4_new_iqzs9j.mp4"
-                      : "https://res.cloudinary.com/dde6glimb/video/upload/v1671025948/Setu-4_mobile_t9y3oh.mp4";
+    const background_video_after_mint = screenWidth > 600 
+                      ? "https://res.cloudinary.com/dde6glimb/video/upload/v1671047375/Setu-stone_new_py4ktx.mp4"
+                      : "https://res.cloudinary.com/dde6glimb/video/upload/v1671047375/Setu-stone_mobile_u1bmcu.mp4";
 
     const background_image_fill_details = screenWidth > 600 
                       ? "https://res.cloudinary.com/dde6glimb/image/upload/v1671035377/hanuman_web_sv0djm.png"
                       : "https://res.cloudinary.com/dde6glimb/image/upload/v1671035376/hanuman_mobile_z8wn8n.png";
 
+    const background_video_share = screenWidth > 600 
+                      ? "https://res.cloudinary.com/dde6glimb/video/upload/v1671047375/Setu-share_new_tk4bzn.mp4"
+                      : "https://res.cloudinary.com/dde6glimb/video/upload/v1671047375/Setu-share_mobile_shpjkk.mp4";
+
     setRamSitaVideo(background_video);
-    setMintSuccessVideo(background_video_before);
+    setMintSuccessVideo(background_video_after_mint);
     setDetailsImg(background_image_fill_details);
-  }, [screenWidth, ramSitaVideo, mintSuccessVideo, detailsImg]);
+    setShareVideo(background_video_share);
+  }, [screenWidth, ramSitaVideo, mintSuccessVideo, detailsImg, shareVideo]);
   
   const anyAudio =
     "https://res.cloudinary.com/dde6glimb/video/upload/v1666700225/afterSetuAudio_rg4qor.mp3";
@@ -123,6 +129,7 @@ const Contact = () => {
     
     setTimeout(()=>{
       setQuizCompleted(true);
+      setVidOn(false);
     },5000);
   }
   const mintNFT = async () => {
@@ -222,9 +229,9 @@ const Contact = () => {
         timerProgressBar: true,
         timer: 4000,
       }).then(function () {
-        // setVidOn(true);
-        SetQuizOpen(true);
-        console.log("Open Quiz");
+        setVidOn(true);
+        // SetQuizOpen(true);
+        // console.log("Open Quiz");
       });
       // async function smallDelay() {
       //   await delay(4000);
@@ -272,7 +279,7 @@ const Contact = () => {
       })
       .catch(function (error) {
         console.log(error);
-        if (error.response.status === 300) {
+        if (error.response.status === 500) {
           console.log("wallet id from backend is " + error.response.data.userToFind.walletId)
           setcurrentAccount(error.response.data.userToFind.walletId)
           console.log("EMAIL ID Already Exists");
@@ -283,8 +290,8 @@ const Contact = () => {
             timer: 3000,
             timerProgressBar: true,
           }).then(function () {
-            // setVidOn(true);
-            SetQuizOpen(true);
+            setVidOn(true);
+            // SetQuizOpen(true);
             console.log("Open Quiz");
           });
         }
@@ -397,12 +404,23 @@ const Contact = () => {
             )}
             </div>
         )}
-</div>
+        </div>
+
+        {vidOn === true && quizCompleted === false && QuizOpen === false ? (
+          <div>
+            <video
+              src={mintSuccessVideo}
+              playsInline
+              autoPlay 
+              className="BackgroundVideoContainer"
+              onEnded={() => SetQuizOpen(true)}
+            />
+          </div>
+        ) : (<> </>)}
 
         {/* QUIZZZZ MODALLL BELOW */}
-
-        {vidOn === false && quizCompleted === false && QuizOpen === true ? (
-        <>
+        {vidOn === true && quizCompleted === false && QuizOpen === true ? (
+          <>
           <div className="quizModal">
             <div className="QuizHead1">{"जवाब दीजिये एक आसान से सवाल का और पाइये मौका सुनहरी ट्रॉफी जीतने का "}</div>
             <div className="QuizHead">{"प्रश्न - रावण का वध करने के बाद राम जी किस वाहन पे अयोध्या लौटे थे ?"}</div>
@@ -472,6 +490,22 @@ const Contact = () => {
               </>
             )}
           </>
+        ) : (<> </>)}
+
+        {vidOn === true && quizCompleted === false && QuizOpen === true? (
+          <div className="warp d-flex justify-content-center align-items-center">
+          <video
+              playsInline
+              className="ramSita d-flex"
+              id="myVideo"
+              ref={ref}
+              src={ramSitaVideo}
+              autoPlay
+              loop
+            ></video>
+    
+          </div>
+          
         ) : (
           <></>
         )
@@ -499,11 +533,11 @@ const Contact = () => {
         {vidOn === false && quizCompleted ? (
           <div>
             <video
-              src={mintSuccessVideo}
+              src={shareVideo}
               playsInline
               autoPlay 
               className="BackgroundVideoContainer"
-              onEnded={() => setVidOn(true)}
+              onEnded={() => {setVidOn(true)}}
             />
           </div>
         ) : (
