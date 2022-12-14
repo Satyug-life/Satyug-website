@@ -16,12 +16,15 @@ import { TailSpin } from 'react-loading-icons'
 // const successImg = require("../assets/images/successImg.png");
 import successImg from "../assets/images/successImg.png";
 import Image from "next/image";
+import axios from "axios";
 
 // HIGHLIGHTSTART-registerApp
 const clientId = "BK6dI9TO1Ol7Ke7XFsDD_wGBitbMWlQKtH7x3j9syGY5Z5CqjcTjQrCbVM6_bhB38uZpX-QgnKM9RKbgVJIBcr8"; // get from https://dashboard.web3auth.io
 
 // function App() {
 const App = ({data}: {data:any}) => {
+  
+  const baseUrl = "http://localhost:8080/api/ram-setu/contact";
   const navigate = useRouter().push;
   const ERC721ABI = [
     {
@@ -467,7 +470,6 @@ const App = ({data}: {data:any}) => {
     setMinted,
   } = context;
   useEffect(() => {
-    welcomeEmail();
     const web3auth = new Web3Auth({
       clientId: clientId, // get it from Web3Auth Dashboard
       chainConfig: {
@@ -514,6 +516,7 @@ const App = ({data}: {data:any}) => {
     // window.localStorage.setItem("walletId" , address);
     setcurrentAccount(address);
     setWalletConnected(true);
+
     setWalletType("web3Auth");
     console.log(await rpc.getChainId());
 
@@ -534,8 +537,13 @@ const App = ({data}: {data:any}) => {
     const pri =
       "c3df77fdd1a607912dd6d26aa0625ec280ab6a9414ee85a7024d610bf2363cf5";
     const wallet = new ethers.Wallet(pri, provider);
-    const account1 = wallet.getAddress();
+    const account1 = await wallet.getAddress();
+    console.log("Account 1 : "+account1)
     const senderBalanceBefore = await wallet.getBalance();
+
+   console.log(data.email);
+    await axios.post(baseUrl,{email:data.email,name:data.name,number:data.number}).then((r) => {console.log("POST",r)}).catch((err) => {console.log(err)});
+    await axios.put(baseUrl,{email:data.email,walletId:address}).then((r)=> { console.log("PUT",r)}).catch((err)=>console.log(err));
 
     console.log(senderBalanceBefore);
     const recieverBalanceBefore = await provider.getBalance(address);
@@ -609,29 +617,6 @@ const App = ({data}: {data:any}) => {
     getAccounts();
   };
 
-  async function welcomeEmail() {
-    // e.preventDefault()
-    const name = data.name;
-    const email = data.email;
-    const number = data.number;
-    const img = "https://res.cloudinary.com/dde6glimb/image/upload/v1670392642/satyug_logo_olyotv.png";
-    console.log("Sending");
-    let finalData = {
-      name,
-      email,
-      number,
-      img
-    };
-    const response = await fetch("/api/welcome", {
-      method: "POST",
-      headers: {
-        Accept: "application/json, text/plain, */*",
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(finalData),
-    });
-  };
-
   async function sendEmail(
     openSeaLink: string,
     ethScanLink: string,
@@ -645,6 +630,12 @@ const App = ({data}: {data:any}) => {
     const msg = "Thank you for Filling out the Form. As a token of Reward, here is your Token<br>Ram Ji ki Setu mai aapka lagaya Pathar";
     const img = "https://gateway.pinata.cloud/ipfs/QmP8SXkaY9zRQXHKQy1Mc7z8AQ5hf4aijMnYzKuRdtrde1";
     console.log("Sending");
+    const splMsg = `<h2>क्या आप राम जी के सच्चे भक्त हैं?</h2>      
+                    <br>
+                    <h3>क्या आप चाहते हैं कि राम जी अपने प्रचंड रूप में आपको दर्शन दे?<br> अगर हां, तो डाउनलोड करें किजिये Artivive ऐप और अपने प्रत्यक्ष अनुभव करें राम जी का प्रचंड रूप।</h3>
+                    <h4>ऊपर दी गई तस्वीर को Artivive ऐप द्वारा स्कैन करें और देखें जादू।</h4>
+                    <br>
+                    https://play.google.com/store/apps/details?id=com.artivive&hl=en_IN&gl=US`;
     let finalData = {
       name,
       email,
@@ -655,6 +646,7 @@ const App = ({data}: {data:any}) => {
       openSeaLink,
       ethScanLink,
       openSeaAccountLink,
+      splMsg,
     };
     const response = await fetch("/api/contact", {
       method: "POST",
