@@ -8,15 +8,34 @@ import { useRouter } from 'next/router';
 // import after_video from "../../assets/video/afterSetu.mp4";
 import full_Setu_pic from '../../assets/images/setu_full_pic.jpg';
 import { Fireworks } from '@fireworks-js/react'
+import {
+  useWindowWidth,
+} from '@react-hook/window-size'
 
 const Setu = () => {
-  const background_video = "https://res.cloudinary.com/dde6glimb/video/upload/v1670944366/Setu-2_new_ka4h2h.mp4";
-  const background_after_video = "https://res.cloudinary.com/dde6glimb/video/upload/v1670944562/Setu-3_new_jamwdj.mp4";
+  const [videoBefore, setVideoBefore] = useState("");
+  const [videoAfter, setVideoAfter] = useState("");
+
   const [Goalposition, setGoalPosition] = useState({ x: 0, y: 0 });
   const [Stoneposition, setStonePosition] = useState({ x: 0, y: 0 });
   const [Complete, SetComplete] = useState(false);
   const Goal = useRef();
   const stony = useRef();
+
+  let screenWidth = useWindowWidth();
+
+  useEffect(() => {
+    const background_video = screenWidth > 600 
+                      ? "https://res.cloudinary.com/dde6glimb/video/upload/v1670944366/Setu-2_new_ka4h2h.mp4"
+                      : "https://res.cloudinary.com/dde6glimb/video/upload/v1670996286/Setu-2_mobile_dmaw1w.mp4";
+
+    const background_video_after = screenWidth > 600 
+                      ? "https://res.cloudinary.com/dde6glimb/video/upload/v1670944562/Setu-3_new_jamwdj.mp4"
+                      : "https://res.cloudinary.com/dde6glimb/video/upload/v1670996292/Setu-3_mobile_ldwbef.mp4";
+    setVideoBefore(background_video);
+    setVideoAfter(background_video_after);
+  }, [screenWidth, videoBefore, videoAfter]);
+
   const trackPos = () => {
     const GoalX = Goal.current.getBoundingClientRect().left;
     const GoalY = Goal.current.getBoundingClientRect().top;
@@ -63,7 +82,7 @@ const Setu = () => {
         className="BackgroundVideoContainer"
         src={
           // Complete === false ? 
-          background_video
+          videoBefore
           //  : after_video
           }
       ></video>
@@ -104,7 +123,7 @@ const Setu = () => {
         className="BackgroundVideoContainer"
         autoPlay
         playsInline
-        src={background_after_video}
+        src={videoAfter}
         onEnded = {() => navigate("/ram-setu/contact")}
         />
         )

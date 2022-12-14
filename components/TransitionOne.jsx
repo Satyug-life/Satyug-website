@@ -7,11 +7,30 @@ import { useRouter } from "next/router";
 import Image from 'next/future/image'
 import initialImage from "../assets/images/initial-image.png";
 import initialImage2 from "../assets/images/initial-image2.png";
+import initialImageMobile from "../assets/images/initial-image-mobile.png";
+import {
+  useWindowWidth,
+} from '@react-hook/window-size'
 
 import { useNavigate } from "react-router-dom";
 const TransitionOne = () => {
   const [hide, setHide] = useState('');
-  const homeVideo = "https://res.cloudinary.com/dde6glimb/video/upload/v1670944400/Setu-1_new_hzbtgd.mp4";
+  const [video, setVideo] = useState('');
+  const [staticImg, setStaticImg] = useState('');
+  let screenWidth = useWindowWidth();
+
+  useEffect(() => {
+    const homeVideo = screenWidth > 600 
+                      ? "https://res.cloudinary.com/dde6glimb/video/upload/v1670944400/Setu-1_new_hzbtgd.mp4"
+                      : "https://res.cloudinary.com/dde6glimb/video/upload/v1670996325/Setu-1_mobile_an3qcg.mp4";
+
+    const staticImage = screenWidth > 600 
+                      ? initialImage2
+                      : initialImageMobile;
+    setVideo(homeVideo);
+    setStaticImg(staticImage);
+  }, [screenWidth, video]);
+  
 const homeVideo2 = "";
   const ref = useRef(null);
   
@@ -42,7 +61,7 @@ const navigate = useRouter().push;
   return (
     <div className="parentDiv">
     
-      <Image className={`initialImage ${hide}`} src={initialImage2} alt="Front" onClick={(e)=>{
+      <Image className={`initialImage ${hide}`} src={staticImg} alt="Front" onClick={(e)=>{
         playVideo(e);
       }}/>
 
@@ -59,7 +78,7 @@ const navigate = useRouter().push;
        playsInline
        ref={ref}
         style={{ display: vidIndex === 1 ? "none" : "block" }}
-        src={homeVideo}
+        src={video}
         autoPlay
         onEnded={()=>{navigate("/ram-setu/setu")}}
       />
