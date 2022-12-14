@@ -14,6 +14,10 @@ import mintAndSend from "../../utils/mintAndSend";
 // import { useRouter } from 'next/router';
 import axios from "axios";
 
+import {
+  useWindowWidth,
+} from '@react-hook/window-size'
+
 const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
 const Contact = () => {
@@ -56,8 +60,18 @@ const Contact = () => {
     setMinted,
   } = context;
 
-  const ramSita =
-    "https://res.cloudinary.com/dde6glimb/video/upload/v1666700183/Final_Render_2_oaehkh.mp4";
+  const [ramSitaVideo, setRamSitaVideo] = useState("")
+  
+  let screenWidth = useWindowWidth();
+
+  useEffect(() => {
+    const background_video = screenWidth > 600 
+                      ? "https://res.cloudinary.com/dde6glimb/video/upload/v1671005316/Setu-ram-sita_web_spytbc.mp4"
+                      : "https://res.cloudinary.com/dde6glimb/video/upload/v1671005316/Setu-ram-sita_mobile_xzibzo.mp4";
+
+    setRamSitaVideo(background_video);
+  }, [screenWidth, ramSitaVideo]);
+  
   const anyAudio =
     "https://res.cloudinary.com/dde6glimb/video/upload/v1666700225/afterSetuAudio_rg4qor.mp3";
   const ref = useRef(null);
@@ -166,7 +180,7 @@ const Contact = () => {
   // };
   // var timer1 = "";
   useEffect(() => {
-    audioRef.current.play();
+    // audioRef.current.play();
     // if(OopsOpen === false && ModalOpn === true)
     // {
 
@@ -417,17 +431,22 @@ const Contact = () => {
         ) : (
           <></>
         )}
-
+        <Image
+          src={require("../../assets/video/anumanreal.gif")}
+          className="hanuman d-flex align-items-center"
+          alt="Hanuman img"
+        />
+      </div>
         {/* QUIZZZZ MODALLL ENDSSS */}
 
-        <audio
+        {/* <audio
           ref={audioRef}
           src={anyAudio}
           onEnded={() => {
             save();
             // setVidOn(true);
           }}
-        />
+        /> */}
 
         {vidOn === true && quizCompleted ? (
           <div className="warp d-flex justify-content-center align-items-center">
@@ -436,7 +455,7 @@ const Contact = () => {
               className="ramSita d-flex"
               id="myVideo"
               ref={ref}
-              src={ramSita}
+              src={ramSitaVideo}
               autoPlay
               loop
             ></video>
@@ -474,13 +493,6 @@ const Contact = () => {
         ) : (
           <></>
         )}
-
-        <Image
-          src={require("../../assets/video/anumanreal.gif")}
-          className="hanuman d-flex align-items-center"
-          alt="Hanuman img"
-        />
-      </div>
     </div>
   );
 };

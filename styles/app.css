@@ -1131,7 +1131,7 @@
 .ramSita{
   height: 100vh;
   object-fit: fill;
-  width: 500px;
+  width: 100%;
   z-index: 500;
 }
 
