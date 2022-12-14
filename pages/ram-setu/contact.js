@@ -61,6 +61,7 @@ const Contact = () => {
   } = context;
 
   const [ramSitaVideo, setRamSitaVideo] = useState("")
+  const [mintSuccessVideo, setMintSuccessVideo] = useState("")
   
   let screenWidth = useWindowWidth();
 
@@ -69,8 +70,13 @@ const Contact = () => {
                       ? "https://res.cloudinary.com/dde6glimb/video/upload/v1671005316/Setu-ram-sita_web_spytbc.mp4"
                       : "https://res.cloudinary.com/dde6glimb/video/upload/v1671005316/Setu-ram-sita_mobile_xzibzo.mp4";
 
+    const background_video_before = screenWidth > 600 
+                      ? "https://res.cloudinary.com/dde6glimb/video/upload/v1671025948/Setu-4_new_iqzs9j.mp4"
+                      : "https://res.cloudinary.com/dde6glimb/video/upload/v1671025948/Setu-4_mobile_t9y3oh.mp4";
+
     setRamSitaVideo(background_video);
-  }, [screenWidth, ramSitaVideo]);
+    setMintSuccessVideo(background_video_before);
+  }, [screenWidth, ramSitaVideo, mintSuccessVideo]);
   
   const anyAudio =
     "https://res.cloudinary.com/dde6glimb/video/upload/v1666700225/afterSetuAudio_rg4qor.mp3";
@@ -108,7 +114,6 @@ const Contact = () => {
     (option === "NEXT") ? SetOpenConfeti(true) : SetOpenConfeti(false);
     
     setTimeout(()=>{
-      setVidOn(true);
       setQuizCompleted(true);
     },5000);
   }
@@ -213,11 +218,11 @@ const Contact = () => {
         SetQuizOpen(true);
         console.log("Open Quiz");
       });
-      async function smallDelay() {
-        await delay(4000);
-        setVidOn(minted);
-      }
-      smallDelay();
+      // async function smallDelay() {
+      //   await delay(4000);
+      //   setVidOn(minted);
+      // }
+      // smallDelay();
       setModalOpn(false);
     }
   }, [minted]);
@@ -385,11 +390,23 @@ const Contact = () => {
             <div className="QuizHead">{"प्रश्न - रावण का वध करने के बाद राम जी किस वाहन पे अयोध्या लौटे थे ?"}</div>
             <div className="QuizContainer">
             <div>
-              <input type="radio" id="html" name="fav_language" onClick={()=>{SetQuizOption("HTML")}} value="HTML" /> {" "}
+              <input 
+                type="radio" 
+                id="html"
+                name="fav_language" 
+                onClick={()=>{SetQuizOption("HTML")}} 
+                value="HTML" 
+              /> {" "}
               <label for="html">{"विभीषण एयरक्राफ्ट "}</label>
             </div>
             <div>
-              <input type="radio" id="css" name="fav_language" onClick={()=>{SetQuizOption("CSS")}} value="CSS" /> {" "}
+              <input 
+                type="radio" 
+                id="css" 
+                name="fav_language" 
+                onClick={()=>{SetQuizOption("NEXT")}}
+                value="CSS"   
+              /> {" "}
               <label for="css">{"पुष्पक विमान"}</label>
             </div>
             <div>
@@ -398,7 +415,8 @@ const Contact = () => {
                 id="javascript"
                 name="fav_language"
                 value="JavaScript"
-                onClick={()=>{SetQuizOption("JS")}}
+                onClick={()=>{checkQuiz(QuizOption);
+                console.log(QuizOption);}}
               />
               <label for="javascript">{"अपाची हेलीकाप्टर "}</label>
             </div>
@@ -408,7 +426,7 @@ const Contact = () => {
                 id="javascript"
                 name="fav_language"
                 value="JavaScript"
-                onClick={()=>{SetQuizOption("NEXT")}}
+                onClick={()=>{SetQuizOption("CSS")}} 
               />
             <label for="javascript">{"हनुमान जी की पीठ पर"}</label>
             </div>
@@ -447,6 +465,19 @@ const Contact = () => {
             // setVidOn(true);
           }}
         /> */}
+        {vidOn === false && quizCompleted ? (
+          <div>
+            <video
+              src={mintSuccessVideo}
+              playsInline
+              autoPlay 
+              className="BackgroundVideoContainer"
+              onEnded={() => setVidOn(true)}
+            />
+          </div>
+        ) : (
+          <></>
+        )}
 
         {vidOn === true && quizCompleted ? (
           <div className="warp d-flex justify-content-center align-items-center">
