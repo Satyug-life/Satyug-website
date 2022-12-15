@@ -78,8 +78,8 @@ const Contact = () => {
                       : "https://res.cloudinary.com/dde6glimb/video/upload/v1671047375/Setu-stone_mobile_u1bmcu.mp4";
 
     const background_image_fill_details = screenWidth > 600 
-                      ? "https://res.cloudinary.com/dde6glimb/image/upload/v1671035377/hanuman_web_sv0djm.png"
-                      : "https://res.cloudinary.com/dde6glimb/image/upload/v1671035376/hanuman_mobile_z8wn8n.png";
+                      ? "https://res.cloudinary.com/dde6glimb/video/upload/v1671117303/detalis_without_box_nkcgyb.mp4"
+                      : "https://res.cloudinary.com/dde6glimb/video/upload/v1671117177/mob_without_box_lajugf.mp4";
 
     const background_video_share = screenWidth > 600 
                       ? "https://res.cloudinary.com/dde6glimb/video/upload/v1671047375/Setu-share_new_tk4bzn.mp4"
@@ -323,7 +323,15 @@ const Contact = () => {
 
 
       
-      <div className="background d-flex justify-content-center" style={{backgroundImage: `url('${detailsImg}')`}}>
+      <div className="background d-flex justify-content-center">
+        <video
+              playsInline
+              className="afterMint d-flex"
+              id="myVideo"
+              src={detailsImg}
+              autoPlay
+              loop
+            ></video>
 
         <div className="background d-flex justify-content-center alignModal">
         <Image
