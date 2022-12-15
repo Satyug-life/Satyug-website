@@ -41,14 +41,14 @@ const Setu = () => {
     const GoalY = Goal.current.getBoundingClientRect().top;
     const StoneX = stony.current.getBoundingClientRect().left;
     const StoneY = stony.current.getBoundingClientRect().top;
-    setGoalPosition({ x: Math.round(GoalX) + 180, y: Math.round(GoalY) + 120 });
+    setGoalPosition({ x: Math.round(GoalX), y: Math.round(GoalY) });
     setStonePosition({ x: Math.round(StoneX), y: Math.round(StoneY) });
   };
   const CheckCollide = (GoalX, GoalY, StoneX, StoneY) => {
     if (
-      (StoneX >= GoalX - 30 || StoneX <= GoalX + 30) &&
+      (StoneX >= GoalX - 80 && StoneX <=  GoalX + 80) &&
       // StoneY === GoalY &&
-      !(StoneY <= GoalY - 30 || StoneY >= GoalY + 30) &&
+      (StoneY >= GoalY - 50 && StoneY <=  GoalY + 50) &&
       StoneX !== 0
     ) {
       SetComplete(true);
@@ -70,9 +70,6 @@ const Setu = () => {
   const [isDragging, setDragging] = useState(false);
   return (
     <div className="App">
-    <video autoPlay muted loop id="myBGVideo">
-      <source src="https://res.cloudinary.com/dde6glimb/video/upload/v1665922766/Waves_vsucxi.mp4" type=""></source>
-    </video>
     <div className="imgContainer">
       <video
         autoPlay
@@ -86,7 +83,6 @@ const Setu = () => {
           //  : after_video
           }
       ></video>
-      <Image src={full_Setu_pic} className="BackgroundVideoContainer full_pic"  alt="full pic" />
       {Complete === false ? (
         <Draggable
           onDrag={() => {
@@ -100,11 +96,12 @@ const Setu = () => {
           }}
         >
           <div className="stone"  ref={stony}>
-          <Image
+          {/* <Image
             src={newStone }
             alt="stone"
             className={"stone" + (isDragging ? " " : " highlight")}
-          /></div>
+          /> */}
+          </div>
         </Draggable>
       ) : null}
       {Complete === false ? (
