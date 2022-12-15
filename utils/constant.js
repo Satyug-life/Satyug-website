@@ -1,0 +1,1 @@
+export const BASE_URL = "https://backend.satyug.life/api/ram-setu/contact" ;

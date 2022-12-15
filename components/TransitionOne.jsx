@@ -6,12 +6,32 @@ import { useRouter } from "next/router";
 // import audIntro from "../assets/audio/audIntro.mp3";
 import Image from 'next/future/image'
 import initialImage from "../assets/images/initial-image.png";
+import initialImage2 from "../assets/images/initial-image2.png";
+import initialImageMobile from "../assets/images/initial-image-mobile.png";
+import {
+  useWindowWidth,
+} from '@react-hook/window-size'
 
 import { useNavigate } from "react-router-dom";
 const TransitionOne = () => {
   const [hide, setHide] = useState('');
-  const homeVideo = "https://res.cloudinary.com/dde6glimb/video/upload/v1665922516/intro_gupbp5.mp4";
-const homeVideo2 = "https://res.cloudinary.com/dde6glimb/video/upload/v1665922512/renderAfterPlay_zb6lxg.mp4";
+  const [video, setVideo] = useState('');
+  const [staticImg, setStaticImg] = useState('');
+  let screenWidth = useWindowWidth();
+
+  useEffect(() => {
+    const homeVideo = screenWidth > 600 
+                      ? "https://res.cloudinary.com/dde6glimb/video/upload/v1671039826/Setu-1_new_hzbtgd_1_aanl3h.mp4"
+                      : "https://res.cloudinary.com/dde6glimb/video/upload/v1671041500/Setu-1_mobile_an3qcg_1_dmgaht.mp4";
+
+    const staticImage = screenWidth > 600 
+                      ? initialImage2
+                      : initialImageMobile;
+    setVideo(homeVideo);
+    setStaticImg(staticImage);
+  }, [screenWidth, video]);
+  
+const homeVideo2 = "";
   const ref = useRef(null);
   
   const [vidIndex,setVidIndex]=useState(0);
@@ -41,7 +61,7 @@ const navigate = useRouter().push;
   return (
     <div className="parentDiv">
     
-      <Image className={`initialImage ${hide}`} src={initialImage} alt="Front" onClick={(e)=>{
+      <Image className={`initialImage ${hide}`} src={staticImg} alt="Front" onClick={(e)=>{
         playVideo(e);
       }}/>
 
@@ -58,12 +78,12 @@ const navigate = useRouter().push;
        playsInline
        ref={ref}
         style={{ display: vidIndex === 1 ? "none" : "block" }}
-        src={homeVideo}
+        src={video}
         autoPlay
-        onEnded={() => setVidIndex((idx) => idx + 1)}
+        onEnded={()=>{navigate("/ram-setu/setu")}}
       />
       
-      {vidIndex===0?"":
+      {/* {vidIndex===0?"":
         <video
         className="homeVideo" id="myVideo"
         playsInline
@@ -72,7 +92,7 @@ const navigate = useRouter().push;
           autoPlay
           onEnded={()=>{navigate("/ram-setu/setu")}}
         />
-      }
+      } */}
  
     </div>
   );

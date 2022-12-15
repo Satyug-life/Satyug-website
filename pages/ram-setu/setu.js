@@ -2,43 +2,59 @@ import React, { useEffect, useState, useRef } from "react";
 import Draggable from "react-draggable";
 // import "../../assets/css/Setu.css";
 import chat from "../../assets/images/calll-1.png";
-import stone from "../../assets/images/stone.png";
+import newStone from "../../assets/images/new-stone.png";
 import Image from 'next/future/image';
 import { useRouter } from 'next/router';
 // import after_video from "../../assets/video/afterSetu.mp4";
 import full_Setu_pic from '../../assets/images/setu_full_pic.jpg';
 import { Fireworks } from '@fireworks-js/react'
+import {
+  useWindowWidth,
+} from '@react-hook/window-size'
 
 const Setu = () => {
-  const background_video = "https://res.cloudinary.com/dde6glimb/video/upload/v1665922517/setuvid_gtxhp9.mp4";
+  const [videoBefore, setVideoBefore] = useState("");
+  const [videoAfter, setVideoAfter] = useState("");
+
   const [Goalposition, setGoalPosition] = useState({ x: 0, y: 0 });
   const [Stoneposition, setStonePosition] = useState({ x: 0, y: 0 });
   const [Complete, SetComplete] = useState(false);
   const Goal = useRef();
   const stony = useRef();
+
+  let screenWidth = useWindowWidth();
+
+  useEffect(() => {
+    const background_video = screenWidth > 600 
+                      ? "https://res.cloudinary.com/dde6glimb/video/upload/v1670944366/Setu-2_new_ka4h2h.mp4"
+                      : "https://res.cloudinary.com/dde6glimb/video/upload/v1670996286/Setu-2_mobile_dmaw1w.mp4";
+
+    const background_video_after = screenWidth > 600 
+                      ? "https://res.cloudinary.com/dde6glimb/video/upload/v1670944562/Setu-3_new_jamwdj.mp4"
+                      : "https://res.cloudinary.com/dde6glimb/video/upload/v1670996292/Setu-3_mobile_ldwbef.mp4";
+    setVideoBefore(background_video);
+    setVideoAfter(background_video_after);
+  }, [screenWidth, videoBefore, videoAfter]);
+
   const trackPos = () => {
     const GoalX = Goal.current.getBoundingClientRect().left;
     const GoalY = Goal.current.getBoundingClientRect().top;
     const StoneX = stony.current.getBoundingClientRect().left;
     const StoneY = stony.current.getBoundingClientRect().top;
-    setGoalPosition({ x: Math.round(GoalX), y: Math.round(GoalY) });
+    setGoalPosition({ x: Math.round(GoalX) + 180, y: Math.round(GoalY) + 120 });
     setStonePosition({ x: Math.round(StoneX), y: Math.round(StoneY) });
   };
   const CheckCollide = (GoalX, GoalY, StoneX, StoneY) => {
     if (
-      (StoneX >= GoalX - 20 || StoneX <= GoalX + 20) &&
+      (StoneX >= GoalX - 30 || StoneX <= GoalX + 30) &&
       // StoneY === GoalY &&
-      !(StoneY <= GoalY - 20 || StoneY >= GoalY + 20) &&
+      !(StoneY <= GoalY - 30 || StoneY >= GoalY + 30) &&
       StoneX !== 0
     ) {
       SetComplete(true);
     }
   };
   const navigate = useRouter().push;
-
-  if(Complete){
-    setTimeout(()=>{navigate("/ram-setu/contact")}, 5000)
-  }
 
   useEffect(() => {
     if (Complete === false) {
@@ -66,7 +82,7 @@ const Setu = () => {
         className="BackgroundVideoContainer"
         src={
           // Complete === false ? 
-          background_video
+          videoBefore
           //  : after_video
           }
       ></video>
@@ -85,7 +101,7 @@ const Setu = () => {
         >
           <div className="stone"  ref={stony}>
           <Image
-            src={stone}
+            src={newStone }
             alt="stone"
             className={"stone" + (isDragging ? " " : " highlight")}
           /></div>
@@ -102,19 +118,15 @@ const Setu = () => {
         null}
       </div>
       {Complete ? 
-        <Fireworks
-        
-        options={{ opacity: 0.5 }}
-        style={{
-          width: '100%',
-          height: '100%',
-          maxWidth:'500px',
-          position:'fixed',
-          zIndex: 5,
-
-        
-        }}
-      />
+      (
+      <video
+        className="BackgroundVideoContainer"
+        autoPlay
+        playsInline
+        src={videoAfter}
+        onEnded = {() => navigate("/ram-setu/contact")}
+        />
+        )
        : null}
     </div>
     </div>

@@ -7,7 +7,21 @@
       height: 100vh;
       object-fit: fill;
     }
-   
+    
+    .alignModal {
+      transform: translate(-4px, -13px);
+    }
+    
+
+    .stone {
+      position: absolute;
+      width: 150px;
+      left: 10%;
+      bottom: 20px;
+      z-index: 20;
+      height: auto;
+    }
+
   }
   @media screen and  (min-width: 700px)
   {
@@ -20,6 +34,19 @@
     body{
       overflow-x: hidden;
     }
+    .alignModal {
+      transform: translate(-25vw, 20vh);
+    }
+    
+  .stone {
+    position: absolute;
+    width: 300px;
+    left: 10%;
+    bottom: 20px;
+    z-index: 20;
+    height: auto;
+  }
+
     .App{
       display:flex;
       justify-content: center;
@@ -29,26 +56,25 @@
       /* background-color: black; */
       /* background:url("./assets/video/wave\ 4.gif"); */
     }
+
+    .parentDiv {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+      height: 100vh;
+      overflow-x: hidden;
+      overflow: none;
+      z-index: -1;
+    }
    
     .RamSitaGIFContainer{
       width : 50%;
       object-fit: fill;
       height: 100vh;
     }
-    #myBGVideo {
-      position: absolute;
-      z-index: -10;
-      left: 0;
-      top: 0;
-      height: 100vh;
-      right: 0;
-      bottom: 0;
-      display: flex;
-      object-fit: fill;
-      filter: blur(5px);
-      min-width: 100vw; 
-      min-height: 100vh;
-    }
+    
   }
   @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300&display=swap');
   @font-face {
@@ -133,6 +159,68 @@
     width: 200px;
     margin-top: 0.5em;
   } */
+  .quizModal{
+    background: #ad54008b;
+    backdrop-filter: blur( 8.5px );
+    -webkit-backdrop-filter: blur( 8.5px );
+    border-radius: 10px;
+    z-index: 20;
+    gap: 10px;
+    padding: 10px;
+    width: 50%;
+    border-radius: 10px;
+    box-shadow: 1px 6px 19px #000;
+    height: 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    z-index: 10000;
+  }
+  .ButtonQuiz{
+    border: 1px solid #000;
+    border-radius: 10px;
+    cursor: pointer;
+    background: transparent;
+    background: rgba(20, 222, 5, 0.588);
+  }
+  .QuizContainer{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .QuizHead1{
+    font-size: 1.2rem;
+    font-weight: 700;
+  }
+  .QuizHead{
+    font-size: 1rem;
+    font-weight: 600;
+  }
+
+  
+  .PrizeCup{
+    z-index: 40;
+    position: absolute;
+    transform: translateY(-750px);
+    transition: transform 2s;
+    z-index: 100000;
+  }
+  .PrizeCupHack{
+      transform: translateY(0);
+      z-index: 40;
+      position: absolute;
+     transition: transform 2s;
+  }
+  .Confetiprize{
+    height: 100vh;
+    z-index: 2;
+    position: absolute;
+    width: 50vw;
+    pointer-events: none;
+    inset: 0px;
+  }
   @media screen and (max-width:600px) {
     #clickText{
       position: absolute;
@@ -290,14 +378,15 @@
   .homeVideo{
     height: 100vh;
     object-fit: fill;
-    width: 500px;
+    position: absolute;
+    width: 100vw;
   }
   .initialImage{
     z-index: 10;
     height: 100vh;
     object-fit: fill;
     position: absolute;
-    width: 500px;
+    width: 100vw;
   }
   @keyframes move {
     0% {
@@ -755,30 +844,29 @@
   .imgContainer {
     position: absolute;
     object-fit: fill;
-    width: 500px;
+    width: 100vw;
     height: 100%;
     overflow: hidden;
   }
   
   .Goal {
     position: absolute;
-    width: 50px;
-    top: calc(100px + 40%);
-    left: 50%;
+    width: 100px;
+    top: calc(100px + 65%);
+    left: 60%;
     transform: translate(-50%, -50%);
-    height: 50px;
+    height: 100px;
     border-radius: 50%;
-    border: 5px rgb(255, 0, 0) dotted;
+    border: 3px rgb(255, 0, 0) dotted;
     z-index: 20;
   }
   
   .chat {
     position: absolute;
-   
     width: 165px;
     height: 10%;
-    margin-left: -100px;
-    margin-top: -50px;
+    margin-left: 120px;
+    margin-top: 250px;
     z-index: 10;
     animation: float 2s ease-in-out infinite;
   }
@@ -813,16 +901,7 @@
     justify-content: center;
     align-items: center;
   }
-  
-  .stone {
-    position: absolute;
-    width: 100px;
-    left: 40%;
-    bottom: 40px;
-    bottom: 20px;
-    z-index: 20;
-    height: 25%;
-  }
+ 
   
   .highlight {
     -webkit-filter: drop-shadow(10px 10px 10px white)
@@ -845,7 +924,8 @@
   .BackgroundVideoContainer.full_pic{
     z-index: 2;
   }
-  
+   
+
   .hanuman_pic {
     position: absolute;
     bottom: 0;
@@ -944,10 +1024,9 @@
   }
   .background {
     height:100vh;
-    background-image: url("../assets/images/Login_Background.png");
+    /* background-image: url("../assets/images/Login_Background.png"); */
     width: 100vw;
-    max-width: 500px;
-    height: 100vh;
+    
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center center;
@@ -1019,7 +1098,7 @@
 
 @import url("https://fonts.googleapis.com/css2?family=Crimson+Text&family=Mukta:wght@300&family=Rubik&display=swap");
 .background {
-  background-image: url("../assets/images/Login_Background.png");
+  /* background-image: url("../assets/images/Login_Background.png"); */
   width: 100vw;
   /* max-width: 500px; */
   height: 100vh;
@@ -1083,7 +1162,7 @@
 .ramSita{
   height: 100vh;
   object-fit: fill;
-  width: 500px;
+  width: 100%;
   z-index: 500;
 }
 

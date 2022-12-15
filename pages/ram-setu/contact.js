@@ -1,18 +1,22 @@
 import React, { useEffect, useState, useRef, useContext } from "react";
-// import "../../assets/css/Contact.css";
-// import ramSita from "../../assets/video/Final_Render_2.mp4";
-// import anyAudio from "../../assets/audio/afterSetuAudio.mp3";
+
 import Confetti from "react-confetti";
 import Image from "next/future/image";
 import { useRouter } from "next/router";
 import Swal from "sweetalert2";
 import App from "../RamSetuModal";
+import { BASE_URL } from "../../utils/constant";
 import RockNft from "../../assets/images/RockNFT.jpg";
-
+import Prize from '../../assets/images/trophy.png';
 import WalletContext from "../../context/WalletContext";
 
 import mintAndSend from "../../utils/mintAndSend";
 // import { useRouter } from 'next/router';
+import axios from "axios";
+
+import {
+  useWindowWidth,
+} from '@react-hook/window-size'
 
 const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
@@ -27,6 +31,17 @@ const Contact = () => {
   const [validDetails, setValidDetails] = useState(false);
   const [form, setForm] = useState("");
   const [ModalOpn, setModalOpn] = useState(true);
+  const [quizCompleted, setQuizCompleted] = useState(false);
+  const [QuizOpen, SetQuizOpen] = useState(false);
+  const [QuizOption , SetQuizOption] = useState("");
+  const [OpenConfeti , SetOpenConfeti] = useState(false);
+  const [PrizeDiv , SetPrizeDiv] = useState("PrizeCup");
+
+  // const BASE_URL = "http://localhost:8080/api/ram-setu/contact";
+  console.log(BASE_URL) ;
+  axios.get(BASE_URL).then((respone) => {
+    console.log(respone);
+  });
 
   const context = useContext(WalletContext);
   const {
@@ -46,8 +61,36 @@ const Contact = () => {
     setMinted,
   } = context;
 
-  const ramSita =
-    "https://res.cloudinary.com/dde6glimb/video/upload/v1666700183/Final_Render_2_oaehkh.mp4";
+  const [ramSitaVideo, setRamSitaVideo] = useState("")
+  const [mintSuccessVideo, setMintSuccessVideo] = useState("")
+  const [shareVideo, setShareVideo] = useState("")
+  const [detailsImg, setDetailsImg] = useState("")
+  
+  let screenWidth = useWindowWidth();
+
+  useEffect(() => {
+    const background_video = screenWidth > 600 
+                      ? "https://res.cloudinary.com/dde6glimb/video/upload/v1671005316/Setu-ram-sita_web_spytbc.mp4"
+                      : "https://res.cloudinary.com/dde6glimb/video/upload/v1671005316/Setu-ram-sita_mobile_xzibzo.mp4";
+
+    const background_video_after_mint = screenWidth > 600 
+                      ? "https://res.cloudinary.com/dde6glimb/video/upload/v1671047375/Setu-stone_new_py4ktx.mp4"
+                      : "https://res.cloudinary.com/dde6glimb/video/upload/v1671047375/Setu-stone_mobile_u1bmcu.mp4";
+
+    const background_image_fill_details = screenWidth > 600 
+                      ? "https://res.cloudinary.com/dde6glimb/image/upload/v1671035377/hanuman_web_sv0djm.png"
+                      : "https://res.cloudinary.com/dde6glimb/image/upload/v1671035376/hanuman_mobile_z8wn8n.png";
+
+    const background_video_share = screenWidth > 600 
+                      ? "https://res.cloudinary.com/dde6glimb/video/upload/v1671047375/Setu-share_new_tk4bzn.mp4"
+                      : "https://res.cloudinary.com/dde6glimb/video/upload/v1671047375/Setu-share_mobile_shpjkk.mp4";
+
+    setRamSitaVideo(background_video);
+    setMintSuccessVideo(background_video_after_mint);
+    setDetailsImg(background_image_fill_details);
+    setShareVideo(background_video_share);
+  }, [screenWidth, ramSitaVideo, mintSuccessVideo, detailsImg, shareVideo]);
+  
   const anyAudio =
     "https://res.cloudinary.com/dde6glimb/video/upload/v1666700225/afterSetuAudio_rg4qor.mp3";
   const ref = useRef(null);
@@ -60,6 +103,46 @@ const Contact = () => {
   const cross = useRef();
   const navigate = useRouter().push;
 
+  async function welcomeEmail() {
+    // e.preventDefault()
+    const img =
+      "https://res.cloudinary.com/dde6glimb/image/upload/v1670392642/satyug_logo_olyotv.png";
+    console.log("Sending");
+    let finalData = {
+      name,
+      email,
+      number,
+      img,
+    };
+    const response = await fetch("/api/welcome", {
+      method: "POST",
+      headers: {
+        Accept: "application/json, text/plain, */*",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(finalData),
+    });
+  }
+  const checkQuiz = (option)=>{
+    (option === "NEXT") ? SetOpenConfeti(true) : SetOpenConfeti(false);
+    (option === "NEXT") ? SetPrizeDiv("PrizeCupHack") : SetPrizeDiv("PrizeCup");
+    if(option !== "NEXT")
+    {
+      Swal.fire({
+        title:"गलत जवाब",
+        icon: 'error',
+        text: "सही उत्तर है पुष्पक विमान",
+        imageWidth: 400,
+        allowOutsideClick: false,
+        timerProgressBar: true,
+        timer: 5000,
+      })
+    }
+    setTimeout(()=>{
+      setQuizCompleted(true);
+      setVidOn(false);
+    },5000);
+  }
   const mintNFT = async () => {
     console.log("Minting NFT with name: ");
   };
@@ -74,6 +157,12 @@ const Contact = () => {
     // window.localStorage.setItem("name", name);
     // window.localStorage.setItem("number", number);
     console.log("item saved", name, number);
+    console.log("useer data => " + JSON.stringify(dataToSend));
+
+    axios.post(BASE_URL, dataToSend).then((response) => {
+      console.log("all saved in backend database" + response);
+    });
+
     // setHide("d-none");
     // modal.current.style.display = 'none';
     // noinput.current.style.display = 'none';
@@ -110,22 +199,31 @@ const Contact = () => {
     // buton.classList.add('animationClass');
   };
 
-  const interval = "";
-
-  const intervalFunction = () => {
-    console.log(ModalOpn);
-    Swal.fire({
-      icon: "warning",
-      title: "Oops...",
-      text: "Kindly submit your form",
-      timer: 3000,
-      timerProgressBar: true,
-    });
-  };
-
+  // const intervalFunction = () => {
+  //   console.log(ModalOpn);
+  //   Swal.fire({
+  //     icon: "warning",
+  //     title: "Oops...",
+  //     text: "Kindly submit your form",
+  //     timer: 3000,
+  //     timerProgressBar: true,
+  //   });
+  // };
+  // var timer1 = "";
   useEffect(() => {
-    audioRef.current.play();
-    interval = setInterval(() => intervalFunction(), 5000);
+    // audioRef.current.play();
+    // if(OopsOpen === false && ModalOpn === true)
+    // {
+
+    //   // console.log(ModalOpn);
+    //   //interval = setInterval(() => intervalFunction(), 7000);
+    //   // setTimeout(()=>{
+    //   //   intervalFunction();
+    //   // },10000);
+    //   // SetOopsOpen(true);
+    //   // setModalOpn(false);
+    //   //return () => clearInterval(interval);
+    // }
   }, []);
 
   useEffect(() => {
@@ -141,19 +239,23 @@ const Contact = () => {
         imageAlt: "Custom image",
         timerProgressBar: true,
         timer: 4000,
+      }).then(function () {
+        setVidOn(true);
+        // SetQuizOpen(true);
+        // console.log("Open Quiz");
       });
-      async function smallDelay() {
-        await delay(4000);
-        setVidOn(minted);
-      }
-      smallDelay();
+      // async function smallDelay() {
+      //   await delay(4000);
+      //   setVidOn(minted);
+      // }
+      // smallDelay();
       setModalOpn(false);
     }
   }, [minted]);
 
-  useEffect(() => {
-    return () => clearInterval(interval);
-  }, [ModalOpn]);
+  // useEffect(() => {
+  //   return () => clearTimeout(timer1);
+  // }, [ModalOpn]);
 
   // function playVideo(e) {
   //   // const videoPlay = ref.current;
@@ -167,27 +269,63 @@ const Contact = () => {
   //     window.localStorage.setItem("number",number);
   //     console.log(name,number);
   // } ,[name,number])
-
+  let dataToSend;
   const setData = () => {
-    let data = {
+    dataToSend = {
       name: name,
       email: email,
       number: number,
+      walletId: currentAccount,
     };
-    setUserData(data);
+    setUserData(dataToSend);
+
+    console.log("item saved", name, number);
+    console.log("useer data => " + JSON.stringify(dataToSend));
+
+    axios
+      .post(BASE_URL, dataToSend)
+      .then((response) => {
+        console.log("all saved in backend database" + response);
+        welcomeEmail();
+      })
+      .catch(function (error) {
+        console.log(error);
+        if (error.response.status === 500) {
+          console.log("wallet id from backend is " + error.response.data.userToFind.walletId)
+          setcurrentAccount(error.response.data.userToFind.walletId)
+          console.log("EMAIL ID Already Exists");
+          Swal.fire({
+            icon: "warning",
+            title: "Your Email ID Already Exists",
+            text: "Redirecting you!",
+            timer: 3000,
+            timerProgressBar: true,
+          }).then(function () {
+            setVidOn(true);
+            // SetQuizOpen(true);
+            console.log("Open Quiz");
+          });
+        }
+      });
   };
+
   const metadata =
     "https://gateway.pinata.cloud/ipfs/QmW48ksQbrDMqjWExoBSMq8JiCXcvJrRVsNt2BHiiFdWvq";
 
   return (
     <div className="App">
-      <video autoPlay muted loop id="myBGVideo">
+      {/* <video autoPlay muted loop id="myBGVideo">
         <source
           src="https://res.cloudinary.com/dde6glimb/video/upload/v1665922766/Waves_vsucxi.mp4"
           type=""
         ></source>
-      </video>
-      <div className="background d-flex justify-content-center">
+      </video> */}
+
+
+      
+      <div className="background d-flex justify-content-center" style={{backgroundImage: `url('${detailsImg}')`}}>
+
+        <div className="background d-flex justify-content-center alignModal">
         <Image
           ref={modal}
           src={require("../../assets/images/LableBox.png")}
@@ -250,6 +388,7 @@ const Contact = () => {
                 setEmail(e.target.value);
                 setUserEmail(e.target.value);
                 setModalOpn(false);
+                //console.log(ModalOpn);
               }}
             />
 
@@ -262,36 +401,168 @@ const Contact = () => {
               onClick={() => {
                 setData();
                 setbtn(!btn);
-                save();
+
                 setValidDetails(true);
+                // postingData();
                 // sendEmail();
               }}
             >
               Submit
             </button>
+            
             {btn && (
               <Confetti width="1000vw" height="1000vh" tweenDuration={1000} />
             )}
-          </div>
+            </div>
         )}
+        </div>
 
-        <audio
+        {vidOn === true && quizCompleted === false && QuizOpen === false ? (
+          <div>
+            <video
+              src={mintSuccessVideo}
+              playsInline
+              autoPlay 
+              className="BackgroundVideoContainer"
+              onEnded={() => SetQuizOpen(true)}
+            />
+          </div>
+        ) : (<> </>)}
+
+        {/* QUIZZZZ MODALLL BELOW */}
+        {vidOn === true && quizCompleted === false && QuizOpen === true ? (
+          <>
+          <div className="quizModal">
+            <div className="QuizHead1">{"जवाब दीजिये एक आसान से सवाल का और पाइये मौका सुनहरी ट्रॉफी जीतने का "}</div>
+            <div className="QuizHead">{"प्रश्न - रावण का वध करने के बाद राम जी किस वाहन पे अयोध्या लौटे थे ?"}</div>
+            <div className="QuizContainer">
+            <div>
+              <input 
+                type="radio" 
+                id="html"
+                name="fav_language" 
+                onClick={()=>{SetQuizOption("HTML")}} 
+                value="HTML" 
+              /> {" "}
+              <label for="html">{"विभीषण एयरक्राफ्ट "}</label>
+            </div>
+            <div>
+              <input 
+                type="radio" 
+                id="css" 
+                name="fav_language" 
+                onClick={()=>{SetQuizOption("NEXT")}}
+                value="CSS"   
+              /> {" "}
+              <label for="css">{"पुष्पक विमान"}</label>
+            </div>
+            <div>
+              <input
+                type="radio"
+                id="javascript"
+                name="fav_language"
+                value="JavaScript"
+                onClick={()=>{checkQuiz(QuizOption);
+                console.log(QuizOption);}}
+              />
+              <label for="javascript">{"अपाची हेलीकाप्टर "}</label>
+            </div>
+            <div>
+              <input
+                type="radio"
+                id="javascript"
+                name="fav_language"
+                value="JavaScript"
+                onClick={()=>{SetQuizOption("CSS")}} 
+              />
+            <label for="javascript">{"हनुमान जी की पीठ पर"}</label>
+            </div>
+            </div>
+            <button
+            className="ButtonQuiz"
+              onClick={() => {
+                checkQuiz(QuizOption);
+                console.log(QuizOption);
+              }}
+            >
+              Submit
+            </button>
+            {OpenConfeti && (
+              <>
+                <Confetti className="Confetiprize" width="1000vw" height="1000vh" tweenDuration={1000} />
+              </>
+            )}
+          </div>
+          { (
+              <>
+                <div className={PrizeDiv}>
+                  <Image src={Prize}  height={200} alt="prize"/>
+                </div>
+              </>
+            )}
+          </>
+        ) : (<> </>)}
+
+        {vidOn === true && quizCompleted === false && QuizOpen === true? (
+          <div className="warp d-flex justify-content-center align-items-center">
+          <video
+              playsInline
+              className="ramSita d-flex"
+              id="myVideo"
+              ref={ref}
+              src={ramSitaVideo}
+              autoPlay
+              loop
+            ></video>
+    
+          </div>
+          
+        ) : (
+          <></>
+        )
+        }
+        {/* <Image
+          src={require("../../assets/video/anumanreal.gif")}
+          className="hanuman d-flex align-items-center"
+          alt="Hanuman img"
+        /> */}
+      </div>
+
+
+
+
+        {/* QUIZZZZ MODALLL ENDSSS */}
+
+        {/* <audio
           ref={audioRef}
           src={anyAudio}
           onEnded={() => {
             save();
-            setVidOn(true);
+            // setVidOn(true);
           }}
-        />
+        /> */}
+        {vidOn === false && quizCompleted ? (
+          <div>
+            <video
+              src={shareVideo}
+              playsInline
+              autoPlay 
+              className="BackgroundVideoContainer"
+              onEnded={() => {setVidOn(true)}}
+            />
+          </div>
+        ) : (
+          <></>
+        )}
 
-        {vidOn === true ? (
+        {vidOn === true && quizCompleted ? (
           <div className="warp d-flex justify-content-center align-items-center">
             <video
               playsInline
               className="ramSita d-flex"
               id="myVideo"
               ref={ref}
-              src={ramSita}
+              src={ramSitaVideo}
               autoPlay
               loop
             ></video>
@@ -329,13 +600,6 @@ const Contact = () => {
         ) : (
           <></>
         )}
-
-        <Image
-          src={require("../../assets/video/anumanreal.gif")}
-          className="hanuman d-flex align-items-center"
-          alt="Hanuman img"
-        />
-      </div>
     </div>
   );
 };
