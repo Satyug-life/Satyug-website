@@ -95,7 +95,7 @@ const Setu = () => {
             setDragging(false);
           }}
         >
-          <div className="stone"  ref={stony}>
+          <div className={"stone" + (isDragging ? " " : " highlight")}  ref={stony}>
           {/* <Image
             src={newStone }
             alt="stone"

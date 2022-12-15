@@ -64,7 +64,8 @@ const Contact = () => {
   const [ramSitaVideo, setRamSitaVideo] = useState("")
   const [mintSuccessVideo, setMintSuccessVideo] = useState("")
   const [shareVideo, setShareVideo] = useState("")
-  const [detailsImg, setDetailsImg] = useState("")
+  const [detailsVideo, setDetailsVideo] = useState("")
+  const [btnClickVideo, setBtnClickVideo] = useState("")
   
   let screenWidth = useWindowWidth();
 
@@ -78,18 +79,23 @@ const Contact = () => {
                       : "https://res.cloudinary.com/dde6glimb/video/upload/v1671047375/Setu-stone_mobile_u1bmcu.mp4";
 
     const background_image_fill_details = screenWidth > 600 
-                      ? "https://res.cloudinary.com/dde6glimb/video/upload/v1671117303/detalis_without_box_nkcgyb.mp4"
-                      : "https://res.cloudinary.com/dde6glimb/video/upload/v1671117177/mob_without_box_lajugf.mp4";
+                      ? "https://res.cloudinary.com/dde6glimb/video/upload/v1671126192/Setu-info-loop_web_s17tg6.mp4"
+                      : "https://res.cloudinary.com/dde6glimb/video/upload/v1671126189/Setu-info-loop_mobile_tky29f.mp4";
 
     const background_video_share = screenWidth > 600 
                       ? "https://res.cloudinary.com/dde6glimb/video/upload/v1671047375/Setu-share_new_tk4bzn.mp4"
                       : "https://res.cloudinary.com/dde6glimb/video/upload/v1671047375/Setu-share_mobile_shpjkk.mp4";
 
+    const background_btn_clicked = screenWidth > 600 
+                      ? "https://res.cloudinary.com/dde6glimb/video/upload/v1671123521/Setu-stable-loop_web_fqrgs5.mp4"
+                      : "https://res.cloudinary.com/dde6glimb/video/upload/v1671123520/Setu-stable-loop_mobile_mswp1s.mp4";
+
     setRamSitaVideo(background_video);
     setMintSuccessVideo(background_video_after_mint);
-    setDetailsImg(background_image_fill_details);
+    setDetailsVideo(background_image_fill_details);
     setShareVideo(background_video_share);
-  }, [screenWidth, ramSitaVideo, mintSuccessVideo, detailsImg, shareVideo]);
+    setBtnClickVideo(background_btn_clicked);
+  }, [screenWidth, ramSitaVideo, mintSuccessVideo, detailsVideo, shareVideo]);
   
   const anyAudio =
     "https://res.cloudinary.com/dde6glimb/video/upload/v1666700225/afterSetuAudio_rg4qor.mp3";
@@ -324,14 +330,17 @@ const Contact = () => {
 
       
       <div className="background d-flex justify-content-center">
-        <video
-              playsInline
-              className="afterMint d-flex"
-              id="myVideo"
-              src={detailsImg}
-              autoPlay
-              loop
-            ></video>
+        {vidOn === false && quizCompleted === false && QuizOpen === false ? (
+          <video
+            playsInline
+            className="afterMint d-flex"
+            id="myVideo"
+            src={!btn ? (detailsVideo): (btnClickVideo)}
+            autoPlay
+            loop
+          ></video>
+        ): (<></>)}
+        
 
         <div className="background d-flex justify-content-center alignModal">
         <Image
