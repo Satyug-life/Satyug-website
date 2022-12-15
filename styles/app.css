@@ -1166,6 +1166,12 @@
   z-index: 500;
 }
 
+.afterMint {
+  height: 100vh;
+  object-fit: fill;
+  width: 100%;
+}
+
 
 @keyframes trans{
   from{
