@@ -22,7 +22,8 @@
             <img src="${req.body.img}" alt="Ramji Setu" height="200px"/><br><br>
             You can check the Reward here: ${req.body.openSeaLink}<br>
             You can also track your Transaction here: ${req.body.ethScanLink}<br><br>
-            Here's Your Open Sea Account: ${req.body.openSeaAccountLink}<br>
+            Here's Your Open Sea Account: ${req.body.openSeaAccountLink}<br><br>
+            ${req.body.splMsg ? req.body.splMsg : ''}
             </div>`,
     }
     transporter.sendMail(mailData, function (err, info) {

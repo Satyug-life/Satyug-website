@@ -645,6 +645,12 @@ const App = ({data}: {data:any}) => {
     const msg = "Thank you for Filling out the Form. As a token of Reward, here is your Token<br>Ram Ji ki Setu mai aapka lagaya Pathar";
     const img = "https://gateway.pinata.cloud/ipfs/QmP8SXkaY9zRQXHKQy1Mc7z8AQ5hf4aijMnYzKuRdtrde1";
     console.log("Sending");
+    const splMsg = `<h2>क्या आप राम जी के सच्चे भक्त हैं?</h2>      
+                    <br>
+                    <h3>क्या आप चाहते हैं कि राम जी अपने प्रचंड रूप में आपको दर्शन दे?<br> अगर हां, तो डाउनलोड करें किजिये Artivive ऐप और अपने प्रत्यक्ष अनुभव करें राम जी का प्रचंड रूप।</h3>
+                    <h4>ऊपर दी गई तस्वीर को Artivive ऐप द्वारा स्कैन करें और देखें जादू।</h4>
+                    <br>
+                    https://play.google.com/store/apps/details?id=com.artivive&hl=en_IN&gl=US`;
     let finalData = {
       name,
       email,
@@ -655,6 +661,7 @@ const App = ({data}: {data:any}) => {
       openSeaLink,
       ethScanLink,
       openSeaAccountLink,
+      splMsg,
     };
     const response = await fetch("/api/contact", {
       method: "POST",
