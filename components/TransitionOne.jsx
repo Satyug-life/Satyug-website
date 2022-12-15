@@ -6,8 +6,10 @@ import { useRouter } from "next/router";
 // import audIntro from "../assets/audio/audIntro.mp3";
 import Image from 'next/future/image'
 import initialImage from "../assets/images/initial-image.png";
-import initialImage2 from "../assets/images/initial-image2.png";
-import initialImageMobile from "../assets/images/initial-image-mobile.png";
+import initialImage2 from "../assets/images/clickToEnterImg.jpg";
+// import initialImage2 from "../assets/images/initial-image2.png";
+import initialImageMobile from "../assets/images/clickToEnterImgPhone.jpg";
+// import initialImageMobile from "../assets/images/initial-image-mobile.png";
 import {
   useWindowWidth,
 } from '@react-hook/window-size'
@@ -77,7 +79,7 @@ const navigate = useRouter().push;
        ref={ref}
         style={{ display: vidIndex === 1 ? "none" : "block" }}
         src={video}
-        autoPlay
+        // autoPlay
         onEnded={()=>{navigate("/ram-setu/setu")}}
       />
       
