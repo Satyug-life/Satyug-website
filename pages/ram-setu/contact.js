@@ -126,7 +126,18 @@ const Contact = () => {
   const checkQuiz = (option)=>{
     (option === "NEXT") ? SetOpenConfeti(true) : SetOpenConfeti(false);
     (option === "NEXT") ? SetPrizeDiv("PrizeCupHack") : SetPrizeDiv("PrizeCup");
-    
+    if(option !== "NEXT")
+    {
+      Swal.fire({
+        title:"गलत जवाब",
+        icon: 'error',
+        text: "सही उत्तर है पुष्पक विमान",
+        imageWidth: 400,
+        allowOutsideClick: false,
+        timerProgressBar: true,
+        timer: 5000,
+      })
+    }
     setTimeout(()=>{
       setQuizCompleted(true);
       setVidOn(false);
