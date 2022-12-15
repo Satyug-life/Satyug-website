@@ -63,12 +63,13 @@ const navigate = useRouter().push;
   return (
     <div className="parentDiv">
     
-     
+      <Image className={`initialImage ${hide}`} src={staticImg} alt="Front" onClick={(e)=>{
+        playVideo(e);
+      }}/>
 
       {/* <video  autoPlay className="homeVideo" id="myVideo"  ref={ref} onEnded={() => setVidIndex((idx) => idx + 1)}>
         <source src={homeVideo} type="video/mp4"/>
       </video>
-
        <video className="homeVideo2" id="myVideo"  ref={ref} >
         <source src={homeVideo2} type="video/mp4"/>
       </video>   */}
