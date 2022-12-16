@@ -31,7 +31,7 @@ const Setu = () => {
 
     const background_video_after = screenWidth > 600 
                       ? "https://res.cloudinary.com/dde6glimb/video/upload/v1671116928/Setu-after-stone_web_swuk5q.mp4"
-                      : "https://res.cloudinary.com/dde6glimb/video/upload/v1671116928/Setu-after-stone_mobile_hdzcoh.mp4";
+                      : "https://res.cloudinary.com/dde6glimb/video/upload/v1671199254/Setu-after-stone_mobile_dpsqmo.mp4";
     setVideoBefore(background_video);
     setVideoAfter(background_video_after);
   }, [screenWidth, videoBefore, videoAfter]);
