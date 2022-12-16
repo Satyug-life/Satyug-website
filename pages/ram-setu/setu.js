@@ -43,12 +43,14 @@ const Setu = () => {
     const StoneY = stony.current.getBoundingClientRect().top;
     setGoalPosition({ x: Math.round(GoalX), y: Math.round(GoalY) });
     setStonePosition({ x: Math.round(StoneX), y: Math.round(StoneY) });
+    // console.log("Stone: " + "x : " + StoneX + " and y : " + StoneY);
+    // console.log("Goal: " + "x : " + GoalX + " and y : " + GoalY);
   };
   const CheckCollide = (GoalX, GoalY, StoneX, StoneY) => {
     if (
-      (StoneX >= GoalX - 80 && StoneX <=  GoalX + 80) &&
+      (StoneX >= GoalX - 150 && StoneX <=  GoalX + 50) &&
       // StoneY === GoalY &&
-      (StoneY >= GoalY - 50 && StoneY <=  GoalY + 50) &&
+      (StoneY >= GoalY - 120 && StoneY <=  GoalY + 50) &&
       StoneX !== 0
     ) {
       SetComplete(true);
