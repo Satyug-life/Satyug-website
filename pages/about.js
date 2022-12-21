@@ -21,7 +21,7 @@ function Home() {
 //   const v1 = screenWidth>600 ? 
 //     "https://res.cloudinary.com/dde6glimb/video/upload/v1666530742/earth_lymmu1.mp4": 
 //     "https://res.cloudinary.com/dde6glimb/video/upload/v1666536246/earth_02_zafyak.mp4";
-const v1 = "https://res.cloudinary.com/dde6glimb/video/upload/v1666530742/earth_lymmu1.mp4"
+const v1 = "https://res.cloudinary.com/dde6glimb/video/upload/v1671640405/Untitled_2_nmys9w.mp4"
   const[hideContent,setHideContent]=useState(true)
   useEffect(() => {
     AOS.init()
@@ -36,7 +36,9 @@ const v1 = "https://res.cloudinary.com/dde6glimb/video/upload/v1666530742/earth_
     <>
     <div className="homeIndex">
 
-    <video  src={v1} autoPlay playsInline loop  className={cs.video}/>
+    <video autoplay muted playsinline loop className={cs.video}>
+     <source src={v1} type="video/mp4"/>
+    </video>
       <div className="HomeDiv container" style={{zIndex:'1000'}}>
         <div className="row p-4 pb-0 pe-lg-0 pt-lg-5 align-items-center rounded-3  shadow-lg">
           <div className="col-lg-12 p-3 p-lg-5 pt-lg-3">
