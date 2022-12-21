@@ -36,9 +36,9 @@ const v1 = "https://res.cloudinary.com/dde6glimb/video/upload/v1671640405/Untitl
     <>
     <div className="homeIndex">
 
-    <video autoplay muted playsinline loop className={cs.video}>
-     <source src={v1} type="video/mp4"/>
-    </video>
+    <video src={v1} autoPlay muted playsInline loop className={cs.video}/>
+
+   
       <div className="HomeDiv container" style={{zIndex:'1000'}}>
         <div className="row p-4 pb-0 pe-lg-0 pt-lg-5 align-items-center rounded-3  shadow-lg">
           <div className="col-lg-12 p-3 p-lg-5 pt-lg-3">
