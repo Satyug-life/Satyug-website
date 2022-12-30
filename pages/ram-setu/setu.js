@@ -27,11 +27,11 @@ const Setu = () => {
   useEffect(() => {
     const background_video = screenWidth > 600 
                       ? "https://res.cloudinary.com/dde6glimb/video/upload/v1670944366/Setu-2_new_ka4h2h.mp4"
-                      : "https://res.cloudinary.com/dde6glimb/video/upload/v1670996286/Setu-2_mobile_dmaw1w.mp4";
+                      : "https://res.cloudinary.com/dde6glimb/video/upload/v1671202680/Setu-2_mobile_bom6vo.mp4";
 
     const background_video_after = screenWidth > 600 
                       ? "https://res.cloudinary.com/dde6glimb/video/upload/v1671116928/Setu-after-stone_web_swuk5q.mp4"
-                      : "https://res.cloudinary.com/dde6glimb/video/upload/v1671116928/Setu-after-stone_mobile_hdzcoh.mp4";
+                      : "https://res.cloudinary.com/dde6glimb/video/upload/v1671199254/Setu-after-stone_mobile_dpsqmo.mp4";
     setVideoBefore(background_video);
     setVideoAfter(background_video_after);
   }, [screenWidth, videoBefore, videoAfter]);
