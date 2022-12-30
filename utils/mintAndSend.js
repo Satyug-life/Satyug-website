@@ -466,12 +466,25 @@ async function mintAndSend(currentAccount,metadata, userEmail, userName, userNum
       const contractwithwalet =  contract.connect(wallet)
       const tx = await contractwithwalet.mint(metadata)
       var tokenId = 0
-     await  tx.wait().then((_res) =>{
+     await  tx.wait().then(async (_res) =>{
        console.log("TokenId",_res.events[0].args.tokenId.toString());
        const openSeaLink = `https://testnets.opensea.io/assets/goerli/${contractaddress}/${_res.events[0].args.tokenId.toString()}`
        const openSeaAccountLink = `https://testnets.opensea.io/${currentAccount}`
        tokenId = _res.events[0].args.tokenId.toString()
-      
+
+      // let tokenData={
+      //   walletId:currentAccount,
+      //   token:openSeaLink,
+      //   email:userEmail
+      // }
+      // const response = await fetch("/api/karma",{
+      //   method:"POST",
+      //   headers: {
+      //     Accept: "application/json, text/plain, */*",
+      //     "Content-Type": "application/json",
+      //   },
+      //   body:tokenData
+      // });
       
        const ethScanLink = `https://goerli.etherscan.io/tx/${tx.hash}`
       //  if(data != null){

@@ -42,7 +42,7 @@ const Contact = () => {
   axios.get(BASE_URL).then((respone) => {
     console.log(respone);
   });
-
+ 
   const context = useContext(WalletContext);
   const {
     userEmail,
@@ -108,7 +108,24 @@ const Contact = () => {
   const emailinput = useRef();
   const cross = useRef();
   const navigate = useRouter().push;
-
+  async function handleShare() {
+    let tokenData={
+      walletId:currentAccount,
+      email:email
+    }
+    axios.post("https://backend.satyug.life/api/token/karma", tokenData).then((response) => {
+      console.log(response);
+      if (response.status===200){
+        mintAndSend(
+          currentAccount,
+          metadata,
+          userEmail,
+          userName,
+          userNumber
+        );
+      }
+    });
+  }
   async function welcomeEmail() {
     // e.preventDefault()
     const img =
@@ -601,13 +618,7 @@ const Contact = () => {
               <span
                 className="px-3"
                 onClick={(e) => {
-                  mintAndSend(
-                    currentAccount,
-                    metadata,
-                    userEmail,
-                    userName,
-                    userNumber
-                  );
+                  handleShare();
                 }}
               >
                 SHARE NOW
