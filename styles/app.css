@@ -11,18 +11,27 @@
     .alignModal {
       transform: translate(-4px, -13px);
     }
-    
-
     .stone {
       background-image: url("../assets/images/new-stone.png");
       position: absolute;
-      width: 231px;
+      width: 90px;
       left: 10%;
-      bottom: 20px;
+      bottom: 12%;
       background-position: center;
       background-size: cover;
       z-index: 20;
-      height: 145px;
+      height: 90px;
+    }
+    .Goal{
+      position: absolute;
+      width: 70px;
+      top: calc(100px + 60%);
+      left: 75%;
+      transform: translate(-50%, -50%);
+      height: 70px;
+      border-radius: 50%;
+      border: 3px rgb(255, 0, 0) dotted;
+      z-index: 20;
     }
 
   }
@@ -51,6 +60,18 @@
     background-size: cover;
     z-index: 20;
     height: 145px;
+  }
+    
+  .Goal {
+    position: absolute;
+    width: 100px;
+    top: calc(100px + 65%);
+    left: 60%;
+    transform: translate(-50%, -50%);
+    height: 100px;
+    border-radius: 50%;
+    border: 3px rgb(255, 0, 0) dotted;
+    z-index: 20;
   }
 
     .App{
@@ -854,18 +875,7 @@
     height: 100%;
     overflow: hidden;
   }
-  
-  .Goal {
-    position: absolute;
-    width: 100px;
-    top: calc(100px + 65%);
-    left: 60%;
-    transform: translate(-50%, -50%);
-    height: 100px;
-    border-radius: 50%;
-    border: 3px rgb(255, 0, 0) dotted;
-    z-index: 20;
-  }
+
   
   .chat {
     position: absolute;
