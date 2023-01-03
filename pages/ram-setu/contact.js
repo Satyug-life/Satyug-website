@@ -36,8 +36,11 @@ const Contact = () => {
   const [QuizOption , SetQuizOption] = useState("");
   const [OpenConfeti , SetOpenConfeti] = useState(false);
   const [PrizeDiv , SetPrizeDiv] = useState("PrizeCup");
+  const [SubmitButtonClick  , SetSubmitButtonClick] = useState(false);
 
   // const BASE_URL = "http://localhost:8080/api/ram-setu/contact";
+  // const demo = 'http://localhost:8080/api/token/karma'
+
   console.log(BASE_URL) ;
   axios.get(BASE_URL).then((respone) => {
     console.log(respone);
@@ -113,8 +116,9 @@ const Contact = () => {
       walletId:currentAccount,
       email:email
     }
-    axios.post("https://backend.satyug.life/api/token/karma", tokenData).then((response) => {
-      console.log(response);
+    // try{
+
+    axios.post('https://backend.satyug.life/api/token/karma', tokenData).then((response) => {
       if (response.status===200){
         mintAndSend(
           currentAccount,
@@ -124,7 +128,16 @@ const Contact = () => {
           userNumber
         );
       }
+    }).catch((error)=> {
+      console.log("EROR CHAL RAHA HAI",error)
+       alert('Token Limit Reached !!')
+
     });
+
+  // }
+  // catch(error){
+  //   console.log(error);
+  // }
   }
   async function welcomeEmail() {
     // e.preventDefault()
@@ -149,6 +162,7 @@ const Contact = () => {
   const checkQuiz = (option)=>{
     (option === "NEXT") ? SetOpenConfeti(true) : SetOpenConfeti(false);
     (option === "NEXT") ? SetPrizeDiv("PrizeCupHack") : SetPrizeDiv("PrizeCup");
+    SetSubmitButtonClick(true);
     if(option !== "NEXT")
     {
       Swal.fire({
@@ -315,19 +329,21 @@ const Contact = () => {
         console.log(error);
         if (error.response.status === 300) {
           console.log("wallet id from backend is " + error.response.data.userToFind.walletId)
-          setcurrentAccount(error.response.data.userToFind.walletId)
-          console.log("EMAIL ID Already Exists");
-          Swal.fire({
-            icon: "warning",
-            title: "Your Email ID Already Exists",
-            text: "Redirecting you!",
-            timer: 3000,
-            timerProgressBar: true,
-          }).then(function () {
-            setVidOn(true);
-            // SetQuizOpen(true);
-            console.log("Open Quiz");
-          });
+          if(error.response.data.userToFind.walletId != "") {
+            setcurrentAccount(error.response.data.userToFind.walletId)
+            console.log("EMAIL ID Already Exists");
+            Swal.fire({
+              icon: "warning",
+              title: "Your Email ID Already Exists",
+              text: "Redirecting you!",
+              timer: 3000,
+              timerProgressBar: true,
+            }).then(function () {
+              setVidOn(true);
+              // SetQuizOpen(true);
+              console.log("Open Quiz");
+            });
+          }
         }
       });
   };
@@ -470,7 +486,59 @@ const Contact = () => {
             <div className="QuizHead1">{"जवाब दीजिये एक आसान से सवाल का और पाइये मौका सुनहरी ट्रॉफी जीतने का "}</div>
             <div className="QuizHead">{"प्रश्न - रावण का वध करने के बाद राम जी किस वाहन पे अयोध्या लौटे थे ?"}</div>
             <div className="QuizContainer">
+            {
+              SubmitButtonClick === true ? (
+                <>
+                <div>
+              <input 
+              disabled
+                type="radio" 
+                id="html"
+                name="fav_language" 
+                onClick={()=>{SetQuizOption("HTML")}} 
+                value="HTML" 
+              /> {" "}
+              <label for="html">{"विभीषण एयरक्राफ्ट "}</label>
+            </div>
             <div>
+              <input 
+              disabled
+                type="radio" 
+                id="css" 
+                name="fav_language" 
+                onClick={()=>{SetQuizOption("NEXT")}}
+                value="CSS"   
+              /> {" "}
+              <label for="css">{"पुष्पक विमान"}</label>
+            </div>
+            <div>
+              <input
+              disabled
+                type="radio"
+                id="javascript"
+                name="fav_language"
+                value="JavaScript"
+                onClick={()=>{checkQuiz(QuizOption);
+                console.log(QuizOption);}}
+              />
+              <label for="javascript">{"अपाची हेलीकाप्टर "}</label>
+            </div>
+            <div>
+              <input
+              disabled
+                type="radio"
+                id="javascript"
+                name="fav_language"
+                value="JavaScript"
+                onClick={()=>{SetQuizOption("CSS")}} 
+              />
+            <label for="javascript">{"हनुमान जी की पीठ पर"}</label>
+            </div>
+            </>
+              ):
+              (
+                <>
+                <div>
               <input 
                 type="radio" 
                 id="html"
@@ -511,16 +579,33 @@ const Contact = () => {
               />
             <label for="javascript">{"हनुमान जी की पीठ पर"}</label>
             </div>
+            </>
+              )
+              
+            }
             </div>
-            <button
+            {
+              SubmitButtonClick === true ? <button
+              className="ButtonQuiz"
+              disabled
+                onClick={() => {
+                  checkQuiz(QuizOption);
+                  // console.log(QuizOption);
+                }}
+              >
+                Submit
+              </button>
+              :
+              <button
             className="ButtonQuiz"
               onClick={() => {
                 checkQuiz(QuizOption);
-                console.log(QuizOption);
+                // console.log(QuizOption);
               }}
             >
               Submit
             </button>
+            }
             {OpenConfeti && (
               <>
                 <Confetti className="Confetiprize" width="1000vw" height="1000vh" tweenDuration={1000} />

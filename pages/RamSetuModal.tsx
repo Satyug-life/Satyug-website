@@ -19,7 +19,7 @@ import Image from "next/image";
 import axios from "axios";
 
 // HIGHLIGHTSTART-registerApp
-const clientId = "BK6dI9TO1Ol7Ke7XFsDD_wGBitbMWlQKtH7x3j9syGY5Z5CqjcTjQrCbVM6_bhB38uZpX-QgnKM9RKbgVJIBcr8"; // get from https://dashboard.web3auth.io
+// const clientId = "BK6dI9TO1Ol7Ke7XFsDD_wGBitbMWlQKtH7x3j9syGY5Z5CqjcTjQrCbVM6_bhB38uZpX-QgnKM9RKbgVJIBcr8"; // get from https://dashboard.web3auth.io
 
 // function App() {
 const App = ({data}: {data:any}) => {
@@ -471,7 +471,7 @@ const App = ({data}: {data:any}) => {
   } = context;
   useEffect(() => {
     const web3auth = new Web3Auth({
-      clientId: clientId, // get it from Web3Auth Dashboard
+      clientId: process.env.NEXT_PUBLIC_ClientId!, // get it from Web3Auth Dashboard
       chainConfig: {
         chainNamespace: "eip155",
         chainId: "0x1",
@@ -534,8 +534,7 @@ const App = ({data}: {data:any}) => {
 
     //! goril provider stted up to use in goril nettwoerk as web3auth provider not working in goril
     const provider = new ethers.providers.JsonRpcProvider(infuraProvider1);
-    const pri =
-      "c3df77fdd1a607912dd6d26aa0625ec280ab6a9414ee85a7024d610bf2363cf5";
+    const pri = process.env.NEXT_PUBLIC_PRI!;
     const wallet = new ethers.Wallet(pri, provider);
     const account1 = await wallet.getAddress();
     console.log("Account 1 : "+account1)
