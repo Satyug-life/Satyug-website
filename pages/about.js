@@ -1,5 +1,6 @@
 import React , {useEffect, useState} from "react";
 import AOS from 'aos';
+import Image from "next/image";
 import 'aos/dist/aos.css';
 import Typical from 'react-typical';
 import Footer from "../components/Footer";
@@ -7,8 +8,16 @@ import UpperFooter from "../components/UpperFooter";
 import cs from "../assets/cssModules/Home.module.css"
 import { useRouter } from "next/router";
 import Typewriter from 'typewriter-effect';
+import { useRef } from "react";
+import mute from "../assets/images/mute2.png"
+// import { Platform } from 'react-native';
+
+
 
 function Home() {
+  const audioref = useRef();
+  const [muteButton, setmuteButton] = useState(true);
+
 //   function getWindowDimensions() {
 //     const { innerWidth: width, innerHeight: height } = window;
 //     return {
@@ -24,23 +33,33 @@ function Home() {
 const v1 = "https://res.cloudinary.com/dde6glimb/video/upload/v1671640405/Untitled_2_nmys9w.mp4"
   const[hideContent,setHideContent]=useState(true)
   useEffect(() => {
+   
+    console.log(navigator.platform.valueOf);
     AOS.init()
     // window.scrollTo(0,0);
     setTimeout(() => {
       setHideContent(false)
+      
     }, 6000);
     
   }, []);
+  const playAudio = () => {
+    audioref.current.play()
+    setmuteButton(false)
+  }
   
   return (
     <>
-    <div className="homeIndex">
-
-    <video src={v1} autoPlay muted playsInline loop className={cs.video}/>
-
+    <div className="homeIndex " >
+    
+    <video src={v1} ref={audioref}  playsInline loop className={cs.video}/>
+    {muteButton? <div className="image-wrapper "  >
+      <Image src={mute} id="muteImg" onClick={()=>{playAudio();}}></Image>
+    </div>:<></>}
    
-      <div className="HomeDiv container" style={{zIndex:'1000'}}>
-        <div className="row p-4 pb-0 pe-lg-0 pt-lg-5 align-items-center rounded-3  shadow-lg">
+   
+      <div className="HomeDiv container static" style={{zIndex:'10'}}>
+        <div className="row p-4 pb-0 pe-lg-0 pt-lg-5 align-items-center rounded-3  shadow-lg sta">
           <div className="col-lg-12 p-3 p-lg-5 pt-lg-3">
             <h2 className="display-4 fw-bold lh-1 font-scriptina typewritter"> 
             {/* <Typical
