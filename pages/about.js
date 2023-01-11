@@ -78,7 +78,7 @@ const v1 = "https://res.cloudinary.com/dde6glimb/video/upload/v1671640405/Untitl
     <>
     <div className="homeIndex " >
     
-    <video src={v1} ref={audioref} autoPlay muted playsInline loop className={cs.video}/>
+    <video src={v1} ref={audioref} autoPlay playsInline loop className={cs.video}/>
     {/* {muteButton? <div className="image-wrapper "  >
       <Image src={mute} id="muteImg" onClick={()=>{playAudio();}}></Image>
     </div>:<></>} */}
