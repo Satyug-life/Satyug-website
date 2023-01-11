@@ -1,6 +1,8 @@
 import classes from "../assets/cssModules/dhyana.module.css"
-import React from "react"
+import {useRef, useState} from "react"
 import { useRouter } from "next/router";
+import Image from "next/image"
+import mute from "../assets/images/mute1.png"
 import {
     useWindowWidth,
   } from '@react-hook/window-size'
@@ -30,8 +32,8 @@ const Dhyana = () => {
     return (
         <div className="App">
             <div className={classes.container} >
-                <video src={v} playsInline className={classes.vidStyles} onEnded={()=>navigate("/dhyanaToken")} autoPlay/>
-                {muteButton? <div className="image-wrapper "  >
+                <video src={v} playsInline className={classes.vidStyles } ref={audioref} onEnded={()=>navigate("/dhyanaToken")} />
+                {muteButton? <div className="image-wrapper"  >
       <Image src={mute} id="muteImg" onClick={()=>{playAudio();}}></Image>
     </div>:<></>}
             </div>

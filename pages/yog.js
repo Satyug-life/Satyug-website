@@ -1,12 +1,16 @@
 import classes from "../assets/cssModules/Yog.module.css";
 
-import React from "react";
+import {useRef, useState} from "react"
 import { useRouter } from "next/router";
+import Image from "next/image"
+import mute from "../assets/images/mute2.png"
 import {
   useWindowWidth,
 } from '@react-hook/window-size'
 
 const Yog = () => {
+  const audioref = useRef();
+  const [muteButton, setmuteButton] = useState(true);
     // function getWindowDimensions() {
     //     const { innerWidth: width, innerHeight: height } = window;
     //     return {
@@ -23,16 +27,28 @@ const Yog = () => {
     "https://res.cloudinary.com/dde6glimb/video/upload/v1666363192/M-3_hupvky.mp4";
 
   const navigate = useRouter().push;
+
+
+  
+  const playAudio = () => {
+    audioref.current.play()
+    setmuteButton(false)
+  }
+  
   return (
     <div className="App">
     <div className={classes.container}>
       <video
         src={v}
+        ref={audioref}
         playsInline
         className={classes.vidStyles}
-        autoPlay
+      
         onEnded={() => navigate("/yogaToken")}
       />
+       {muteButton? <div className="image-wrapper"  >
+      <Image src={mute} id="muteImg" onClick={()=>{playAudio();}}></Image>
+    </div>:<></>}
     </div>
     <button className="SkipButtonUniversal" onClick={()=>navigate("/yogaToken")}>
                 <div className="SkipButtonUniversalContainer">
