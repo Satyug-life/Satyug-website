@@ -1,7 +1,7 @@
 import React , {useEffect, useState} from "react";
-var http = require('http');
-var parser = require('ua-parser-js');
-import AOS from 'aos';
+// var http = require('http');
+// var parser = require('ua-parser-js');
+// import AOS from 'aos';
 import Image from "next/image";
 import 'aos/dist/aos.css';
 import Typical from 'react-typical';
@@ -60,8 +60,8 @@ const v1 = "https://res.cloudinary.com/dde6glimb/video/upload/v1671640405/Untitl
   const[hideContent,setHideContent]=useState(true)
   useEffect(() => {
    
-    console.log(navigator.platform.valueOf);
-    AOS.init()
+    // console.log(navigator.platform.valueOf);
+    // AOS.init()
     // window.scrollTo(0,0);
     setTimeout(() => {
       setHideContent(false)
@@ -78,7 +78,7 @@ const v1 = "https://res.cloudinary.com/dde6glimb/video/upload/v1671640405/Untitl
     <>
     <div className="homeIndex " >
     
-    <video src={v1} ref={audioref} autoPlay  playsInline loop className={cs.video}/>
+    <video src={v1} ref={audioref} autoPlay muted playsInline loop className={cs.video}/>
     {/* {muteButton? <div className="image-wrapper "  >
       <Image src={mute} id="muteImg" onClick={()=>{playAudio();}}></Image>
     </div>:<></>} */}

@@ -349,21 +349,21 @@ const Contact = () => {
         console.log(error);
         if (error.response.status === 300) {
           console.log("wallet id from backend is " + error.response.data.userToFind.walletId)
-          if(error.response.data.userToFind.walletId != "") {
-            setcurrentAccount(error.response.data.userToFind.walletId)
-            console.log("EMAIL ID Already Exists");
-            Swal.fire({
-              icon: "warning",
-              title: "Your Email ID Already Exists",
-              text: "Redirecting you!",
-              timer: 3000,
-              timerProgressBar: true,
-            }).then(function () {
-              setVidOn(true);
-              // SetQuizOpen(true);
-              console.log("Open Quiz");
-            });
-          }
+          // if(error.response.data.userToFind.walletId != "") {
+          //   setcurrentAccount(error.response.data.userToFind.walletId)
+          //   console.log("EMAIL ID Already Exists");
+          //   Swal.fire({
+          //     icon: "warning",
+          //     title: "Your Email ID Already Exists",
+          //     text: "Redirecting you!",
+          //     timer: 3000,
+          //     timerProgressBar: true,
+          //   }).then(function () {
+          //     setVidOn(true);
+          //     // SetQuizOpen(true);
+          //     console.log("Open Quiz");
+          //   });
+          // }
         }
       });
   };
