@@ -4,7 +4,7 @@ import { useRouter } from "next/router";
 // import image from "../assets/images/image.png";
 // import hanuman from "../assets/images/hanuman.png";
 // import audIntro from "../assets/audio/audIntro.mp3";
-import Image from "next/future/image";
+import Image from 'next/image'
 import initialImage from "../assets/images/initial-image.png";
 import initialImage2 from "../assets/images/clickToEnterImg.jpg";
 // import initialImage2 from "../assets/images/initial-image2.png";
@@ -63,7 +63,7 @@ const navigate = useRouter().push;
   return (
     <div className="parentDiv">
     
-      <Image className={`initialImage ${hide}`} loader={() => staticImg} src={staticImg} alt="Front" width="100" height="100" onClick={(e)=>{
+      <Image className={`initialImage ${hide}`} src={staticImg} alt="Front" width="100" height="100" onClick={(e)=>{
         playVideo(e);
       }}/>
 
