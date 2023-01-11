@@ -6,6 +6,8 @@ import {
   } from '@react-hook/window-size'
 
 const Dhyana = () => {
+    const audioref = useRef();
+    const [muteButton, setmuteButton] = useState(true);
     const navigate = useRouter().push;
     // function getWindowDimensions() {
     //     const { innerWidth: width, innerHeight: height } = window;
@@ -19,12 +21,19 @@ const Dhyana = () => {
     const v = screenWidth>600?"https://res.cloudinary.com/dde6glimb/video/upload/v1665916476/Dhyana_Video_1_gybggg.mp4":"https://res.cloudinary.com/dde6glimb/video/upload/v1666419487/M-2_-_Compressed_with_FlexClip_ud6vfg.mp4";
     // const v ="https://res.cloudinary.com/dde6glimb/video/upload/v1665916476/Dhyana_Video_1_gybggg.mp4"
 
-   
+    const playAudio = () => {
+        audioref.current.play()
+        setmuteButton(false)
+      }
+      
 
     return (
         <div className="App">
             <div className={classes.container} >
                 <video src={v} playsInline className={classes.vidStyles} onEnded={()=>navigate("/dhyanaToken")} autoPlay/>
+                {muteButton? <div className="image-wrapper "  >
+      <Image src={mute} id="muteImg" onClick={()=>{playAudio();}}></Image>
+    </div>:<></>}
             </div>
             <button className="SkipButtonUniversal" onClick={()=>navigate("/dhyanaToken")}>
                 <div className="SkipButtonUniversalContainer">
