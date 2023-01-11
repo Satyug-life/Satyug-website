@@ -63,7 +63,7 @@ const navigate = useRouter().push;
   return (
     <div className="parentDiv">
     
-      <Image className={`initialImage ${hide}`} src={staticImg} alt="Front" width="100" height="100" onClick={(e)=>{
+      <Image className={`initialImage ${hide}`} src={staticImg} layout='fill' alt="Front" onClick={(e)=>{
         playVideo(e);
       }}/>
 
