@@ -27,8 +27,8 @@ const TransitionOne = () => {
                       : "https://res.cloudinary.com/dde6glimb/video/upload/v1671199509/Setu-1_mobile_djhsnw.mp4";
 
     const staticImage = screenWidth > 600 
-                      ? initialImage2
-                      : initialImageMobile;
+                      ? "https://res.cloudinary.com/dde6glimb/image/upload/v1673440515/clickToEnterImg_j1ufu7.jpg"
+                      : "https://res.cloudinary.com/dde6glimb/image/upload/v1673440515/clickToEnterImgPhone_lvgwdg.jpg";
     setVideo(homeVideo);
     setStaticImg(staticImage);
   }, [screenWidth, video]);
@@ -63,7 +63,7 @@ const navigate = useRouter().push;
   return (
     <div className="parentDiv">
     
-      <Image className={`initialImage ${hide}`} src={staticImg} alt="Front" onClick={(e)=>{
+      <Image className={`initialImage ${hide}`} loader={() => staticImg} src={staticImg} alt="Front" width="100" height="100" onClick={(e)=>{
         playVideo(e);
       }}/>
 

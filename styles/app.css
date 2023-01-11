@@ -139,6 +139,7 @@
     padding: 5px 15px;
     border-radius: 10px;
     position: absolute;
+    z-index: 10;
   }
   
   .SkipButtonUniversalContainer{
@@ -148,6 +149,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+    z-index: 10;
   }
   .topContainer{
     width: 100%;
@@ -302,6 +304,10 @@
 .navigateKriya{
     width: 25%;
     height: 40%;
+}
+
+.navigateDarshana:hover, .navigateDhyana:hover, .navigateYog:hover, .navigateKriya:hover {
+  cursor: pointer;
 }
 
 @media only screen and (max-width: 1000px) {

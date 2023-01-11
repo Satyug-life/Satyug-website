@@ -1,4 +1,6 @@
 import React , {useEffect, useState} from "react";
+var http = require('http');
+var parser = require('ua-parser-js');
 import AOS from 'aos';
 import Image from "next/image";
 import 'aos/dist/aos.css';
@@ -11,12 +13,36 @@ import Typewriter from 'typewriter-effect';
 import { useRef } from "react";
 import mute from "../assets/images/mute2.png"
 // import { Platform } from 'react-native';
+// import DeviceDetector from "node-device-detector";
 
 
 
 function Home() {
   const audioref = useRef();
-  const [muteButton, setmuteButton] = useState(true);
+  
+  // const detector = new DeviceDetector({
+  //   clientIndexes: true,
+  //   deviceIndexes: true,
+  //   deviceAliasCode: false,
+  // });
+  // const userAgent = 'Mozilla/5.0 (Linux; Android 5.0; NX505J Build/KVT49L) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/43.0.2357.78 Mobile Safari/537.36';
+  // const result = detector.detect(userAgent);
+  // console.log('result parse', result);
+  // console.log(navigator.appVersion);
+
+//   console.log(navigator.userAgent);
+//   var http = require('http');
+// var parser = require('ua-parser-js');
+//   const audioref = useRef();
+//   let parsewr = new parser.UAParser();
+//   console.log(parser.OS.NAME.toString())
+// if (isIPhone) {
+//   console.log("ios")
+// } else {
+//   console.log("non ios")
+// }
+  // const [muteButton, setmuteButton] = useState(true);
+
 
 //   function getWindowDimensions() {
 //     const { innerWidth: width, innerHeight: height } = window;
@@ -43,19 +69,19 @@ const v1 = "https://res.cloudinary.com/dde6glimb/video/upload/v1671640405/Untitl
     }, 6000);
     
   }, []);
-  const playAudio = () => {
-    audioref.current.play()
-    setmuteButton(false)
-  }
+  // const playAudio = () => {
+  //   audioref.current.play()
+  //   setmuteButton(false)
+  // }
   
   return (
     <>
     <div className="homeIndex " >
     
-    <video src={v1} ref={audioref}  playsInline loop className={cs.video}/>
-    {muteButton? <div className="image-wrapper "  >
+    <video src={v1} ref={audioref} autoPlay  playsInline loop className={cs.video}/>
+    {/* {muteButton? <div className="image-wrapper "  >
       <Image src={mute} id="muteImg" onClick={()=>{playAudio();}}></Image>
-    </div>:<></>}
+    </div>:<></>} */}
    
    
       <div className="HomeDiv container static" style={{zIndex:'10'}}>

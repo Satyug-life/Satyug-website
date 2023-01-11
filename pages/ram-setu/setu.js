@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useRef } from "react";
 import Draggable from "react-draggable";
 // import "../../assets/css/Setu.css";
+
 import chat from "../../assets/images/calll-1.png";
 import newStone from "../../assets/images/new-stone.png";
 import Image from 'next/future/image';
@@ -21,10 +22,13 @@ const Setu = () => {
   const [Complete, SetComplete] = useState(false);
   const Goal = useRef();
   const stony = useRef();
+  const router = useRouter()
+
 
   let screenWidth = useWindowWidth();
 
   useEffect(() => {
+
     const background_video = screenWidth > 600 
                       ? "https://res.cloudinary.com/dde6glimb/video/upload/v1670944366/Setu-2_new_ka4h2h.mp4"
                       : "https://res.cloudinary.com/dde6glimb/video/upload/v1671202680/Setu-2_mobile_bom6vo.mp4";
@@ -72,6 +76,29 @@ const Setu = () => {
   const [isDragging, setDragging] = useState(false);
   return (
     <div className="App">
+
+{(
+          <button
+            className="SkipButtonUniversal"
+            onClick={() => router.push("/ram-setu/contact")}
+          >
+            <div className="SkipButtonUniversalContainer">
+              Skip
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="16"
+                height="16"
+                fill="currentColor"
+                class="bi bi-skip-forward"
+                viewBox="0 0 16 16"
+              >
+                <path d="M15.5 3.5a.5.5 0 0 1 .5.5v8a.5.5 0 0 1-1 0V8.752l-6.267 3.636c-.52.302-1.233-.043-1.233-.696v-2.94l-6.267 3.636C.713 12.69 0 12.345 0 11.692V4.308c0-.653.713-.998 1.233-.696L7.5 7.248v-2.94c0-.653.713-.998 1.233-.696L15 7.248V4a.5.5 0 0 1 .5-.5zM1 4.633v6.734L6.804 8 1 4.633zm7.5 0v6.734L14.304 8 8.5 4.633z" />
+              </svg>
+            </div>
+          </button>
+        )}
+   
+
     <div className="imgContainer">
       <video
         autoPlay
@@ -130,6 +157,8 @@ const Setu = () => {
     </div>
     </div>
   );
+  
+  
 };
 
 export default Setu;

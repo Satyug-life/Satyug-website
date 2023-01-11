@@ -10,7 +10,7 @@ import {
 
 const Yog = () => {
   const audioref = useRef();
-  const [muteButton, setmuteButton] = useState(true);
+  // const [muteButton, setmuteButton] = useState(true);
     // function getWindowDimensions() {
     //     const { innerWidth: width, innerHeight: height } = window;
     //     return {
@@ -30,10 +30,10 @@ const Yog = () => {
 
 
   
-  const playAudio = () => {
-    audioref.current.play()
-    setmuteButton(false)
-  }
+  // const playAudio = () => {
+  //   audioref.current.play()
+  //   setmuteButton(false)
+  // }
   
   return (
     <div className="App">
@@ -43,12 +43,12 @@ const Yog = () => {
         ref={audioref}
         playsInline
         className={classes.vidStyles}
-      
+        autoPlay
         onEnded={() => navigate("/yogaToken")}
       />
-       {muteButton? <div className="image-wrapper"  >
+       {/* {muteButton? <div className="image-wrapper"  >
       <Image src={mute} id="muteImg" onClick={()=>{playAudio();}}></Image>
-    </div>:<></>}
+    </div>:<></>} */}
     </div>
     <button className="SkipButtonUniversal" onClick={()=>navigate("/yogaToken")}>
                 <div className="SkipButtonUniversalContainer">

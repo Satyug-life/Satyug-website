@@ -1,9 +1,9 @@
 .container{
     height:99.435vh;
     width: 100vw;
-    display: contents;
+    /* display: contents;
     justify-content: center;
-    align-items: center;
+    align-items: center; */
 }
 
 .vidStyles{
